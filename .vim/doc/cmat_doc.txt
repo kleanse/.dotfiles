@@ -1,0 +1,392 @@
+*cmat_doc.txt*	For Vim version 8.2 	Last change: 2021 Oct 11
+
+			       Cmat User Manual
+
+	       Cmat - Automatic formatter for C-style languages
+
+This document contains information for using Cmat and understanding the
+functions defined in cmat.vim.
+
+1.  Function list		    |cmat-function-list|
+2.  Function documentation	    |cmat-functions|
+3.  Using Cmat			    |cmat-usage|
+4.  Technical details		    |cmat-verbose|
+    4.1 Determining line break		|cmat-linebreak|
+    4.2 Calculating indent		|cmat-indent|
+
+==============================================================================
+1.	Function list					*cmat-function-list*
+
+String manipulation:					*cmat-string-functions*
+	s:Calculate_line_break()	calculates the location for a line
+					break in a string
+	s:Count_initial_tabs()		gets the number of tabs at the start
+					of a string
+	s:Find_unmatched_dblquote()	gets the unmatched unescaped
+					double quote
+	s:Get_word_positions()		gets the positions of the words in a
+					string
+	s:Prev_word_position()		gets the position of the word before a
+					byte index in a string
+	s:Strgetindent()		gets the indent length of a string
+	s:Strgetword()			gets word from a string using byte
+					index
+	s:Str_unmatched_delimiters()	gets the byte indices of the unmatched
+					delimiters in a string
+	s:Tw_word_pos()			gets the position of the word in a
+					string crossing 'textwidth'
+
+List manipulation:					*cmat-list-functions*
+	s:Peek()			gets the last item of a List
+	s:Pop()				removes the last item of a List
+	s:Push()			adds an item to the end of a List
+
+Working with text in the current buffer:		*cmat-text-functions*
+	s:Get_prev_lines()		get a List of lines before a line
+					number from the buffer
+
+Conversion:					*cmat-conversion-functions*
+	s:Screen_col_to_byte_index()	returns the byte index of a string
+					corresponding to a screen column
+
+Other:							*cmat-other-functions*
+	s:Infer_indent()		calculates the indent length to apply
+					to the last line in a list of lines
+	s:Word_delimiters_locations()	gets the locations of the delimiters
+					surrounding a word in a list of lines
+
+==============================================================================
+2.	Function documentation				*cmat-functions*
+
+See |cmat-function-list| for a list of functions grouped together into
+categories, each of which are sorted alphabetically.
+
+s:Calculate_line_break({string} [, {tw}])	*s:Calculate_line_break()*
+	Expects: type({string}) == v:t_string
+	         Optional parameters:
+	         type({tw}) == v:t_number
+	         && 0 <= {tw} < strdisplaywidth({string})
+	Ensures: returns the byte index to insert a line break in {string}
+	         based on 'textwidth', or {tw} if it is given. For information
+	         about how the line break's position is calculated, read
+	         |cmat-linebreak|. If {string} cannot be broken, returns -1.
+	         If &textwidth == 0, 79 is used.
+
+s:Count_initial_tabs({string})			*s:Count_initial_tabs()*
+	Expects: type({string}) == v:t_string
+	Ensures: returns the number of tabs at the start of {string}.
+
+s:Find_unmatched_dblquote({string})		*s:Find_unmatched_dblquote()*
+	Expects: type({string}) == v:t_string
+	Ensures: returns the byte index of the unmatched unescaped double
+	         quote in {string}. If no such quote exists, returns -1.
+
+s:Get_prev_lines({lnum}, {count} [, {pat}])	*s:Get_prev_lines()*
+	Expects: type({lnum}) == v:t_number && type({count}) == v:t_number
+	         && {lnum} > 0
+	         Optional parameters:
+	         type({pat}) == v:t_string
+	Ensures: returns a List containing at most {count} lines before {lnum}
+	         from the current buffer. Only valid lines are included. If
+	         {pat} is specified, a line is considered valid if it resides
+	         between the first line before {lnum} that matches {pat} and
+	         the line at {lnum}; otherwise, all lines before {lnum} are
+	         valid.
+
+	         The List mirrors the line ordering of the buffer: the first
+	         item corresponds to the line with the smallest line number;
+	         the second item corresponds to the line with the second
+	         smallest line number; and so forth. If no valid previous line
+	         can be fetched, returns an empty List.
+
+s:Get_word_positions({string} [, {index}])	*s:Get_word_positions()*
+	Expects: type({string}) == v:t_string
+	         Optional parameters:
+	         type({index}) == v:t_number && {index} >= 0
+	Ensures: returns a List of Lists, each of which holds the starting and
+	         ending byte indices of a word in {string} (the ending index
+	         is actually the byte index of the character following the
+	         word). The List is ordered: the first item corresponds to the
+	         first word starting at {index} (default 0), the second item
+	         corresponds to the second word starting at {index}, and so
+	         forth.
+	                 Index  Position
+	                 0      start
+	                 1      end
+
+s:Infer_indent({lines})					*s:Infer_indent()*
+	Expects: type({lines}) == v:t_list && len({lines}) > 1
+	         && for item in {lines}, type(item) == v:t_string
+	Ensures: returns a List of two integers. The first integer indicates
+	         the indent offset counted in spaces that the last string in
+	         {lines} should consider according to the rules of this indent
+	         function (read the "Indent" section of the marker fold titled
+	         "Custom 'formatexpr' expression documentation" for more
+	         information). The second integer gives the number of tabs
+	         that the indent of the last string in {lines} should contain
+	         to match the indent format of the inferred line.
+	                Index  Meaning
+	                0      indent offset
+	                1      number of initial tabs to match indent format
+
+s:Peek({stack})						*s:Peek()*
+	Expects: type({stack}) == v:t_list && !empty({stack})
+	Ensures: returns the last item of {stack}.
+
+s:Pop({stack})						*s:Pop()*
+	Expects: type({stack}) == v:t_list && !empty({stack})
+	Ensures: removes the last item of {stack}.
+
+s:Prev_word_position({string}, {index})			*s:Prev_word_position()*
+	Expects: type({string}) == v:t_string && type({index}) == v:t_number
+	         && {index} < strlen({string})
+	Ensures: returns a List containing the starting and ending byte
+	         indices of the first word before {index} in {string}. If no
+	         such word exists, returns an empty List.
+	                 Index  Position
+	                 0      start
+	                 1      end
+
+s:Push({stack}, {item})					*s:Push()*
+	Expects: type({stack}) == v:t_list
+	Ensures: adds {item} to the end of {stack}.
+
+s:Screen_col_to_byte_index({string}, {col})	*s:Screen_col_to_byte_index()*
+	Expects: type({string}) == v:t_string && type({col}) == v:t_number
+	         && {col} > 0
+	Ensures: returns the byte index of {string} corresponding to the
+	         screen column {col}. If no byte index corresponds to {col},
+	         returns -1. Note that if {col} matches a screen column which
+	         is part of all but the last screen column of a byte index
+	         occupying multiple screen columns (i.e., a <Tab>), that
+	         multi-screen-column byte index is returned.
+
+s:Strgetindent({string})				*s:Strgetindent()*
+	Expects: type({string}) == v:t_string
+	Ensures: like indent(), this function returns the indent length
+	         counted in spaces of {string}.
+
+s:Strgetword({string}, {index})				*s:Strgetword()*
+	Expects: type({string}) == v:t_string && type({index}) == v:t_number
+	         && {index} >= 0
+	Ensures: like strgetchar(), this function gets the first word in
+	         {string} starting at {index}, which is a byte index. In this
+	         context, the definition of a word is less strict than that of
+	         Vim: it is a sequence of non-whitespace characters. If a word
+	         cannot be found when starting at {index}, an empty string is
+	         returned.
+
+s:Str_lbindex_general(string)			*s:Str_lbindex_general()*
+	Expects: type({string}) == v:t_string && {string}.word_count > 1
+	         (See s:Strgetword() for the definition of a word.)
+	Ensures: returns the byte index at which to break {string} according
+	         to the rules of this format function (read the "General
+	         format" section of the marker fold titled "Custom
+	         'formatexpr' expression documentation" for more information).
+	         The character at this byte index is the first character on
+	         the new line. If {string} cannot be broken, returns -1.
+
+s:Str_lbindex_operator(string)			*s:Str_lbindex_operator()*
+	Expects: type({string}) == v:t_string
+	Ensures: returns the byte index at which to break {string} according
+	         to the rules of this format function (read the "Operator"
+	         section of the marker fold titled "Custom 'formatexpr'
+	         expression documentation" for more information). The
+	         character at this byte index is the first character on the
+	         new line. If {string} cannot be broken, returns -1.
+
+s:Str_lbindex_quotes({string})			*s:Str_lbindex_quotes()*
+	Expects: type({string}) == v:t_string
+	Ensures: returns the byte index at which to break {string} according
+	         to the rules of this format function (read the "Quotes"
+	         section of the marker fold titled "Custom 'formatexpr'
+	         expression documentation" for more information). The
+	         character at this byte index is the first character on the
+	         new line. If {string} cannot be broken, returns -1.
+
+s:Str_unmatched_delimiters({string}, {delims})	*s:Str_unmatched_delimiters()*
+	Expects: type({string}) == v:t_string && type({delims}) == v:t_list
+	         && len({delims}) == 2
+	         && for item in {delims}, type(item) == v:t_string
+	Ensures: returns a List of two Lists indicating the starting byte
+	         indices of the unmatched delimiters given by {delims} in
+	         {string}. The first list contains the indices of unmatched
+	         opening delimiters, while the second list contains the
+	         indices of unmatched closing delimiters. Either list may be
+	         empty, and both lists are ordered.
+	                Index  Delimiter
+	                0      open
+	                1      close
+
+	         {delims} must contain two Strings: the first String is the
+	         opening delimiter, and the second String is the closing
+	         delimiter.
+
+s:Tw_word_pos({string} [, {tw}])			*s:Tw_word_pos()*
+	Expects: type({string}) == v:t_string
+	         && strdisplaywidth({string}) > &textwidth
+	         Optional parameters:
+	         type({tw}) == v:t_number
+	         && 0 <= {tw} < strdisplaywidth({string})
+	Ensures: returns a List containing the starting and ending byte
+	         indices of the word in {string} that crosses 'textwidth', or
+	         {tw} if it is given, that is,
+	         word.start_index <= tw_byte_index < word.end_index - 1.
+	         If no word crosses 'textwidth', returns an empty List.
+	         If &textwidth == 0, 79 is used.
+	                Index  Position
+	                0      start
+	                1      end
+
+						*s:Word_delimiters_locations()*
+s:Word_delimiters_locations({lines}, {location}, {delims})
+	Expects: type({lines}) == v:t_list && type({location}) == v:t_list
+	         && type({delims}) == v:t_list
+	         && len({location}) == 2 && len({delims}) == 2
+	         && for item in {lines}, type(item) == v:t_string
+	         && for item in {location}, type(item) == v:t_number
+	         && for item in {delims}, type(item) == v:t_string
+	            && item is not a substring of the word found using
+	            {location}.
+	Ensures: returns a List of at most two Lists indicating the locations
+	         of the delimiters in {delims} that surround the first word
+	         found using {location}. Each nested List comprises the index
+	         of {lines}, the starting index, and the ending index of its
+	         corresponding delimiter. If more than one pair of delimiters
+	         surround the found word, the locations of the most nested
+	         delimiters are returned. The following table summarizes the
+	         nested Lists' indices:
+	                Index  Position
+	                0      index of {lines}
+	                1      start
+	                2      end
+
+	         {location} must contain two integers: the first integer is
+	         the index of {lines} to find a word, and the second integer
+	         is the starting byte index on that line.
+
+	         {delims} must contain two Strings: the first String is the
+	         opening delimiter, and the second String is the closing
+	         delimiter.
+
+	         If a word cannot be found or the found word does not follow
+	         an unmatched {delims}[0] (the opening delimiter), returns an
+	         empty List. If {delims}[1] (the closing delimiter) cannot be
+	         found but {delims}[0] is found and it precedes the word found
+	         using {location}, returns a List of one List, which is the
+	         location of {delims}[0].
+
+Format_C_Code()
+
+==============================================================================
+3.	Using Cmat			*cmat-usage*
+
+This program is to be used with 'formatexpr'. It specially formats lines that
+exceed or just exceed (e.g., through Insert mode) 'textwidth' (or, if
+'textwidth' is 0, 79 characters). Effectively, lines whose last words are
+preceded by an operator have the operator moved to the new line, and lines
+that end with an unenclosed string are terminated with a <Space> and ", and
+the following line begins with a ".
+
+The new lines beginning with the operator will try to indent their operator
+to the same screen column as the first operator in the original line after
+the same screen column as their first non-blank character. The new lines
+beginning with " do the same but indent to the first " in the original line.
+For example, with 'textwidth' set at 30 and after typing the last 'r', the
+line
+
+Column by tens:          1         2         3
+Column by ones: 12345678901234567890123456789012345
+          Text: std::cout << "A string." << var
+
+becomes
+
+                 1         2         3
+        12345678901234567890123456789012345
+        std::cout << "A string."
+                  << var
+
+and, after typing the last '\', the line
+
+                 1         2         3
+        12345678901234567890123456789012345
+        std::cout << "A longer string.\
+
+becomes
+
+                 1         2         3
+        12345678901234567890123456789012345
+        std::cout << "A longer "
+                     "string.\
+
+In both examples, the cursor is positioned at the end of the new line.
+
+The following sections discuss the formatting of their corresponding lines in
+more detail.
+
+1. Operator
+
+In this implementation, an operator is a sequence of one or more characters
+that are not alphabetic, numeric, <Space>s, <Tab>s, quotations, semicolons,
+underscores, or braces, i.e., \v[^[:blank:]"'[:alnum:];_\{\}]+
+
+The algorithm used to indent operators prioritizes horizontal space
+efficiency. The distances for all specific cases are computed first and then
+compared: the smallest distance is used for the indentation. If no valid
+distance is computed, an indentation of zero is returned.
+
+2. Quotes
+
+The function s:Str_lbindex_quotes() sets the line break index on a line
+ending with an unterminated string before the last word so long as the string
+remains substantial. A substantial unterminated string is an unterminated
+string with one or more words after the line is broken. For example,
+
+                 1         2         3
+        12345678901234567890123456789012345
+        std::cout << "A longer string.
+
+has the line break index set to the index of 's' in "string", whereas
+
+                 1         2         3
+        12345678901234567890123456789012345
+        std::cout << variable << " is
+
+will not have a line break index.
+
+==============================================================================
+4.	Technical details				*cmat-verbose*
+
+This section details the algorithm used by Cmat.
+
+4.1 Determining linebreak ~
+							*cmat-linebreak*
+If valid, the position returned by s:Calculate_line_break() guarantees no
+trailing whitespace will appear on the first line after inserting the line
+break.
+
+4.2 Calculating indent ~
+							*cmat-indent*
+Cmat calculates the indent length of a line depending on the line's first
+word. If the first word is or comprises any of the following attributes, it
+receives an indent length calculated using special rules:
+
+	First word
+	o  begins with a double quote; or
+	o  is an operator.
+
+A first word that does not possess any of these qualities receives an indent
+length that is the difference between its line's and the previous line's
+indent lengths. Thus, applying this indent length to the first word's line
+will indent it to the same level as the previous line.
+
+The remainder of this subsection describes the cases that follow special
+indent calculation rules in detail.
+
+Special indent rules - double quote ~
+
+If the first word begins with a double quote, ...
+
+Special indent rules - operator ~
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

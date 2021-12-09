@@ -1,0 +1,206 @@
+*pseudocode_style.txt*	Last change: 2021 Oct 12
+
+		  Reference for a readable pseudocode style
+
+This document details a formatting style for pseudocode that prioritizes
+readability. A list of keywords, statement syntax, and an example piece of
+pseudocode showcasing all of the keywords and indentation style are included.
+Although the style aims to clarify, it is not appropriate for every person or
+situation; adapting it to be more or less verbose when needed is encouraged.
+
+1. Keywords		    |pseudocode-keywords|
+2. Syntax		    |pseudocode-syntax|
+   2.1 Statements		|pseudocode-statements|
+   2.2 Expressions		|pseudocode-expressions|
+   2.3 Conditional statements	|pseudocode-conditions|
+   2.4 Loops			|pseudocode-loops|
+   2.5 Comments			|pseudocode-comments|
+3. Sample pseudocode	    |pseudocode-sample|
+
+==============================================================================
+1. Keywords						*pseudocode-keywords*
+
+The following table lists keywords for this pseudocode style lexically from
+top to bottom, left to right:
+
+	and		false		or		then
+	do		for  		print		to
+	downto		goto 		procedure	true
+	else		if   		return		while
+	end
+
+Keywords should be bold in a rich text document.
+
+==============================================================================
+2. Syntax						*pseudocode-syntax*
+
+2.1 Statements ~
+						       *pseudocode-statements*
+Statements comprise those defined in traditional programming languages and
+natural language statements. Thus, there is a lot of freedom in writing
+program statements. As pseudocode aims for comprehension rather than
+preciseness, high-level, intuitive statements are recommended. For example,
+the statement
+
+	Add word2 to a queue Q
+
+is readily understandable and appropriate; however, for an actual
+implementation, it omits many necessary, often low-level, details: defining a
+"word", finding and getting a word from a source, and constructing a queue.
+
+2.2 Expressions ~
+						      *pseudocode-expressions*
+The definition of an expression follows that of the C++ programming language
+(see https://en.cppreference.com/w/cpp/language/expressions).
+
+Data types ~
+
+The default for data type declaration is this: if a variable's type can be
+inferred from its initialization value, then do not declare it. Otherwise,
+declare the variable's data type. For example,
+
+	i <- 2                     // i is an integer.
+	Enqueue word to Q          // Error: type of Q cannot be deduced.
+	Enqueue word to a queue Q  // Q is a queue.
+
+Had the queue Q been declared earlier, the error in the previous example would
+not occur.
+
+Printing ~
+
+The "print" keyword is flexible in handling arguments. It can be used to print
+expressions one by one, each with its own "print" keyword and line:
+
+	print 1
+	print "Hello, world!"
+	variable <- 3.1415
+	print variable
+	1 Hello, world! 3.1415 ~
+
+Alternatively, expressions can be typed sequentially on the same line:
+
+	print 1 "Hello, world!" variable
+	1 Hello, world! 3.1415 ~
+
+In this latter case, expressions are printed in the order they are specified
+with spaces separating them.
+	Note: if space separators are not desired, consider defining a
+	concatenation function or a concatenation operator before the
+	pseudocode.
+
+Implicitly, all expressions are converted to the string data type before being
+printed. This convention allows numbers to be printed without quoting them and
+non-string variables to be supplied (so long as their conversions to the
+string type are intuitive or mentioned explicitly at their outsets).
+
+By default, "print" does not print a newline; this special character must be
+specified, either with the C/C++ escape character '\n' or a similar
+indication:
+
+	print '\n'
+	print a newline
+
+2.3 Conditional statements ~
+						       *pseudocode-conditions*
+if {condition} then
+	statement
+else if {condition} then
+	statement
+else
+	statement
+end if
+
+	The latter two conditional branches are optional.
+
+2.4 Loops ~
+							    *pseudocode-loops*
+for {range} do
+	statement
+end for
+
+	{range} can be ascending (to) or descending (downto). The keywords
+	"to" and "downto" are inclusive:
+
+		i <- 0 to 9      // i increments from 0 to 9 and ends with 10
+		i <- 9 downto 0  // i decrements from 9 to 0 and ends with -1
+
+while {condition} do
+	statement
+end while
+
+do
+	statement
+while {condition}
+
+	Note that do-while does not use the "end" keyword.
+
+procedure name(parameters)
+	statement
+end procedure
+
+goto {label}
+
+	Where {label} is a line comprising only a name ending with a colon (:)
+	and surrounded by empty lines.
+
+2.5 Comments ~
+							 *pseudocode-comments*
+Sometimes, even pseudocode cannot be perfectly transparent with its ideas.
+Comments can be useful in these cases. The use of comments is like that in
+C++: comments should be placed closest to the statements they refer
+(preferably on the same line; otherwise, before the statements), and they must
+be preceded with a comment symbol. What symbol used is preference. Any symbol
+can be used so long as it is not important in the pseudocode. For consistency,
+this pseudocode style favors the comment symbol used in C++: two sequential
+forward slashes (//).
+
+==============================================================================
+3. Sample pseudocode					*pseudocode-sample*
+
+procedure main()
+	str <- "Hello, world!"
+	for each char c in str do
+		Push c onto a stack char_stack
+	end for
+	if top of char_stack is '$' then
+		return 1
+	else if top of char_stack is 'H' then
+		// Perhaps char_stack is mysteriously backward. Fix it.
+		while char_stack is not empty do
+			Enqueue top of char_stack to a queue tmp
+			Pop top of char_stack
+		end while
+		do
+			Push head of tmp to char_stack
+			Dequeue tmp
+		while tmp is not empty
+	else if top of char_stack is '!' then
+		goto output
+	end if
+
+	while true do
+		if char_stack is empty then
+			break
+		end if
+		if top of char_stack is an alphabetic
+		   or punctuation character then
+			print top of char_stack
+		else
+			print "Invalid character"
+		end if
+		print a newline
+		Pop top of char_stack
+	end while
+
+output:
+
+	for i <- length(char_stack) - 1 downto 0 do
+		print i
+		print top of char_stack
+		Pop top of char_stack
+	end for
+
+	return 0
+end procedure
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
