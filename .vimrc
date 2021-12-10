@@ -137,22 +137,18 @@ augroup vimrc
 	" file types to maintain a uniform editor appearance. Options
 	" such as formatting ones are safe and even necessary to change
 	" for specific file types.
-	autocmd FileType make set
+	autocmd FileType make setlocal
 		\ autoindent
 		\ noexpandtab
-		\ nojoinspaces
 		\ textwidth=0
 
-	autocmd FileType vim set
+	autocmd FileType vim setlocal
 		\ autoindent
-		\ colorcolumn=+1
 		\ copyindent
 		\ foldmethod=marker
 		\ formatoptions=tcroqlj
-		\ nojoinspaces
 		\ textwidth=79
 
-	autocmd FileType c,cpp source $HOME/vim/cppediting.vim
 augroup END
 "}}}
 
@@ -165,6 +161,7 @@ inoreabbrev lc: Last change:
 
 " Key mappings {{{
 let mapleader = ","
+let maplocalleader = mapleader
 
 " Remap Normal-mode commands ";" and "," to different keys for delay-free ","
 " behavior while using such a key for mapleader.
