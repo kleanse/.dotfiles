@@ -1,4 +1,4 @@
-*klen_lib.txt*	For Vim version 8.2	Last change: 2021 Nov 23
+*klen_lib.txt*	For Vim version 8.2	Last change: 2021 Nov 29
 
 			  Library of custom functions
 
@@ -82,7 +82,7 @@ klen#genlib#cursor_char_byte([{prev} [, {pat}]])
 	Ensures: Like |klen#genlib#cursor_char()|, but returns the byte index
 		 of the character at the cursor. If such a character does not
 		 exist, returns -1. The optional parameters {start} and {pat}
-		 have the same meaning as |klen#genlib#cursor_char()|.
+		 have the same meanings as |klen#genlib#cursor_char()|.
 		 Composing characters are not counted separately.
 
 					*klen#str#byteidx_quote_positions()*
@@ -205,7 +205,7 @@ klen#str#match_chars({expr}, {pat}, {start}, {end})
 		 between the line indices of {start} and {end} in {expr} are
 		 matched with {pat}. Keeping {start} as a number will
 		 implicitly set {lidx} to zero, i.e., the index of the first
-		 string in {expr}. Likewise, if {end} is a number, its {lidx}
+		 string in {expr}. Similarly, if {end} is a number, its {lidx}
 		 is set to the length of {expr} minus one: the last string in
 		 {expr}.
 

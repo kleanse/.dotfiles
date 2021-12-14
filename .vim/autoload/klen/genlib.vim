@@ -38,7 +38,7 @@ function klen#genlib#cursor_char(prev = v:false, pat = '')
 			endif
 		endfor
 	else
-		for l:char in slice(l:csr_line, l:csr_idx)
+		for l:char in split(slice(l:csr_line, l:csr_idx), '\zs')
 			if l:char =~ a:pat
 				let l:csr_char = l:char
 				break

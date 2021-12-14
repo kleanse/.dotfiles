@@ -147,7 +147,8 @@ function klen#str#match_chars(expr, pat, start, end)
 	"}}}
 	let l:n_chars = 0
 	if l:start[0] == l:end[0]
-		for l:char in slice(a:expr[l:start[0]], l:start[1], l:end[1])
+		for l:char in split(slice(a:expr[l:start[0]], l:start[1],
+					\ l:end[1]), '\zs')
 			if l:char !~ a:pat
 				return -1
 			endif
@@ -155,7 +156,7 @@ function klen#str#match_chars(expr, pat, start, end)
 		endfor
 		return l:n_chars
 	endif
-	for l:char in slice(a:expr[l:start[0]], l:start[1])
+	for l:char in split(slice(a:expr[l:start[0]], l:start[1]), '\zs')
 		if l:char !~ a:pat
 			return -1
 		endif
@@ -164,7 +165,7 @@ function klen#str#match_chars(expr, pat, start, end)
 	" Account for new line.
 	let l:n_chars += 1
 	for l:str in a:expr[l:start[0] + 1 : l:end[0] - 1]
-		for l:char in l:str
+		for l:char in split(l:str, '\zs')
 			if l:char !~ a:pat
 				return -1
 			endif
@@ -172,7 +173,7 @@ function klen#str#match_chars(expr, pat, start, end)
 		endfor
 		let l:n_chars += 1
 	endfor
-	for l:char in slice(a:expr[l:end[0]], 0, l:end[1])
+	for l:char in split(slice(a:expr[l:end[0]], 0, l:end[1]), '\zs')
 		if l:char !~ a:pat
 			return -1
 		endif
@@ -210,7 +211,7 @@ function s:find_quotes(string, quote, unmatched = v:false, both = v:false)
 	\ }
 	let l:qt_pat = (a:both) ? '''\|"' : a:quote
 	let l:bidx = 0	" Byte index of current character.
-	for c in a:string
+	for c in split(a:string, '\zs')
 		" Track a valid instance of argument quote.
 		if c =~ l:qt_pat
 			if !l:state.in_str && !l:state.pc_is_wc
@@ -260,7 +261,7 @@ function s:str_match_chars(string, pat, start, end)
 		return -1
 	endif
 	let l:n_chars = 0
-	for l:char in slice(a:string, l:start, a:end)
+	for l:char in split(slice(a:string, l:start, a:end), '\zs')
 		if l:char !~ a:pat
 			return -1
 		endif
