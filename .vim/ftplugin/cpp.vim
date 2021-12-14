@@ -32,6 +32,10 @@ if !exists("*s:undo_ftplugin")
 			\ textwidth<
 
 		xunmap <buffer> <Plug>cpp_comment;
+		if maparg(g:maplocalleader .. 'c', 'x')
+		 \ ==# '<Plug>cpp_comment;'
+			xunmap <buffer> <LocalLeader>c
+		endif
 	endfunction
 endif
 
@@ -40,8 +44,8 @@ if !exists("*s:v_toggle_comment")
 	" is not commented. Otherwise, uncomment them.
 	function s:v_toggle_comment() range
 		let l:range = a:firstline .. ',' .. a:lastline
-		if getline(a:firstline) =~ '\v^// '
-			execute l:range .. 'substitute`\v^// ``'
+		if getline(a:firstline) =~ '\v^\s*//'
+			execute l:range .. 'substitute`\v^\s*\zs// ?``'
 		else
 			execute l:range .. 'substitute`\v^%(// )?`// `'
 		endif
