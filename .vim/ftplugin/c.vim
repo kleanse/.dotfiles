@@ -11,6 +11,11 @@ set cpoptions&vim
 
 let b:undo_ftplugin = "call " .. expand("<SID>") .. "undo_ftplugin()"
 
+" Associates default key sequences with plugin mappings.
+let s:plug_names = {
+	\ g:maplocalleader .. 'c': '<Plug>c_comment;',
+\ }
+
 setlocal
 	\ cindent
 	\ copyindent
@@ -31,73 +36,30 @@ if !exists("*s:undo_ftplugin")
 			\ path<
 			\ textwidth<
 
-		xunmap <buffer> <Plug>c_comment;
-		if maparg(g:maplocalleader .. 'c', 'x') ==# '<Plug>c_comment;'
-			xunmap <buffer> <LocalLeader>c
-		endif
+		for [l:lhs, l:plug_name] in items(s:plug_names)
+			execute 'xunmap <buffer>' l:plug_name
+			if maparg(l:lhs, 'x') ==# l:plug_name
+				execute 'xunmap <buffer>' l:lhs
+			endif
+		endfor
 	endfunction
 endif
 
 if !exists("*s:v_toggle_comment")
-	" Comment out lines selected in Visual mode if the first of such lines
-	" is not commented. Otherwise, uncomment them.
-	function s:v_toggle_comment() range
-		" s:v_toggle_comment() implementation {{{
-		let l:range = a:firstline .. ',' .. a:lastline
-		let l:xrange = (a:firstline + 1) .. ',' .. (a:lastline - 1)
-		if getline(a:firstline) =~ '\v^\s*%(/\*|\*)'
-			" First line is a comment: uncomment selected lines.
-			if a:firstline == a:lastline
-				execute a:firstline
-					\ .. 's`\v^\s*\zs%(/\* ?| \* ?)``'
-				execute a:firstline .. 's`\v\s*\*/\s*$``e'
-			else
-				execute l:range
-				     \ .. 's`\v^\s*\zs%(/\* ?| \*/| \* ?)``e'
-			endif
-		elseif a:firstline == a:lastline
-			" Comment the one selected line.
-			execute a:firstline .. 's`\v^`/\* `'
-			execute a:firstline .. 's`\v$` \*/`'
-		else
-			" Comment selected lines.
-			execute a:firstline .. 's`\v^`/\* `'
-			if a:firstline + 1 <= a:lastline - 1
-				execute l:xrange
-				      \ .. 's`\v^%(/\* | \* )?` \* `'
-			endif
-			if getline(a:lastline) =~ '\v^\s*%(\*/)?\s*$'
-				call setline(a:lastline, ' */')
-			else
-				execute a:lastline
-				      \ .. 's`\v^%(/\* | \* )?` \* `'
-				let l:next_line = a:lastline + 1
-				if l:next_line <= line('$')
-				 \ && getline(l:next_line)
-				    \ =~ '\v^\s*%(\*/)?\s*$'
-					call setline(l:next_line, ' */')
-				else
-					call append(a:lastline, ' */')
-				endif
-				let l:end = getpos("'>")
-				let l:end[1] += 1
-				call setpos("'>", l:end)
-			endif
-		endif
-		nohlsearch
-	endfunction
-	" }}}
 endif
 " }}}
 
 " Mappings {{{
 " Comment out lines selected in Visual mode.
 if !exists("no_plugin_maps") && !exists("no_c_maps")
-	if !hasmapto('<Plug>c_comment;')
-		xmap <buffer> <unique> <LocalLeader>c <Plug>c_comment;
-	endif
+	for [s:lhs, s:plug_name] in items(s:plug_names)
+		if !hasmapto(s:plug_name)
+			execute 'xmap <buffer> <unique>' s:lhs s:plug_name
+		endif
+	endfor
+	unlet s:lhs s:plug_name
 	xnoremap <buffer> <silent> <unique> <Plug>c_comment;
-		\ :<Home>silent <End>call <SID>v_toggle_comment()<CR>
+	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
 "}}}
 
