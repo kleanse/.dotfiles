@@ -12,6 +12,7 @@ set
 	\ listchars=tab:--\|
 	\ textwidth=79
 	\ wildmode=longest,list
+	\ nowrapscan
 
 filetype plugin indent on
 
@@ -183,6 +184,11 @@ nnoremap N Nzvzz
 " Toggle 'colorcolumn'.
 nnoremap <special> <Leader>cc
 	\ <Cmd>let &colorcolumn = (empty(&colorcolumn)) ? "+1" : ""<CR>
+
+" Toggle 'virtualedit'.
+nnoremap <special> <Leader>ve
+	\ <Cmd>let &virtualedit = (empty(&virtualedit)) ? "all" : ""
+	\ <Bar> set virtualedit?<CR>
 nnoremap <special> <Leader>h <Cmd>nohlsearch<CR>
 
 " Access system clipboard.
