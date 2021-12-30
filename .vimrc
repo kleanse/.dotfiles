@@ -181,15 +181,24 @@ nnoremap Y y$
 nnoremap n nzvzz
 nnoremap N Nzvzz
 
+nnoremap <special> <Leader>h <Cmd>nohlsearch<CR>
+
 " Toggle 'colorcolumn'.
 nnoremap <special> <Leader>cc
 	\ <Cmd>let &colorcolumn = (empty(&colorcolumn)) ? "+1" : ""<CR>
+
+" Toggle 'list'
+nnoremap <special> <Leader>l
+			\ <Cmd>let &list = !&list<CR>
+
+" Toggle 'spell'
+nnoremap <special> <Leader>sp
+			\ <Cmd>let &spell = !&spell<CR>
 
 " Toggle 'virtualedit'.
 nnoremap <special> <Leader>ve
 	\ <Cmd>let &virtualedit = (empty(&virtualedit)) ? "all" : ""
 	\ <Bar> set virtualedit?<CR>
-nnoremap <special> <Leader>h <Cmd>nohlsearch<CR>
 
 " Access system clipboard.
 nnoremap <special> <Leader>p "+p
@@ -203,11 +212,6 @@ xnoremap <special> <Leader>x "+d
 " Visual-mode "K" is rare.
 xnoremap <special> J :move '>+1<CR>gv=gv
 xnoremap <special> K :move '<-2<CR>gv=gv
-
-cnoremap <special> <Leader>sp  set spell
-cnoremap <special> <Leader>nos set nospell
-cnoremap <special> <Leader>l   set list
-cnoremap <special> <Leader>nol set nolist
 
 inoremap <special> <C-C> <Esc>
 xnoremap <special> <C-C> <Esc>
