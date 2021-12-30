@@ -1,4 +1,4 @@
-*pseudocode_style.txt*	Last change: 2021 Oct 12
+*pseudocode_style.txt*	Last change: 2021 Dec 30
 
 		  Reference for a readable pseudocode style
 
@@ -24,9 +24,9 @@ The following table lists keywords for this pseudocode style lexically from
 top to bottom, left to right:
 
 	and		false		or		then
-	do		for  		print		to
-	downto		goto 		procedure	true
-	else		if   		return		while
+	do		for		print		to
+	downto		goto		procedure	true
+	else		if		return		while
 	end
 
 Keywords should be bold in a rich text document.
@@ -118,11 +118,20 @@ for {range} do
 	statement
 end for
 
+for {var} in {object} do
+	statement
+end for
+
 	{range} can be ascending (to) or descending (downto). The keywords
 	"to" and "downto" are inclusive:
 
 		i <- 0 to 9      // i increments from 0 to 9 and ends with 10
 		i <- 9 downto 0  // i decrements from 9 to 0 and ends with -1
+
+	{object} must be an expression representing a sequence (e.g., array)
+	or be a list-like object. {var} is the variable iterating over the
+	items in {object}, being assigned the value of the current item per
+	loop iteration.
 
 while {condition} do
 	statement
