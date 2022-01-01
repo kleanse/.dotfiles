@@ -14,7 +14,15 @@ let b:undo_ftplugin = "call " .. expand("<SID>") .. "undo_ftplugin()"
 " Associates default key sequences with plugin mappings.
 let s:plug_names = {
 	\ g:maplocalleader .. 'c': '<Plug>cpp_comment;',
+	\ g:maplocalleader .. '<Space>': '<Plug>cpp_make;',
 	\ g:maplocalleader .. 'm': '<Plug>cpp_multiline_comment;',
+\ }
+
+" Associates plugin mappings with mapping modes (see "map-modes").
+let s:plug_modes = {
+	\ '<Plug>cpp_make;'             : 'n',
+	\ '<Plug>cpp_comment;'          : 'x',
+	\ '<Plug>cpp_multiline_comment;': 'x',
 \ }
 
 setlocal
@@ -39,9 +47,10 @@ if !exists("*s:undo_ftplugin")
 			\ textwidth<
 
 		for [l:lhs, l:plug_name] in items(s:plug_names)
-			execute 'xunmap <buffer>' l:plug_name
-			if maparg(l:lhs, 'x') ==# l:plug_name
-				execute 'xunmap <buffer>' l:lhs
+			let l:mode = s:plug_modes[l:plug_name]
+			execute l:mode .. 'unmap <buffer>' l:plug_name
+			if maparg(l:lhs, l:mode) ==# l:plug_name
+				execute l:mode .. 'unmap <buffer>' l:lhs
 			endif
 		endfor
 	endfunction
@@ -70,10 +79,12 @@ endif
 if !exists("no_plugin_maps") && !exists("no_cpp_maps")
 	for [s:lhs, s:plug_name] in items(s:plug_names)
 		if !hasmapto(s:plug_name)
-			execute 'xmap <buffer> <unique>' s:lhs s:plug_name
+			execute s:plug_modes[s:plug_name]
+			      \ .. 'map <buffer> <unique>' s:lhs s:plug_name
 		endif
 	endfor
 	unlet s:lhs s:plug_name
+	nnoremap <buffer> <unique> <Plug>cpp_make; <Cmd>make<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>cpp_comment;
 	       \ :<Home>silent <End>call <SID>v_toggle_comment()<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>cpp_multiline_comment;

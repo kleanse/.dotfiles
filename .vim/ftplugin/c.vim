@@ -14,6 +14,13 @@ let b:undo_ftplugin = "call " .. expand("<SID>") .. "undo_ftplugin()"
 " Associates default key sequences with plugin mappings.
 let s:plug_names = {
 	\ g:maplocalleader .. 'c': '<Plug>c_comment;',
+	\ g:maplocalleader .. '<Space>': '<Plug>c_make;',
+\ }
+
+" Associates plugin mappings with mapping modes (see "map-modes").
+let s:plug_modes = {
+	\ '<Plug>c_make;'   : 'n',
+	\ '<Plug>c_comment;': 'x',
 \ }
 
 setlocal
@@ -37,9 +44,10 @@ if !exists("*s:undo_ftplugin")
 			\ textwidth<
 
 		for [l:lhs, l:plug_name] in items(s:plug_names)
-			execute 'xunmap <buffer>' l:plug_name
-			if maparg(l:lhs, 'x') ==# l:plug_name
-				execute 'xunmap <buffer>' l:lhs
+			let l:mode = s:plug_modes[l:plug_name]
+			execute l:mode .. 'unmap <buffer>' l:plug_name
+			if maparg(l:lhs, l:mode) ==# l:plug_name
+				execute l:mode .. 'unmap <buffer>' l:lhs
 			endif
 		endfor
 	endfunction
@@ -54,10 +62,12 @@ endif
 if !exists("no_plugin_maps") && !exists("no_c_maps")
 	for [s:lhs, s:plug_name] in items(s:plug_names)
 		if !hasmapto(s:plug_name)
-			execute 'xmap <buffer> <unique>' s:lhs s:plug_name
+			execute s:plug_modes[s:plug_name]
+			      \ .. 'map <buffer> <unique>' s:lhs s:plug_name
 		endif
 	endfor
 	unlet s:lhs s:plug_name
+	nnoremap <buffer> <unique> <Plug>c_make; <Cmd>make<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>c_comment;
 	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
