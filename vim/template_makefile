@@ -1,0 +1,61 @@
+# Assert specific values for builtin variables.
+CC = gcc
+CFLAGS = -pedantic-errors -Wall -Wextra -Werror
+
+CXX = g++
+CXXFLAGS = -std=c++20 -pedantic-errors -Wall -Wextra -Werror
+
+RM = rm -f
+
+src_dir = .
+obj_dir = .
+bin_dir = bin
+
+# Name of the binary to produce.
+target =
+
+# Type of the files to compile.
+ft = cpp
+
+ifeq ($(ft), cpp)
+compiler = $(CXX)
+compiler_flags = $(CXXFLAGS)
+else
+compiler = $(CC)
+compiler_flags = $(CFLAGS)
+endif
+
+srcs = $(wildcard $(src_dir)/*.$(ft))
+objs = $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
+
+.PHONY: all clean fclean
+
+all: | $(obj_dir) $(bin_dir)
+all: $(bin_dir)/$(target)
+
+clean:
+	$(RM) -r $(bin_dir)
+
+# fclean target.
+ifeq ($(obj_dir), .)
+fclean: clean
+	$(RM) $(objs)
+else ifeq ($(obj_dir), ..)
+fclean: clean
+	$(RM) $(objs)
+else
+fclean: clean
+	$(RM) -r $(obj_dir)
+endif
+
+$(obj_dir):
+	@mkdir $@
+
+$(bin_dir):
+	@mkdir $@
+
+$(obj_dir)/%.o: $(src_dir)/%.$(ft)
+	$(compiler) -c $(compiler_flags) $< -o $@
+
+$(bin_dir)/$(target): $(objs)
+	$(compiler) $^ -o $@

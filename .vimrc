@@ -66,11 +66,11 @@ endfunction
 "}}}
 
 " Internal functions. {{{
-" Expects: {ext} is a String beginning with a '.', {curpos} is a List that
-"          cursor() accepts, and the current buffer is empty.
-" Ensures: read the template file with the extension {ext} into the current
-"          buffer and set the cursor's position to {curpos}. See
-"          s:template_path for where template files are searched.
+" Expects: {ext} is a String, {curpos} is a List that cursor() accepts, and the
+"	   current buffer is empty.
+" Ensures: read the template file with the extension or suffix {ext} into the
+"	   current buffer and set the cursor's position to {curpos}. See
+"	   s:template_path for where template files are searched.
 function s:load_template_file(ext, curpos)
 	" s:load_template_file() implementation {{{
 	silent execute "read" s:template_path .. "template" .. a:ext
@@ -119,6 +119,10 @@ augroup vimrc
 					\ | startinsert! | redrawstatus
 	autocmd BufNewFile  *.h       call s:load_template_file(".h", [4, 1])
 					\ | call s:set_header_macros()
+					\ | startinsert! | redrawstatus
+	autocmd BufNewFile  Makefile  call s:load_template_file("_makefile",
+					\ [15, 8])
+					\ | execute "normal! a "
 					\ | startinsert! | redrawstatus
 	autocmd BufWritePre *	      silent call Trim_peripheral_blank_lines()
 					\ | silent call Trim_whitespace()
