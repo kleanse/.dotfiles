@@ -1,4 +1,4 @@
-*sum_usr_24.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_24.txt*	For Vim version 8.2	Last change: 2022 Jan 05
 
 What I learned:
 
@@ -44,7 +44,7 @@ exists.
 
 To change the time the cursor stays at the matching delimiter, use
 
-	:set matchime=15
+	:set matchtime=15
 
 In this case, the cursor waits for one and a half seconds; the unit is a tenth
 of a second.

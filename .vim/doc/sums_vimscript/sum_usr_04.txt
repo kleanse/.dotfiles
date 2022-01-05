@@ -1,10 +1,10 @@
-*sum_usr_04.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_04.txt*	For Vim version 8.2	Last change: 2022 Jan 05
 
 What I learned:
 
 "3dw" and "d3w" achieve the same result but differ semantically. The former
 deletes one word three times, while the latter deletes three words once. If
-indifferent, favor the latter style as it is more sensical ("d3w" == delete
+indifferent, favor the latter style as it is more sensible ("d3w" == delete
 three words).
 
 Entering the "o" command in Visual mode jumps the cursor to the other side

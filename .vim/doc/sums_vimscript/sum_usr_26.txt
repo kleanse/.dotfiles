@@ -1,4 +1,4 @@
-*sum_usr_26.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_26.txt*	For Vim version 8.2	Last change: 2022 Jan 05
 
 What I learned:
 
@@ -56,7 +56,7 @@ A Vim script file can be sourced in this process as well:
 
 	ls | vim -S change.vim -
 
-To interpet a script's contents as Normal-mode commands instead, use
+To interpret a script's contents as Normal-mode commands instead, use
 
 	vim -s script file.txt ...
 
