@@ -1,0 +1,172 @@
+*sum_usr_28.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+Folding is the process of representing multiple lines with one line on the
+screen (like folding a piece of paper to shorten it). The advantage of this
+process is that it is easier to discern the structure of text and quicker to
+move around.
+
+
+Create a fold with the "zf" operator:
+
+	zfap
+
+This command hides the paragraph the cursor was on with a highlighted line.
+
+Open the fold with
+
+	zo
+
+Close it with
+
+	zc
+
+All folding commands begin with "z". (The mnemonic is that "z" looks like a
+folded piece of paper viewed from the side.) The following table shows how the
+past three commands can be memorized:
+
+	zf	F-old creation
+	zo	O-pen a fold
+	zc	C-lose a fold
+
+Folds can be nested: closing a parent fold hides all child folds, and opening
+one reveals the child folds as they were when the parent fold was open (e.g.,
+some are closed and the rest open).
+
+R-educe folds by one level with
+
+	zr
+
+Conversely, fold M-ore (by one level) with
+
+	zm
+
+Open all folds with
+
+	zR
+
+Likewise, close all folds with
+
+	zM
+
+Disable folding ('foldenable') with "zn" and enable it with "zN". Toggle this
+option with "zi".
+
+
+Folds can be yanked, deleted, and put like one line.
+
+View defined folds with
+
+	:set foldcolumn=4
+
+The 'foldcolumn' option displays a column on the left-hand side of the window
+that indicates folds. The value of 'foldcolumn' determines this column's width.
+In this column, a "+" is shown for a closed fold.  A "-" is shown at the start
+of each open fold and "|" for each subsequent line of the fold.
+
+Open all folds recursively at the cursor line with
+
+	zO
+
+Close all folds recursively at the cursor line with
+
+	zC
+
+Delete a fold with
+
+	zd
+
+and delete all folds recursively at the cursor line with
+
+	zD
+
+Folds are opened automatically when jumping around or moving the cursor
+horizontally. Alter this behavior with 'foldopen', e.g.,
+
+	:set foldopen=all
+
+which opens any fold under the cursor.
+
+The 'foldclose' option does the same but for closing folds.
+
+Folds are local to the window. Thus, different windows (even viewing the same
+file) can have different fold locations and states.
+
+The state of folds revert to their default when leaving a file (e.g., starting
+to edit another one). If folds have been created manually, they are lost. To
+save folds, use
+
+	:mkview
+
+(Visit sum_usr21.txt for a review of ":mkview".)
+
+Load the view again when editing the same file with
+
+	:loadview
+
+See 'viewdir' to find where views are stored (e.g., to delete old ones).
+
+
+Creating folds manually can be tedious. If the text is structured by indent,
+the indent folding method can be used:
+
+	:set foldmethod=indent
+
+This method creates folds for sequences of lines with the same indent; lines
+with a greater indent become nested folds. (The relationship between the amount
+of indent and fold depth depends on 'shiftwidth': one 'shiftwidth' worth of
+indent adds one fold level to the fold depth.)
+
+Using "zr" or "zm" actually increments or decrements 'foldlevel', respectively.
+The lower the 'foldlevel', the more folds will be closed, with zero closing all
+folds. "zM" sets 'foldlevel' to zero, while "zR" sets 'foldlevel' to the
+deepest fold level in the current file. Thus, two ways to open and close folds
+exist:
+
+	1. setting the fold level; and
+	2. using "zo" and "zc".
+
+The former method provides a quick way of "zooming in and out" the text.
+Meanwhile, the latter method offers the opening or closing of specific folds.
+Both methods can be combined to control text view quickly: close most folds
+with "zm", then open specific ones with "zo", or vice versa.
+
+Note that folds cannot be created manually when 'foldmethod' is not "manual".
+
+
+Another folding method is "marker": folds are created with unique strings in
+the text (by default, these strings are "{{{" and "}}}"). The advantage of this
+method is that it provides precise control over which lines are included in a
+fold; however, it requires the text to be modified.
+
+The opening marker may have text before it, which will be displayed on the
+folded line. The ending marker is optional.
+
+Numbers can be appended to markers to indicate the fold level.
+
+
+A third folding method is "syntax", which creates folds automatically based on
+the file's syntax.
+
+
+Yet another folding method is "expression". This method is similar to indent
+folding, except an expression is evaluated to compute the fold level of a line
+instead. This expression is specified by 'foldexpr'. (When writing an
+expression for this option, remember that ":set" needs a backslash before an
+actual space, double quote, or backslash.)
+
+
+The final folding method is "diff". This method is useful when 'diff' is set
+for the same window (see "vimdiff"), e.g.,
+
+	:setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1
+
+Lines that are the same between two files are folded.
+
+
+For more information about any of the summarized folding methods, see
+'foldmethod'.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

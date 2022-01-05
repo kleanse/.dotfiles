@@ -1,0 +1,100 @@
+*sum_usr_20.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+The command line is the line on which colon commands and search commands are
+entered. Press the <BS> (backspace) key (or CTRL-H) to delete the character
+before the cursor on the command line. Use navigation keys to traverse the
+command line:
+
+	<Left>			one character left
+	<Right>			one character right
+	<S-Left> or <C-Left>	one word left
+	<S-Right> or <C-Right>	one word right
+	CTRL-B or <Home>	to begin of command line
+	CTRL-E or <End>		to end of command line
+
+<S-Left> is the cursor left key with the Shift key pressed, and <C-Left> is the
+cursor left key with the Control key pressed. These keys do not work on all
+keyboards, in which case <Left> and <Right> should be used instead.
+
+Delete the word before the cursor with
+
+	CTRL-W
+
+Delete all characters before the cursor with
+
+	CTRL-U
+
+Use <Insert> to toggle between inserting (default) and replacing characters.
+Cancel a colon or search command with CTRL-C or <Esc>.
+
+
+All colon commands can be abbreviated. In the help files, a colon command such
+as
+
+	:s[ubstitute]
+
+shows optional characters in brackets. These characters may be specified
+partially (e.g., ":su", and ":sub" invoke the ":substitute" command).
+
+Writing the full names of commands in Vim scripts is recommended.
+
+Like colon commands, options also have shorthand versions, but they do not have
+optional characters.
+
+
+Use
+
+	<Tab>
+
+to complete the word before the cursor when entering a colon command.
+Completion is based on context: the words Vim references for completion depends
+on the arguments a command accepts. If more than one match was found when
+completing a word, press <Tab> again or
+
+	CTRL-N
+
+to change the word to the next match. Press
+
+	CTRL-P
+
+for the previous match. Press
+
+	CTRL-D
+
+for a list of all matches. Complete the word to the longest unambiguous string
+with
+
+	CTRL-L
+
+
+When entering a colon command, specify a few characters and then press <Up> to
+find the most recent colon command that best matches the characters typed.
+Unlike most cases, this case does not treat CTRL-P and <Up> equally: CTRL-P
+will get the previous colon command regardless of what was typed.
+
+Get the history of all colon command entered with
+
+	:history
+
+For search commands, use
+
+	:history /
+
+
+Open the command line window with
+
+	q:
+
+This command opens a window containing the command-line history. Press
+
+	<Enter>
+
+to execute the line under the cursor and close the window. Close the window
+without executing anything with
+
+	:q
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

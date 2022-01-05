@@ -1,0 +1,27 @@
+*sum_usr_11.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+Start Vim with the -r option to attempt recovery of a file:
+
+	vim -r crashed.txt
+
+Specify an empty string for the filename when the file lost was edited without
+a name:
+
+	vim -r ""
+
+This command only works when invoked in the same directory as the unnamed file.
+
+
+Launch Vim with the -r option and no other arguments to get a list of swap
+files found by Vim:
+
+	vim -r
+
+Use a specific swap file by specifying it:
+
+	vim -r .specific.txt.swp
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

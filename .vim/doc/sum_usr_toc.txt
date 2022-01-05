@@ -1,0 +1,50 @@
+*sum_usr_toc.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+		       Chapter summaries - by Kenny Lam
+
+The documents listed in this table of contents are modified versions of the
+original documents composing the Vim user manual, which is written by Bram
+Moolenaar. Specifically, these documents are summaries of their
+correspondingly named documents, that is, "sum_usr_04.txt" is a summary of the
+original "usr_04.txt" document, "sum_usr_05.txt" a summary of "usr_05.txt",
+and so forth. All original material, and more generally the Vim user manual,
+can be found in |usr_toc.txt| or at the tag |user-manual|. The works provided
+here are NOT endorsed by Bram Moolenaar.
+
+			      Table Of Contents
+
+==============================================================================
+Getting Started
+|sum_usr_04.txt|  Making small changes
+|sum_usr_05.txt|  Set your settings
+|sum_usr_06.txt|  Using syntax highlighting
+|sum_usr_07.txt|  Editing more than one file
+|sum_usr_08.txt|  Splitting windows
+|sum_usr_10.txt|  Making big changes
+|sum_usr_11.txt|  Recovering from a crash
+|sum_usr_12.txt|  Clever tricks
+
+Editing Effectively
+|sum_usr_20.txt|  Typing command-line commands quickly
+|sum_usr_21.txt|  Go away and come back
+|sum_usr_22.txt|  Finding the file to edit
+|sum_usr_23.txt|  Editing other files
+|sum_usr_24.txt|  Inserting quickly
+|sum_usr_25.txt|  Editing formatted text
+|sum_usr_26.txt|  Repeating
+|sum_usr_27.txt|  Search commands and patterns
+|sum_usr_28.txt|  Folding
+|sum_usr_29.txt|  Moving through programs
+|sum_usr_30.txt|  Editing programs
+|sum_usr_32.txt|  The undo tree
+
+Tuning Vim
+|sum_usr_40.txt|  Make new commands
+|sum_usr_41.txt|  Write a Vim script
+|sum_usr_42.txt|  Add new menus
+|sum_usr_43.txt|  Using filetypes
+|sum_usr_44.txt|  Your own syntax highlighted
+|sum_usr_45.txt|  Select your language (locale)
+|sum_usr_46.txt|  Write plugins using Vim9 script
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

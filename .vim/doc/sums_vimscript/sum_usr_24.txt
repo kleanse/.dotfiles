@@ -1,0 +1,298 @@
+*sum_usr_24.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+Several ways of correcting inserted text exist. The most basic is the <BS> key:
+it deletes the character just before the cursor. The <Del> key does the same
+for the character under (after) the cursor. In Insert mode, enter
+
+	CTRL-W
+
+to delete the word before the cursor. Enter
+
+	CTRL-U
+
+to delete all characters from the first non-blank character on the line to the
+character before the cursor.
+
+Special keys may be used to move around text without exiting Insert mode. The
+following list shows some of these keys:
+
+	Special key	   Move the cursor
+	<C-Home>	   to the start of the file
+	<PageUp>	   one whole screenful up
+	<Home>		   to the start of the line
+	<S-Left>	   one word left
+	<C-Left>	   one word left
+	<S-Right>	   one word right
+	<C-Right>	   one word right
+	<End>		   to the end of the line
+	<PageDown>	   one whole screenful down
+	<C-End>		   to the end of the file
+
+
+Check for a matching parenthesis, bracket, curly brace, or other similar
+delimiter in Insert mode with
+
+	:set showmatch
+
+When 'showmatch' is set, the cursor will briefly jump to the matching delimiter
+when a delimiter is typed. No wait is needed to continue typing when this jump
+occurs: the cursor will return and inserting continues as before when another
+character is typed. Vim will emit an audible beep if no matching delimiter
+exists.
+
+To change the time the cursor stays at the matching delimiter, use
+
+	:set matchime=15
+
+In this case, the cursor waits for one and a half seconds; the unit is a tenth
+of a second.
+
+
+In Insert mode, complete a partially typed word with
+
+	CTRL-P
+
+For example, pressing CTRL-P when the cursor is at the end of the following
+line:
+
+	total = ch_array[0] + ch_
+
+produces
+
+	total = ch_array[0] + ch_array
+
+CTRL-P (Previous-match) searches for the best previous match for the word in
+front of the cursor. CTRL-N (Next-match) does the same but looks for the best
+next match. Both commands will wraparound the match list if no more matches are
+found.
+
+Vim searches the following locations for matches:
+
+	1. Current file
+	2. Files in other windows
+	3. Other loaded files (hidden buffers)
+	4. Files which are not loaded (inactive buffers)
+	5. Tag files
+	6. All files #included by the current file
+
+Change this search order and these locations with 'complete'.
+
+If 'ignorecase' is set, case is disregarded when searching for matches. The
+special option 'infercase', which requires 'ignorecase' to be set, preserves
+the case of the partially typed word when completing it with a match.
+
+Complete a specific text type with the following commands in Insert mode:
+
+	Command		     Completes
+	CTRL-X CTRL-F	     file names
+	CTRL-X CTRL-L	     whole lines
+	CTRL-X CTRL-D	     macro definitions (also in included files)
+	CTRL-X CTRL-I	     words from current and included files
+	CTRL-X CTRL-K	     words from a dictionary
+	CTRL-X CTRL-T	     words from a thesaurus
+	CTRL-X CTRL-]	     tags
+	CTRL-X CTRL-V	     words from the Vim command line
+
+As an example, consider CTRL-X CTRL-F. CTRL-X CTRL-F completes a partially
+typed word with file names. By default, it searches for file names in the
+current directory. However, if the partially typed word begins with a "/"
+(UNIX) or "C:\" (MS-Windows), CTRL-X CTRL-F begins its search in the root
+directory. Descend into a selected directory by entering CTRL-X CTRL-F again,
+which now searches for files in that directory.
+
+Source code can be completed in an intelligent manner. In Microsoft Visual
+Studio, this completion is referred to as IntelliSense. In Vim, it is Omni
+completion. Omni completion requires some set up before it can be used (see
+ft-c-omni for using Omni completion with C files, e.g., :help ft-c-omni, and
+compl-omni-filetypes for other file types). It also only works for specific
+file types.
+
+Perform Omni completion while in Insert mode with
+
+	CTRL-X CTRL-O
+
+
+In Insert mode, immediately insert the text typed in the last Insert mode with
+
+	CTRL-A
+
+For example, inserting the string "word" followed by a space ' ', exiting
+Insert mode with <Esc>, appending to the line with "A", and entering the
+command CTRL-A produces
+
+	word word
+
+The command CTRL-@ is equivalent to CTRL-A, but it also exits Insert mode.
+
+
+Insert the character that is immediately above the cursor in Insert mode with
+
+	CTRL-Y
+
+Likewise, insert the character that is immediately below the cursor in Insert
+mode with
+
+	CTRL-E
+
+
+Insert the contents of a register in Insert mode with
+
+	CTRL-R {register}
+
+Special characters in the register, such as <BS>, are interpreted as if they
+have been typed manually. For example, the register b with the contents
+
+	find<BS>
+
+will be inserted as
+
+	fin
+
+with CTRL-R b.
+
+To insert the contents of a register verbatim instead, use
+
+	CTRL-R CTRL-R {register}
+
+
+Quickly type a long word by defining an abbreviation for it:
+
+	:iabbrev ad advertisement
+
+Vim will expand the abbreviation when a character that cannot part of a word is
+entered after the abbreviation. That is, only whole words are checked for
+abbreviations. For example, in this case, "ad" is inserted as "advertisement"
+when it is followed by a space:
+
+	What is entered		   What you see
+	I saw the a		   I saw the a
+	I saw the ad		   I saw the ad
+	I saw the ad<Space>	   I saw the advertisement<Space>
+
+Defining an abbreviation for multiple words is possible:
+
+	:iabbrev MAC Macros are cool!
+
+In this sense, abbreviations expand into strings of characters.
+
+Abbreviations can be used to correct typing mistakes automatically:
+
+	:abbreviate teh the
+
+Use the previous command without any arguments to list all defined
+abbreviations:
+
+	:abbreviate
+
+The first column of the output contains characters indicating what mode their
+corresponding abbreviations can be used. These characters include
+
+	Character    Appropriate mode			  Command
+	i	     Insert mode			  :iabbrev
+	c	     Command-line mode			  :cabbrev
+	!	     both Insert and Command-line mode	  :abbreviate
+
+Remove an abbreviation with
+
+	:unabbreviate ad
+
+Remove all abbreviations with
+
+	:abclear
+
+Both ":unabbreviate" and ":abclear" have the same mode-specific variants as
+":abbreviate", e.g., ":iunabbreviate" and ":cabclear".
+
+The resulting string of an abbreviation can be mapped. For example, after
+entering the following commands:
+
+	:abbreviate @a adder
+	:imap dd disk-door
+
+typing @a will give "adisk-doorer". This abbreviation-map relationship is
+generally undesirable; prevent resulting strings of abbreviations from being
+used for mappings with
+
+	:noreabbrev @a adder
+
+which, besides precluding abbreviation-map interactions, behaves the same as
+":abbreviate".
+
+
+In Insert mode, type
+
+	CTRL-V
+
+to insert the next character literally. For example,
+
+	CTRL-V <Esc>
+
+inserts an escape character, which Vim shows as ^[. Enter a character by its
+code with
+
+	CTRL-V {digits}
+
+Thus, entering
+
+	CTRL-V 122
+
+produces the character 'z'. This use of CTRL-V requires three digits to be
+entered before it is evaluated; however, a number that has fewer than three
+digits can be evaluated immediately by entering a non-digit character, which
+will also be evaluated. Otherwise, prepend the number with leading zeros.
+
+Prepend {digits} with an "x" to enter a character in hexadecimal:
+
+	CTRL-V x7a
+
+The same format applies to "o" for octal:
+
+	CTRL-V o172
+
+The characters 'u' and 'U' accept 16- and 32-bit numbers, respectively, which
+are entered in hexadecimal:
+
+	CTRL-V u1234
+	CTRL-V U12345678
+
+
+To enter a character not on the keyboard, use
+
+	CTRL-K {char1} [char2]
+
+For example,
+
+	CTRL-K Co
+
+produces the copyright character, ©.
+
+View all digraphs with
+
+	:digraphs
+
+which shows the digraph table. Each field in this table begins with a
+two-character combination, followed by the resulting character, and finally
+that character's decimal code.
+
+Define a digraph with ":digraphs". For example, the command
+
+	:digraphs a" ä
+
+enables CTRL-K a" to insert ä. The special character may also be specified with
+its decimal code.
+
+
+Execute one Normal-mode command from Insert mode with
+
+	CTRL-O {command}
+
+For example, an absurd alternative to entering a newline in Insert mode is
+
+	CTRL-O o
+
+though this command is not exactly the same as <CR>.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

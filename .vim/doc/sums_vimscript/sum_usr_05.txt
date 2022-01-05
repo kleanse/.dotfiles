@@ -1,0 +1,12 @@
+*sum_usr_05.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+The 'iskeyword' option specifies what characters constitute a word.
+
+String options can use operator+= to append a substring and operator-= to
+remove a substring. Options that use delimiters (e.g., a comma ',')
+automatically supply or extract them when invoking such operations.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

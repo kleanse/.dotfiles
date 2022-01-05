@@ -1,0 +1,148 @@
+*sum_usr_23.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+In the past, old Teletype machines used two characters to start a new line: the
+carriage return, <CR>, which moved the carriage back to the first character
+column, and the line feed, <LF>, which moved the paper up.
+
+With the advent of computers, storage was expensive; people questioned whether
+or not two characters were needed for the end-of-line. Computer communities
+became divided: the UNIX community decided <Line Feed> would indicate the
+end-of-line; the Apple community chose <CR>; and the MS-DOS community opted for
+the traditional <CR><LF>.
+
+Since the end-of-line has different implementations, moving files from one
+machine to a different one will cause line-break problems. Fortunately, Vim can
+automatically recognize and handle different file formats. The option
+'fileformats' contains the file formats to try when editing a new file. For
+example,
+
+	:set fileformats=unix,dos
+
+tells Vim to try the UNIX format first and the MS-DOS format second.
+
+Editing a file displays the format Vim selected if it differs from a native
+file format. For example, editing a MS-DOS file on a UNIX system shows
+
+	"/path/to/file/filename" [dos] 2L, 80C
+
+A Mac file would display "[mac]".
+
+The detected file format is stored in 'fileformat'. See the format for the file
+currently being edited with
+
+	:set fileformat?
+
+This command will show one of three formats:
+
+	Format	      End-of-line
+	unix	      <LF>
+	mac	      <CR>
+	dos	      <CR><LF>
+
+The 'fileformat' option can also convert one file format to another. Begin by
+editing a file:
+
+	vim README.txt
+
+Then, change the file format to a different format with
+
+	:set fileformat=unix
+	:write
+
+The file is now written in the UNIX format.
+
+
+An easy yet unreliable way of accessing a file by its URL is typing
+
+	gf
+
+when the cursor is over any of the URL's characters. Vim will try to use the
+correct program to download the file. If it is successful, it will download the
+file and begin editing the copy. Otherwise, it gives an error message.
+
+Currently, Vim recognizes the following URL formats:
+
+	Format	       Auxiliary program
+	ftp://	       ftp
+	rcp://	       rcp
+	scp://	       scp
+	http://        wget (read only)
+
+
+Start editing a file with encryption by invoking
+
+	vim -x sensitive.txt
+
+Vim will supply a prompt requesting a secret key and another prompt to reenter
+it. Writing the file and then exiting Vim will encrypt the file. Later, when
+trying to edit the file normally (such as ":edit" or starting Vim with the
+file), Vim will prompt for the secret key. Entering the wrong key or using
+another program to view the file will show garbage.
+
+While editing an encrypted file, disable the file's encryption with
+
+	:set key=
+
+Writing the file afterward will be done without encryption. Although setting
+'key' can enable file encryption, using
+
+	:X
+
+is better as it provides the same prompts as the "-x" argument did when
+starting Vim; this command avoids revealing the secret key as plain text while
+it is being entered.
+
+
+Edit binary files properly in Vim by supplying the "-b" option:
+
+	vim -b binary_file
+
+This option sets 'binary', which disables unexpected side effects when editing
+the file, such as automatic line formatting, and standardizes the file format
+to the UNIX format.
+
+View unprintable characters in a hexadecimal format with
+
+	:set display=uhex
+
+Alternatively, use the "ga" normal-mode command to see the value of the
+character under the cursor.
+
+Get the byte position of the cursor in the file with
+
+	g CTRL-G
+
+Move to a specific byte in the file with "go". For example, move the cursor to
+byte 16 with
+
+	16go
+
+Convert the file currently being edited to a hex dump with the external "xxd"
+program:
+
+	:%!xxd
+
+Convert it back to its normal appearance with
+
+	:%!xxd -r
+
+which saves any changes made to the hexadecimal values; changes to the
+printable text of the hex dump are ignored. Alternatively, use the normal-mode
+command "u" to undo the hex dump conversion.
+
+
+Compressed files can be edited like any other file in Vim; the "gzip" plugin
+decompresses a compressed file when it is being edited and compresses it when
+it is written.
+
+Vim supports the following compression methods:
+
+	Method	      Program
+	.Z	      compress
+	.gz	      gzip
+	.bz2	      bzip2
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

@@ -1,0 +1,30 @@
+*sum_usr_04.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+"3dw" and "d3w" achieve the same result but differ semantically. The former
+deletes one word three times, while the latter deletes three words once. If
+indifferent, favor the latter style as it is more sensical ("d3w" == delete
+three words).
+
+Entering the "o" command in Visual mode jumps the cursor to the other side
+(hence, "o") of the text selection area. In Visual blockwise mode, "o" jumps
+the cursor between the ends of a diagonal of the selection area; "O" moves the
+cursor to the other diagonal in the same line.
+
+Commands in Vim are labeled as "inclusive" or "exclusive." "Inclusive" commands
+operate on the character the cursor ends at, while "exclusive" commands do
+not.
+
+Three ways of changing text in Vim exist: operator-motion, Visual mode, and
+operator-text object. The last method comprises two variants: "i" for "Inner"
+and "a" for "A". For example, the "is" command means "Inner Sentence" and "as"
+means "A Sentence." The difference between these variants is whether or not
+they delete leading and trailing whitespace; the former does not, the latter
+does.
+
+Two characters can be swapped with the neat sequence "xp": "x" deletes the
+character under the cursor and "p" puts that character after the cursor.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

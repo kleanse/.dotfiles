@@ -1,0 +1,141 @@
+*sum_usr_25.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+
+What I learned:
+
+Allow Vim to break lines automatically in Insert mode by setting 'textwidth' to
+a nonzero value:
+
+	:set textwidth=30
+
+Now, when inserting text that makes the line exceed 30 characters, a line break
+is inserted before the partially typed word in front of the cursor. For
+example, inserting one more character after the following text
+
+	Column by tens:		 1	   2	     3
+	Column by ones: 12345678901234567890123456789012345
+		  Text: I taught programming for a whi
+
+yields
+
+	Column by tens:		 1	   2	     3
+	Column by ones: 12345678901234567890123456789012345
+		  Text: I taught programming for a
+			whil
+
+Reformat text with the "gq" operator.
+
+
+Center a range of lines with
+
+	:{range}center [width]
+
+where [width] is an optional line width to use for centering (default is the
+value of 'textwidth' or 80 if 'textwidth' is 0).
+
+Right-align text with
+
+	:{range}right [width]
+
+Similarly, left-align text with
+
+	:{range}left [margin]
+
+Unlike ":center" and ":right", however, the argument to ":left" is not the
+length of the line; rather, it is the length of the left margin (default is 0).
+
+
+If 'autoindent' is enabled, starting a new line sets the line's indent to that
+of the previous line.
+
+Increase the amount of indent in a line with the ">" operator; the amount added
+is specified by 'shiftwidth'.
+
+Set 'softtabstop' to change the number of spaces worth of indent the <Tab> key
+inserts. Setting 'tabstop' also achieves the same result, but most programs
+consider a <Tab> to be worth eight spaces: this value is the standard.
+Therefore, 'tabstop' should be a constant eight.
+
+Change the tabstop of all <Tab>s in a file without changing the text's
+appearance with
+
+	:retab [new_tabstop]
+
+which sets 'tabstop' to the optional [new_tabstop] or itself if [new_tabstop]
+is omitted or is zero.
+
+One use case that exploits ":retab" is editing a file that was written with a
+tabstop differing from the default. For example, if a file was written with a
+tabstop of four, the text will look unformatted with the constant eight
+tabstop. Setting 'tabstop' to four fixes the view, but this change must be
+performed every time the file is edited. A more convenient solution that
+requires more upfront work is as follows:
+
+	:set tabstop=4
+	:retab 8
+
+The text looks the same as it was written, but all tabs are resized to the
+default tabstop. Now, editing the file will display the text in the correct
+format, thereby eliminating the need to change 'tabstop'.
+
+
+Disable the 'wrap' option to display each line in a window as one line,
+regardless of its length; the ends of lines that cannot be displayed at once on
+the screen disappear off to the right.
+
+The following commands can be used to scroll long lines:
+
+	Normal-mode command	Meaning
+			 zh	scroll right
+			 zH	scroll half a window width right
+			 ze	scroll right to put the cursor at the end
+			 zl	scroll left
+			 zL	scroll half a window width left
+			 zs	scroll left to put the cursor at the start
+
+Likewise, the following table shows the commands for navigating the text within
+view of the current window along with a complementary illustration:
+
+	g0		to first visible character in this line
+	g^		to first non-blank visible character in this line
+	gm		to middle of screen line
+	gM		to middle of the text in this line
+	g$		to last visible character in this line
+
+		|<--	  window     -->|
+	some long    text, part of which is visible in one line
+		 ^   ^	   ^	   ^   ^
+		 g0  g^    gm	   gM g$
+
+When 'wrap' is on, set 'linebreak' to break lines between words rather than
+within words. (See 'breakat' for the characters that accept a line break and
+'showbreak' for a visual indicator that a line is broken.)
+
+Move by visible lines with "gj" and "gk"; these commands are the same as "j"
+and "k", except their line-by-line movement applies for wrapped lines as well.
+
+Turn each paragraph into a line with
+
+	:g/./.,/^$/join
+
+which executes the ":join" command for all non-empty lines with the range from
+the current line (the non-empty line) to an empty one. (See edit-paragraph-join
+for more information.)
+
+
+Change 'virtualedit' with
+
+	:set virtualedit=all
+
+to move the cursor to positions void of characters (collectively called
+"virtual space"). This option allows easier editing of tables. Unset the option
+with
+
+	:set virtualedit=
+
+An alternative to 'virtualedit' is Virtual Replace mode. To enter it, prepend a
+replace command (r or R) with g. This mode is similar to Replace mode, but
+instead of replacing actual characters in the file, screen space is replaced,
+preserving the formatting of characters further in the file.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
