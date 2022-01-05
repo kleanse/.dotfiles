@@ -121,7 +121,7 @@ augroup vimrc
 					\ | call s:set_header_macros()
 					\ | startinsert! | redrawstatus
 	autocmd BufNewFile  Makefile  call s:load_template_file("_makefile",
-					\ [15, 8])
+					\ [2, 14])
 					\ | execute "normal! a "
 					\ | startinsert! | redrawstatus
 	autocmd BufWritePre *	      silent call Trim_peripheral_blank_lines()

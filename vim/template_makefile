@@ -1,3 +1,17 @@
+# Names of the binaries to produce.
+debug_target =
+release_target = release_$(debug_target)
+
+# Type of the files to compile.
+ft = cpp
+
+src_dir = .
+obj_dir = .
+bin_dir = .
+
+srcs = $(wildcard $(src_dir)/*.$(ft))
+objs = $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
+
 # Assert specific values for builtin variables.
 CC = gcc
 CFLAGS = -pedantic-errors -Wall -Wextra -Werror
@@ -7,16 +21,10 @@ CXXFLAGS = -std=c++20 -pedantic-errors -Wall -Wextra -Werror
 
 RM = rm -f
 
-src_dir = .
-obj_dir = .
-bin_dir = bin
+debug_flags = -O0 -g
+release_flags = -O2 -DNDEBUG
 
-# Name of the binary to produce.
-target =
-
-# Type of the files to compile.
-ft = cpp
-
+# Use the correct compiler and compiler flags.
 ifeq ($(ft), cpp)
 compiler = $(CXX)
 compiler_flags = $(CXXFLAGS)
@@ -25,37 +33,51 @@ compiler = $(CC)
 compiler_flags = $(CFLAGS)
 endif
 
-srcs = $(wildcard $(src_dir)/*.$(ft))
-objs = $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
-
-.PHONY: all clean fclean
-
-all: | $(obj_dir) $(bin_dir)
-all: $(bin_dir)/$(target)
-
-clean:
-	$(RM) -r $(bin_dir)
-
-# fclean target.
-ifeq ($(obj_dir), .)
-fclean: clean
-	$(RM) $(objs)
-else ifeq ($(obj_dir), ..)
-fclean: clean
-	$(RM) $(objs)
+# Determine appropriate recipes for targets "clean" and "fclean".
+ifeq ($(bin_dir), .)
+clean_recipe = $(RM) $(debug_target) $(release_target)
 else
-fclean: clean
-	$(RM) -r $(obj_dir)
+clean_recipe = $(RM) -r $(bin_dir)
 endif
 
+ifeq ($(obj_dir), .)
+fclean_recipe = $(RM) $(objs)
+else
+fclean_recipe = $(RM) -r $(obj_dir)
+endif
+
+# Makefile rules.
+.PHONY: clean fclean debug release
+
+debug: compiler_flags+=$(debug_flags)
+debug: | $(obj_dir) $(bin_dir)
+debug: $(debug_target)
+
+release: compiler_flags+=$(release_flags)
+release: fclean
+release: | $(obj_dir) $(bin_dir)
+release: $(release_target)
+
+clean:
+	$(clean_recipe)
+
+fclean: clean
+	$(fclean_recipe)
+
+# Avoid duplicate targets.
+ifneq ($(obj_dir), $(bin_dir))
 $(obj_dir):
 	@mkdir $@
+endif
 
 $(bin_dir):
 	@mkdir $@
 
 $(obj_dir)/%.o: $(src_dir)/%.$(ft)
-	$(compiler) -c $(compiler_flags) $< -o $@
+	$(compiler) -c $(compiler_flags) -o $@ $<
 
-$(bin_dir)/$(target): $(objs)
-	$(compiler) $^ -o $@
+$(debug_target): $(objs)
+	$(compiler) -o $(bin_dir)/$@ $^
+
+$(release_target): $(objs)
+	$(compiler) -o $(bin_dir)/$@ $^
