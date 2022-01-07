@@ -1,54 +1,54 @@
-*sum_usr_08.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_08.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
-Use
+Use >
 
 	:split
 
 to split the current window into two windows, leaving the cursor in the top
-one. Close all windows except the current one with
+one. Close all windows except the current one with >
 
 	:only
 
 
 Supplying a filename to ":split" opens a new window like before, but the top
-window edits the file specified. To open a new, empty window, enter
+window edits the file specified. To open a new, empty window, enter >
 
 	:new
 
 
 Preceding ":split" with a count opens the new window that many lines high. Use
-
+>
 	CTRL-W +
 
-to increase the current window's height by one line and
+to increase the current window's height by one line and >
 
 	CTRL-W -
 
-to decrease it. Use a count to scale these changes:
+to decrease it. Use a count to scale these changes: >
 
 	4 CTRL-W +
 
-To set the current window's height, use
+To set the current window's height, use >
 
 	{height}CTRL-W _
 
-where {height} accepts an optional count. Providing no count sets the height to
-its max.
+where {height} accepts an optional count. Providing no count sets the height
+to its max.
 
 
 Instead of splitting horizontally (stacked), windows can be split vertically.
-Use
+Use >
 
 	:vsplit
 
 to split a window vertically, leaving the cursor on the left one. This command
 accepts the same arguments as :split. Open a new, empty window vertically with
-
+>
 	:vnew
 
-Alternatively, use
+Alternatively, use >
 
 	:vertical new
 
@@ -59,7 +59,7 @@ specified.)
 
 Prepend CTRL-W before a cursor key to move to the window in that direction:
 
-	Normal mode command    Move to the window
+	Normal mode command    Move to the window ~
 	CTRL-W h	       on the left
 	CTRL-W j	       below
 	CTRL-W k	       above
@@ -72,80 +72,80 @@ Using CTRL-W before an uppercase cursor key (except 't' and 'b') moves the
 current window to the farthest in that direction.
 
 
-Specify the -o option when launching Vim to open a window for each file:
+Specify the -o option when launching Vim to open a window for each file: >
 
 	vim -o one.c two.c three.c
 
 Use -O instead to vertically split the windows.
 
-If in Vim, invoke
+If in Vim, invoke >
 
 	:all
 
-to do the same as the -o option. For -O, use
+to do the same as the -o option. For -O, use >
 
 	:vertical all
 
 
-Start Vim with
+Start Vim with >
 
 	vimdiff one.c two.c
 
 to see the differences between "one.c" and "two.c". Lines that are different
 are highlighted. Lines that are the same are folded into a closed fold, which
 is a line that represents a range of actual text lines. To open a closed fold,
-position the cursor on the fold and enter
+position the cursor on the fold and enter >
 
 	zo
 
-Close it by moving the cursor to a represented line and entering
+Close it by moving the cursor to a represented line and entering >
 
 	zc
 
-To start diff mode in Vim, open one of the files to diff, then enter
+To start diff mode in Vim, open one of the files to diff, then enter >
 
 	:vertical diffsplit other.c
 
 Omit ":vertical" to split horizontally.
 
-To scroll diff windows individually, use
+To scroll diff windows individually, use >
 
 	:set noscrollbind
 
-To see the next difference after the cursor, enter
+To see the next difference after the cursor, enter >
 
 	]c
 
-For the previous difference, enter
+For the previous difference, enter >
 
 	[c
 
-If necessary, use
+If necessary, use >
 
 	:diffupdate
 
 to update diff highlighting and folds.
 
 Resolve a difference by getting or putting a change. Get the change from the
-other diff window at the current difference with
+other diff window at the current difference with >
 
 	do
 
-Alternatively, put the change of the current window to the other one with
+Alternatively, put the change of the current window to the other one with >
 
 	dp
 
 
-Instead of splitting a window, a window can be opened on a new tab page. Create
-a tab page with
+Instead of splitting a window, a window can be opened on a new tab page.
+Create a tab page with >
 
 	:tabedit two.c
 
-Move to the next tab page:
+Move to the next tab page: >
 
 	gt
 
-The previous tab page:
+The previous tab page: >
 
 	gT
 
@@ -153,7 +153,7 @@ Precede any Ex command that opens a new window with ":tab" to open it in a new
 tab page. (Like ":vertical", ":tab" can be used with any Ex command and leaves
 alone those that do not open a new window.)
 
-Close all tab pages except the current one with
+Close all tab pages except the current one with >
 
 	:tabonly
 

@@ -1,41 +1,41 @@
-*sum_usr_27.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_27.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
-Vim's searches are case sensitive by default. To ignore case, use
+Vim's searches are case sensitive by default. To ignore case, use >
 
 	:set ignorecase
 
-Intelligently flip between case sensitivity and insensitivity with
+Intelligently flip between case sensitivity and insensitivity with >
 
 	:set ignorecase smartcase
 
 Now, if a pattern contains a capital character, the search becomes case
 sensitive. The following table exemplifies this behavior:
 
-	Pattern			Matches
+	Pattern			Matches ~
 	word			word, Word, WORD, WoRd, ...
 	Word			Word
 	WORD			WORD
 	WoRd			WoRd
 
-To ignore case for one specific pattern, prepend it with "\c". Use "\C" instead
-to enforce case. These strings overrule 'ignorecase' and 'smartcase'.
+To ignore case for one specific pattern, prepend it with "\c". Use "\C"
+instead to enforce case. These strings overrule 'ignorecase' and 'smartcase'.
 
-By default, Vim's searches wrap around the file; this behavior allows searching
-indefinitely with the "n" command. To see when the cursor is back at the first
-match, and generally where the cursor is in the file, use
+By default, Vim's searches wrap around the file; this behavior allows
+searching indefinitely with the "n" command. To see when the cursor is back at
+the first match, and generally where the cursor is in the file, use >
 
 	:set ruler
 
-Disable search wrapping with
+Disable search wrapping with >
 
 	:set nowrapscan
 
 
 By default, the search command positions cursor at the beginning of the
 pattern. To change where the cursor is positioned after searching, specify an
-offset:
+offset: >
 
 	/default/2
 
@@ -50,8 +50,8 @@ Positive numbers move the cursor down, while negative numbers move the cursor
 up.
 
 Use "e" for the offset to position the cursor at the end of a match or "b" for
-the start. Adding a number to this offset moves the cursor that many characters
-forward:
+the start. Adding a number to this offset moves the cursor that many
+characters forward: >
 
 	/const/e+1
 
@@ -59,69 +59,69 @@ This command positions the cursor after the "t" of "const". If this number is
 negative, the cursor moves backward.
 
 Repeat the previous search pattern with a different offset by omitting the
-pattern:
+pattern: >
 
 	//e
 
-The "?" command uses offsets in the same way; just remember that "?" is used to
-denote the end of the pattern.
+The "?" command uses offsets in the same way; just remember that "?" is used
+to denote the end of the pattern.
 
-Be aware that a line offset can render searching useless if it moves the cursor
-opposite to the search direction.
+Be aware that a line offset can render searching useless if it moves the
+cursor opposite to the search direction.
 
 
-Append "*" to an item to search it zero or more times:
+Append "*" to an item to search it zero or more times: >
 
 	/a*
 
 This pattern matches "a", "aa", "aaa", etc. and "" (the empty string) because
 zero times is included. To apply this quantifier to a string, group the string
-with escaped parentheses:
+with escaped parentheses: >
 
 	/\(ab\)*
 
 This pattern matches: "ab", "abab", "ababab", etc. and also "".
 
-Avoid matching the empty string with "\+", which matches the preceding item one
-or more times. Use "\=" (or "\?") to match an optional item:
+Avoid matching the empty string with "\+", which matches the preceding item
+one or more times. Use "\=" (or "\?") to match an optional item: >
 
 	/folders\=
 
 This pattern matches "folder" and "folders".
 
 Match a specific number of items with "\{n,m}", where "n" and "m" are numbers.
-For example, the pattern
+For example, the pattern >
 
 	/ab\{3,5}
 
-matches "abbb", "abbbb" and "abbbbb". Notice that this range is inclusive. When
-"n" is omitted, zero is used, and when "m" is omitted, infinity is used.
+matches "abbb", "abbbb" and "abbbbb". Notice that this range is inclusive.
+When "n" is omitted, zero is used, and when "m" is omitted, infinity is used.
 Specifying only "n" matches the preceding item exactly "n" times.
 
-To match the preceding item as few as possible, use "\{-n,m}". This range works
-like "\{n,m}" but matches the fewest characters possible:
+To match the preceding item as few as possible, use "\{-n,m}". This range
+works like "\{n,m}" but matches the fewest characters possible: >
 
 	/ab\{-1,3}
 
 Here, only "ab" is matched. If only "-" is specified, i.e., "\{-}", it is like
 "*" was given, but the preceding item is matched as few as possible. For
-example,
+example, >
 
 	/a.\{-}b
 
-matches "axb" in "axbxb". One way to think about "\{-}" and "*" in this case is
-that the former matches to the first "b", while the latter matches to the last
-"b".
+matches "axb" in "axbxb". One way to think about "\{-}" and "*" in this case
+is that the former matches to the first "b", while the latter matches to the
+last "b".
 
 
 Specify alternatives in a pattern with "\|", which is a pattern's version of
-the "or" operator. For example,
+the "or" operator. For example, >
 
 	/foo\|bar
 
-matches "foo" or "bar". A related metacharacter is "\&". This special character
-requires all alternatives to match at the same place. The resulting match is
-that of the last alternative. An example:
+matches "foo" or "bar". A related metacharacter is "\&". This special
+character requires all alternatives to match at the same place. The resulting
+match is that of the last alternative. An example: >
 
 	/forever\&...
 
@@ -130,30 +130,30 @@ This pattern matches the "for" in "forever" but not in "fortune". (Recall that
 
 
 Include characters inside brackets to specify a list of characters that can be
-matched at one position:
+matched at one position: >
 
 	/[0123456789abcdef]
 
 This pattern matches any of the characters in the [] expression: "a", "b" "2",
 etc. For consecutive characters, the range may be specified: "0-3" is
-equivalent to "0123". Thus, the above pattern can be abbreviated to
+equivalent to "0123". Thus, the above pattern can be abbreviated to >
 
 	/[0-9a-f]
 
 The "-" character can be matched by specifying it as the first or last item in
 the bracket expression.
 
-Invert the match of [] by including a "^" as the first item. Thus,
+Invert the match of [] by including a "^" as the first item. Thus, >
 
 	/"[^"]*"
 
 matches a double quote, followed by zero or more of any character not a double
 quote, and finally another double quote.
 
-Vim provides shortcuts for several common character ranges. The following table
-presents some of them:
+Vim provides shortcuts for several common character ranges. The following
+table presents some of them:
 
-	Item	Matches			Equivalent
+	Item	Matches			Equivalent ~
 	\d	digit			[0-9]
 	\D	non-digit		[^0-9]
 	\x	hex digit		[0-9a-fA-F]
@@ -172,7 +172,7 @@ Also, they cannot be used inside [].
 
 
 Similar to character ranges, character classes match a set of characters, but
-this set can be redefined. For example, the pattern
+this set can be redefined. For example, the pattern >
 
 	/\f\+
 
@@ -181,7 +181,7 @@ matches file name characters. The 'isfname' option determines what characters
 can compose a file name. The following table summarizes all the character
 classes:
 
-	Item	Matches				Option
+	Item	Matches				Option ~
 	\i	identifier characters		'isident'
 	\I	like \i, excluding digits
 	\k	keyword characters		'iskeyword'
@@ -192,12 +192,12 @@ classes:
 	\F	like \f, excluding digits
 
 
-Match a line break with the "\n" item:
+Match a line break with the "\n" item: >
 
 	/one\ntwo
 
 This pattern matches at a line that ends with "one" and the next line starts
-with "two". To match "one two" as well, use "\_s":
+with "two". To match "one two" as well, use "\_s": >
 
 	/one\_stwo
 

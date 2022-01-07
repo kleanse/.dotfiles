@@ -1,4 +1,4 @@
-*sum_usr_26.txt*	For Vim version 8.2	Last change: 2022 Jan 05
+*sum_usr_26.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
@@ -11,20 +11,20 @@ CTRL-X.
 
 
 Make a change on multiple files at once with ":argdo". First, load all the
-pertinent files into the argument list:
+pertinent files into the argument list: >
 
 	:args *.c
 
-Then, specify the change to perform for the files after ":argdo":
+Then, specify the change to perform for the files after ":argdo": >
 
 	:argdo %s/\<x_cnt\>/x_counter/ge | update
 
 In this case, all instances of the word "x_cnt" in the argument list's files
 are replaced with "x_counter", and if a file was changed, it is written.
 
-Commands similar to ":argdo" include ":windo" and ":bufdo": the former executes
-its argument in all windows, while the latter executes its argument on all
-buffers.
+Commands similar to ":argdo" include ":windo" and ":bufdo": the former
+executes its argument in all windows, while the latter executes its argument
+on all buffers.
 
 
 Recall that "Ex command" is a synonym for "Command-line command".
@@ -32,13 +32,13 @@ Recall that "Ex command" is a synonym for "Command-line command".
 It is possible to use Vim for batch processing, that is, running batch jobs,
 which are jobs that can run without end user interaction. First, enter Ex
 commands into a file; for example, save the following into a file named
-"change.vim":
+"change.vim": >
 
 	%s/-person-/Jones/g
 	write tempfile
 	quit
 
-Next, invoke Vim in a shell script:
+Next, invoke Vim in a shell script: >
 
 	for file in *.txt; do
 		vim -e -s $file < change.vim
@@ -48,15 +48,15 @@ Next, invoke Vim in a shell script:
 The -e argument tells Vim to run in Ex mode on the file $file (a variable),
 reading commands from "change.vim"; -s makes Vim operate silently.
 
-Pass text to Vim from standard input by specifying "-" for a file:
+Pass text to Vim from standard input by specifying "-" for a file: >
 
 	ls | vim -
 
-A Vim script file can be sourced in this process as well:
+A Vim script file can be sourced in this process as well: >
 
 	ls | vim -S change.vim -
 
-To interpret a script's contents as Normal-mode commands instead, use
+To interpret a script's contents as Normal-mode commands instead, use >
 
 	vim -s script file.txt ...
 
@@ -64,7 +64,7 @@ Without -e, -s tells Vim to execute the contents of "script" as Normal-mode
 commands on "file.txt". (The ellipsis indicates more than one file may be
 supplied.)
 
-To record all commands typed and save them into a file, use
+To record all commands typed and save them into a file, use >
 
 	vim -w script file.txt ...
 

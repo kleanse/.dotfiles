@@ -1,9 +1,9 @@
-*sum_usr_12.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_12.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
-Prepend "\<" to a pattern to match it at the start of a word and append "\>" to
-match it at the end of a word:
+Prepend "\<" to a pattern to match it at the start of a word and append "\>"
+to match it at the end of a word: >
 
 	:%s/\<complete\>/word/g
 
@@ -16,7 +16,7 @@ If an error occurs during a register's execution, the execution stops.
 
 
 Specify the "\(" and "\)" delimiters in the "from" pattern of ":substitute" to
-enable referencing of matched text:
+enable referencing of matched text: >
 
 	:%s/\(^,\)\(.*\)/\1 \2/
 
@@ -29,7 +29,7 @@ backreferences may be used.
 The "^" regular expression matches the beginning of a line.
 
 
-Enter
+Enter >
 
 	g CTRL-G
 
@@ -37,14 +37,14 @@ to get the numbers of words and characters in the current file. Use it in
 Visual mode for such numbers in the selected area.
 
 
-Press
+Press >
 
 	K
 
 to retrieve a man page for the word under the cursor, if possible.
 
 
-One way to remove whitespace at the end of every line in the current file is
+One way to remove whitespace at the end of every line in the current file is >
 
 	:%s/\s\+$//
 
@@ -52,23 +52,23 @@ The pattern here is "\s\+$": find whitespace characters (\s), one or more of
 them (\+), before the end of the line ($).
 
 
-Launch Vim to edit all C files that contain the word "frame_counter" with
+Launch Vim to edit all C files that contain the word "frame_counter" with >
 
 	vim `grep -l frame_counter *.c`
 
-Find all occurrences of "frame_counter" in all C files with
+Find all occurrences of "frame_counter" in all C files with >
 
 	:grep frame_counter *.c
 
-Use
+Use >
 
 	:cnext
 
-to find the next matching line,
+to find the next matching line, >
 
 	:cprev
 
-for the previous matching line, and
+for the previous matching line, and >
 
 	:clist
 

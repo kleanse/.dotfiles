@@ -1,21 +1,21 @@
-*sum_usr_10.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_10.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
 In Normal mode, entering "." repeats the last text change. To repeat a more
-complex change, record the necessary commands into a register:
+complex change, record the necessary commands into a register: >
 
 	q{register}{commands}q
 
 Here, pressing 'q' followed by an alphabetical character begins recording
 commands for that character register. Pressing 'q' again finishes the
 recording; all keystrokes entered after {register} and before the last 'q' are
-saved into {register}. Execute the contents of a register with
+saved into {register}. Execute the contents of a register with >
 
 	@{register}
 
 Prepend a count to execute the register that many times. A shortcut to execute
-the last executed register is
+the last executed register is >
 
 	@@
 
@@ -27,42 +27,43 @@ then yanking or deleting them back into the register:
 	{edits}
 	"rdd
 
-Append to a register by using its uppercase character:
+Append to a register by using its uppercase character: >
 
 	qR{commands}q
 
-This capability works for yanking and deleting as well:
+This capability works for yanking and deleting as well: >
 
 	"Ryy
 
 
-Substitute text on a range of lines with
+Substitute text on a range of lines with >
 
 	:[range]s/from/to/[flags]
 
-Use the 'g' flag to substitute all occurrences of "from" on a line to "to". (By
-default, ":s" changes only the first occurrence on each line.) The '/'
-delimiter can be replaced with another character so long as all occurrences use
-the same character.
+Use the 'g' flag to substitute all occurrences of "from" on a line to "to".
+(By default, ":s" changes only the first occurrence on each line.) The '/'
+delimiter can be replaced with another character so long as all occurrences
+use the same character.
 
 
 The format of a range is {number},{number}. Depending on the colon command,
-omitting [range] affects the current line or the whole file. Special characters
-may be used in a range to indicate specific lines:
+omitting [range] affects the current line or the whole file. Special
+characters may be used in a range to indicate specific lines:
 
-	Range character    Represents
+	Range character    Represents ~
 	.		   current line
 	$		   last line
 	%		   all lines
 
 Append an operator+ or operator- and a number to a range boundary to specify
-an offset:
+an offset: >
 
 	:.+5y
 
 This command yanks the line five lines below the current one.
 
-Instead of numbers, patterns and marks can be used to specify a range boundary:
+Instead of numbers, patterns and marks can be used to specify a range
+boundary: >
 
 	:'b,'e
 
@@ -71,25 +72,25 @@ Here, a command will affect only the lines between and including marks 'b and
 selection, respectively. Pressing ":" while in Visual mode automatically
 prepares a range with these marks.
 
-The number of lines to affect with a colon command starting at the current line
-can be specified before pressing ":".
+The number of lines to affect with a colon command starting at the current
+line can be specified before pressing ":".
 
 
 The ":global" command is similar to ":substitute", but instead of replacing a
 string, it executes a command on each instance of a pattern. Its general form
-is
+is >
 
 	:[range]g/{pattern}/{command}
 
 
-In Visual block mode, moving to the end of the current line with "$" highlights
-all visually selected lines to their ends. Performing a horizontal cursor
-movement breaks this behavior.
+In Visual block mode, moving to the end of the current line with "$"
+highlights all visually selected lines to their ends. Performing a horizontal
+cursor movement breaks this behavior.
 
 Special commands may be used in Visual block mode, which affect all lines in
 the visual block:
 
-	Visual-mode command    Description
+	Visual-mode command    Description ~
 	I		       Insert before visual block
 	A		       Append after visual block; length
 				 independent
@@ -106,21 +107,22 @@ the visual block:
 				 block
 	J		       Join selected lines into one line
 
-Length-independent commands can affect lines too short to be highlighted in the
-visual block. Editing commands only show the change on one line while editing.
-Completing the edit copies the change to all of the lines in the visual block.
+Length-independent commands can affect lines too short to be highlighted in
+the visual block. Editing commands only show the change on one line while
+editing. Completing the edit copies the change to all of the lines in the
+visual block.
 
 
-Use
+Use >
 
 	:[range]read {filename}
 
-to insert text from {filename} into the current file after the last line number
-of [range]. Omitting [range] inserts below the current line. Although invalid
-for most commands, specifying zero for [range] inserts text at the start of the
-current file.
+to insert text from {filename} into the current file after the last line
+number of [range]. Omitting [range] inserts below the current line. Although
+invalid for most commands, specifying zero for [range] inserts text at the
+start of the current file.
 
-To write a range of lines to a file, use
+To write a range of lines to a file, use >
 
 	:[range]write {filename}
 
@@ -128,13 +130,13 @@ Invoking this command on an existing file generates an error. Use '!' to
 overwrite it. Omitting [range] writes the entire file to {filename}.
 
 
-Use
+Use >
 
 	:set textwidth=72
 
-to automatically trim each line to 72 characters while inserting them. Manually
-reformat lines with the "gq" operator in Visual mode or before a movement
-command or text object:
+to automatically trim each line to 72 characters while inserting them.
+Manually reformat lines with the "gq" operator in Visual mode or before a
+movement command or text object: >
 
 	gqap
 
@@ -142,54 +144,54 @@ This command reformats "a paragraph" so that each of its lines is at most 72
 characters long.
 
 
-Use the "gU" operator to make characters uppercase:
+Use the "gU" operator to make characters uppercase: >
 
 		 gUw
-	word	---->	 WORD
+<	word	---->	 WORD
 
-Conversely, use "gu" to make them lowercase:
+Conversely, use "gu" to make them lowercase: >
 
 		 guw
-	WORD	---->	 word
+<	WORD	---->	 word
 
-Use "g~" to swap case:
+Use "g~" to swap case: >
 
 		 g~w
-	Word	---->	 wORD
+<	Word	---->	 wORD
 
 Apply the operator to the current line by doubling it or doubling its last
-character:
+character: >
 
 				       gUU
-	A case for case conversion    ---->    A CASE FOR CASE CONVERSION
+<	A case for case conversion    ---->    A CASE FOR CASE CONVERSION
 
 
 Although Vim includes many useful commands, outside programs can sometimes
-perform certain computations more efficiently or effectively. Filter a piece of
-text in Vim to an external program with
+perform certain computations more efficiently or effectively. Filter a piece
+of text in Vim to an external program with >
 
 	!{motion}{program}
 
-This command executes {program} with an input of the text traversed by {motion}
-and then replaces the text with the output of {program}. Filter the current
-line to a program with the shortcut
+This command executes {program} with an input of the text traversed by
+{motion} and then replaces the text with the output of {program}. Filter the
+current line to a program with the shortcut >
 
 	!!{program}
 
 When entering a colon command, prepend '!' to a word to execute the
-corresponding shell program:
+corresponding shell program: >
 
 	:!ls
 	:write !wc
 
 The second command passes the current file as standard input to the program
-"wc". Be careful not to confuse it with
+"wc". Be careful not to confuse it with >
 
 	:write! wc
 
 which overwrites the file named "wc".
 
-Redraw the screen in Vim with
+Redraw the screen in Vim with >
 
 	CTRL-L
 

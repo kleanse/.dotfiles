@@ -1,17 +1,17 @@
-*sum_usr_21.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_21.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
-On a Unix system, press
+On a Unix system, press >
 
 	CTRL-Z
 
-to suspend Vim. Resume Vim with the shell command
+to suspend Vim. Resume Vim with the shell command >
 
 	fg
 
 
-Execute a shell command in Vim with
+Execute a shell command in Vim with >
 
 	:!{command}
 
@@ -22,7 +22,7 @@ The position and context surrounding '!' matters:
 	:w !{program}		execute {program} and send text to its input
 	:[range]!{program}	filter text through {program}
 
-Start a new shell with
+Start a new shell with >
 
 	:shell
 
@@ -39,31 +39,31 @@ Change the viminfo file's capacity with 'viminfo'.
 Since Vim writes the viminfo file when it ends, the last Vim instance to exit
 will overwrite any of the information that previous Vim instances stored.
 
-Return to the last cursor position when exiting Vim with
+Return to the last cursor position when exiting Vim with >
 
 	'0
 
-Get a list of files edited recently with
+Get a list of files edited recently with >
 
 	:oldfiles
 
 Reference a filename in this list by prepending "#<" before the filename's
-number:
+number: >
 
 	:e #<2
 
-Use
+Use >
 
 	:browse oldfiles
 
 to select a file to edit easily; press 'q' or <Esc> to stop the listing and
 enter the number of the file to edit.
 
-Use
+Use >
 
 	:wviminfo [file]
 
-to write the current status information of Vim to viminfo file [file] and
+to write the current status information of Vim to viminfo file [file] and >
 
 	:rviminfo [file]
 
@@ -73,16 +73,16 @@ to read the information of viminfo file [file] to Vim.
 Previous work and editing environments can be restored using Vim sessions. A
 Vim session contains all of the information used while editing in Vim,
 including the file list, window layout, global variables, and options. Save a
-session file with
+session file with >
 
 	:mksession session.vim
 
-Restore it with
+Restore it with >
 
 	:source session.vim
 
 When starting Vim, specify the -S option and supply the session filename to
-restore the session:
+restore the session: >
 
 	vim -S session.vim
 
@@ -95,38 +95,38 @@ desirable.
 Vim sessions are powerful as they can restore the entire appearance of an
 editing session. Sometimes, however, restoring the look of one window is
 enough. A view achieves this small goal. Save the view of the current window
-with
+with >
 
 	:mkview
 
-Vim decides where the view file is stored. Restore the view with
+Vim decides where the view file is stored. Restore the view with >
 
 	:loadview
 
 when editing the same file that created the view. Save a different view of the
-same file with
+same file with >
 
 	:mkview 1
 
-Likewise, restore it with
+Likewise, restore it with >
 
 	:loadview 1
 
-Ten views of the same file may be saved: one without a number and nine numbered
-1 to 9. Supply a filename to ":mkview" to save the view of the current file to
-that file:
+Ten views of the same file may be saved: one without a number and nine
+numbered 1 to 9. Supply a filename to ":mkview" to save the view of the
+current file to that file: >
 
 	:mkview main.vim
 
 Restoring this view can be done while editing any file; doing so will start
-editing the file that saved the view. Restore the view with
+editing the file that saved the view. Restore the view with >
 
 	:source main.vim
 
 
 Even more limited and specific than views are modelines. A modeline is a line
-of text in a file that tells Vim the values of certain options when its file is
-being edited. For example, the modeline
+of text in a file that tells Vim the values of certain options when its file
+is being edited. For example, the modeline
 
 	vim:set shiftwidth=4:
 
@@ -135,8 +135,8 @@ before the modeline. The modeline is valid only if the string "vim:" is not
 prefixed by any text.
 
 The 'modelines' option specifies the number of lines at the start and end of a
-file to scan for a modeline; 'modeline' determines whether or not modelines are
-sought at all.
+file to scan for a modeline; 'modeline' determines whether or not modelines
+are sought at all.
 
 The format of a modeline is
 
@@ -149,8 +149,8 @@ where
 >vim:	   is the string "vim:" verbatim;
 [white]    is optional whitespace; and
 {options}  is a list of option settings separated by whitespace or ':', where
-	   each setting between the ':' delimiters is the argument for a ":set"
-	   command (can be empty).
+	   each setting between the ':' delimiters is the argument for a
+	   ":set" command (can be empty).
 
 
  vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:

@@ -1,25 +1,25 @@
-*sum_usr_06.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_06.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
 Syntax highlighting allows colored text, which makes reading the file easier.
-It can be enabled by invoking the command
+It can be enabled by invoking the command >
 
 	:syntax enable
 
-The command
+The command >
 
 	:syntax off
 
 disables it for all buffers.
 
-Syntax highlighting is specific to the filetype being edited. Use
+Syntax highlighting is specific to the filetype being edited. Use >
 
 	:set filetype
 
 to see the filetype recognized by Vim for the current file.
 
-The command
+The command >
 
 	:TOhtml
 

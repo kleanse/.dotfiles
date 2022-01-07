@@ -1,18 +1,19 @@
-*sum_usr_29.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_29.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
-A tag is a location where an identifier is defined (e.g., a function definition
-in a C or C++ program). A list of tags is kept in a tags file; Vim can use this
-file to jump directly to a tag from any place in the current file.
+A tag is a location where an identifier is defined (e.g., a function
+definition in a C or C++ program). A list of tags is kept in a tags file; Vim
+can use this file to jump directly to a tag from any place in the current
+file.
 
-Generate the tags file for all C files in the current directory with
+Generate the tags file for all C files in the current directory with >
 
 	ctags *.c
 
 ("ctags" is an external program.)
 
-Then, jump to a function definition with
+Then, jump to a function definition with >
 
 	:tag startlist
 
@@ -21,37 +22,37 @@ another file.
 
 The CTRL-] command jumps to the tag of the word under the cursor.
 
-Display the tag stack--the list of tags recently traversed--with
+Display the tag stack--the list of tags recently traversed--with >
 
 	:tags
 
-Jump to the preceding tag in the tag stack with
+Jump to the preceding tag in the tag stack with >
 
 	CTRL-T
 
-or
+or >
 
 	:pop
 
-The inverse is
+The inverse is >
 
 	:tag
 
 which jumps to the next tag. CTRL-T, ":pop", and ":tag" accept a count, in
 which case they will jump that many tags in their respective directions.
 
-By default, ":tag" replaces the file in the current window with that containing
-the previous tag (or a particular tag, if specified). Use
+By default, ":tag" replaces the file in the current window with that
+containing the previous tag (or a particular tag, if specified). Use >
 
 	:stag tagname
 
 to open a new window for the file containing "tagname". Do the same for CTRL-]
-with
+with >
 
 	CTRL-W ]
 
 Vim only recognizes a tags file in the current directory or the directory of
-the current file. To allow Vim to find more tags files, set 'tags':
+the current file. To allow Vim to find more tags files, set 'tags': >
 
 	:set tags=./tags,./../tags,./*/tags
 
@@ -60,22 +61,24 @@ file, one directory level higher, and in all immediate subdirectories. (To
 search directories recursively, use "**" instead.)
 
 Vim can get slow if it needs to search many places for tags files. A solution
-is to collect all tags into one tags file; this approach requires the Exuberant
-ctags program, which provides the -R option to search an entire directory tree:
+is to collect all tags into one tags file; this approach requires the
+Exuberant ctags program, which provides the -R option to search an entire
+directory tree: >
 
 	ctags -R .
 
 One benefit of Exuberant ctags is that it recognizes file types besides C and
 C++ ones.
 
-When a tag is defined multiple times, ":tag" will jump to the first one defined
-or, if a match exists in the current file, the match in the current file.
+When a tag is defined multiple times, ":tag" will jump to the first one
+defined or, if a match exists in the current file, the match in the current
+file.
 
-Jump to the next match with
+Jump to the next match with >
 
 	:tnext
 
-If many matches exist, select one with
+If many matches exist, select one with >
 
 	:tselect tagname
 
@@ -92,31 +95,31 @@ The following list summarizes the commands used to move between matching tags:
 The number "1" is used if [count] is omitted.
 
 Exploit command-line completion to enter a long tag name without much typing:
-
+>
 	:tag write_<Tab>
 
 where "<Tab>" represents the tab key being pressed. A pattern may also be used
-to find a tag:
+to find a tag: >
 
 	:tag /block
 
-Pressing <Tab> here makes Vim find all tags that contain "block". The "/" tells
-Vim that the subsequent string is a pattern, not a literal tag name; all
+Pressing <Tab> here makes Vim find all tags that contain "block". The "/"
+tells Vim that the subsequent string is a pattern, not a literal tag name; all
 pattern items can be used as normal in this pattern.
 
 One possible workflow with tags is to use a window as a tags browser. Tags in
 this window can be jumped to in a new window just by pressing one key. First,
-create a list of identifiers (requires Exuberant ctags):
+create a list of identifiers (requires Exuberant ctags): >
 
 	ctags --c-types=f -f functions *.c
 
-Now, start Vim and edit this file in a new window:
+Now, start Vim and edit this file in a new window: >
 
 	vim
 	:split functions
 
 Clean up the view with ":setlocal tabstop=99" (the additional information is
-not relevant). Then, define the mapping
+not relevant). Then, define the mapping >
 
 	:nnoremap <buffer> <CR> 0ye<C-W>w:tag <C-R>"<CR>
 
@@ -137,9 +140,9 @@ declared; however, it can also find places where the identifier is used. (See
 "cscope" via ":help cscope" for more information.)
 
 
-Sometimes, it is desirable to jump to a tag without changing the current window
-or opening an entirely new one. In this case, the preview window can be used.
-Open the preview window to view the function "write_char" with
+Sometimes, it is desirable to jump to a tag without changing the current
+window or opening an entirely new one. In this case, the preview window can be
+used. Open the preview window to view the function "write_char" with >
 
 	:ptag write_char
 
@@ -147,22 +150,22 @@ Vim will open a window, jump to the tag "write_char", and then return to the
 original window and cursor position. This process saves entering a CTRL-W
 command when opening a normal window for a tag (e.g., ":stag").
 
-Just like "CTRL-W ]" is the counterpart of ":stag", use
+Just like "CTRL-W ]" is the counterpart of ":stag", use >
 
 	CTRL-W }
 
 to jump to the tag of the identifier under the cursor in the preview window.
 
-Close the preview window with
+Close the preview window with >
 
 	:pclose
 
-Edit a specific file in the preview window with
+Edit a specific file in the preview window with >
 
 	:pedit filename
 
 Finally, search for a word in the current file and any included files and
-display the match in the preview window with
+display the match in the preview window with >
 
 	:psearch
 
@@ -170,8 +173,8 @@ Specify the height of the preview window with 'previewheight'.
 
 
 In a C file, enter the "%" Normal-mode command when over a preprocessor
-conditional to jump to its corresponding conditional. (Try this behavior in the
-subsequent example.)
+conditional to jump to its corresponding conditional. (Try this behavior in
+the subsequent example.)
 
 	#ifdef USE_POPEN
 	    fd = popen("ls", "r")
@@ -182,32 +185,32 @@ subsequent example.)
 This command works for nested conditionals, making it useful to check if a
 conditional is matched.
 
-Jump to the start of such a preprocessor construct when inside of it with
+Jump to the start of such a preprocessor construct when inside of it with >
 
 	[#
 
-Likewise, jump to the next "#else" or "#endif" with
+Likewise, jump to the next "#else" or "#endif" with >
 
 	]#
 
 Both of these commands skip "#if"-"#endif" blocks.
 
-Jump to the start of the C function the cursor is in with
+Jump to the start of the C function the cursor is in with >
 
 	[[
 
 (Technically, this command looks for the first "{" in the first column before
 the cursor line.)
 
-Conversely, jump to the end with
+Conversely, jump to the end with >
 
 	][
 
-Jump to the start of the current brace pair with
+Jump to the start of the current brace pair with >
 
 	[{
 
-and to the end with
+and to the end with >
 
 	]}
 
@@ -224,18 +227,18 @@ For languages that support methods (e.g., C++ or Java) with the syntax
 	};
 
 jump to the start of the previous method when the cursor is in the class with
-
+>
 	[m
 
-and the start of the next method with
+and the start of the next method with >
 
 	]m
 
-Move to the end of the previous function with
+Move to the end of the previous function with >
 
 	[]
 
-and the start of the next function with
+and the start of the next function with >
 
 	]]
 
@@ -245,17 +248,17 @@ in the first column.
 Like brace pairs, parenthesis pairs have commands to move to their starts and
 ends: "[(" and "])".
 
-Move to the start of a multi-line, C-style comment with
+Move to the start of a multi-line, C-style comment with >
 
 	[/
 
-Move to the end with
+Move to the end with >
 
 	]/
 
 The following table summarizes these structured movement commands:
 
-	Construct	Start	End
+	Construct	Start	End ~
 	brace pair	[{	]}
 	paren pair	[(	])
 	preproc cond	[#	]#
@@ -269,7 +272,7 @@ The following table summarizes these structured movement commands:
 
 
 Find all matching lines of the identifier under the cursor in the current file
-and all included files with
+and all included files with >
 
 	[I
 
@@ -278,40 +281,40 @@ recognize. By default, this option handles C and C++ files.
 
 Vim searches the places specified by 'path' for the included files. If a
 directory in 'path' is missing, some included files will not be found. Check
-what places are not found with
+what places are not found with >
 
 	:checkpath
 
 Help Vim find files by adding the relevant directories to 'path'. To see which
 included files are found instead, append "!" to the above command.
 
-Jump to the first match shown by "[I" with
+Jump to the first match shown by "[I" with >
 
 	[<Tab>
 
 Prepending a count jumps to the item with the corresponding number. The
 following table summarizes the commands related to "[I":
 
-	Command		Meaning
+	Command		Meaning ~
 	[i		only lists the first match
 	]I		only lists items below the cursor
 	]i		only lists the first item below the cursor
 
-Like "[I",
+Like "[I", >
 
 	[D
 
-finds all matching lines of the word under the cursor, except it only works for
-macros, which are defined with "#define". It too has related commands:
+finds all matching lines of the word under the cursor, except it only works
+for macros, which are defined with "#define". It too has related commands:
 
-	Command		Meaning
+	Command		Meaning ~
 	[d		only lists the first match
 	]D		only lists items below the cursor
 	]d		only lists the first item below the cursor
 
 
 Search the current file for the word under the cursor and jump to the first
-match with
+match with >
 
 	gD
 
@@ -321,7 +324,7 @@ This command is useful for finding variables or functions declared locally
 (i.e., in the current file).
 
 To look for such a word and jump to its first match in the current function
-instead, use
+instead, use >
 
 	gd
 

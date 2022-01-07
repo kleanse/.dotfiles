@@ -1,4 +1,4 @@
-*sum_usr_22.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_22.txt*	For Vim version 8.2	Last change: 2022 Jan 07
 
 What I learned:
 
@@ -7,18 +7,18 @@ information and the directory's contents. Pressing <F1> in the browser opens a
 help file with usage information.
 
 
-Use the ":cd" command to change the current directory:
+Use the ":cd" command to change the current directory: >
 
 	:cd path/to/new_directory
 
-Print the current working directory with
+Print the current working directory with >
 
 	:pwd
 
-Specify a hyphen '-' for the path in ":cd" to return to the previous directory.
-Repeat this command to alternate between the last two directories.
+Specify a hyphen '-' for the path in ":cd" to return to the previous
+directory. Repeat this command to alternate between the last two directories.
 
-Use
+Use >
 
 	:lcd
 
@@ -27,32 +27,32 @@ directory). Return to the shared directory by invoking a ":cd" command in the
 same window.
 
 
-Move the cursor over a word and enter
+Move the cursor over a word and enter >
 
 	gf
 
 for Vim to try to find and edit the file with that name. The places Vim
 searches for the file are specified by the 'path' option, which is a list of
-directory names. The 'isfname' option determines what characters compose a file
-name.
+directory names. The 'isfname' option determines what characters compose a
+file name.
 
-If no word for a particular file name exists, invoke
+If no word for a particular file name exists, invoke >
 
 	:find filename
 
 which behaves the same as ":edit" except it uses 'path'.
 
-Use
+Use >
 
 	CTRL-W f
 
-or
+or >
 
 	:sfind filename
 
 instead to open the file in a new window.
 
-Start Vim via
+Start Vim via >
 
 	vim "+find filename"
 
@@ -64,27 +64,27 @@ A buffer is a copy of a file being edited. When a buffer is changed and the
 distinguishes three types of buffers: active, inactive, and hidden. The
 following list summarizes their differences.
 
-	Type	    Description
+	Type	    Description ~
 	Active	    In a window and has text loaded.
 	Inactive    Not in a window and has no text loaded.
 	Hidden	    Not in a window and has text loaded.
 
-View the buffer list (all recorded buffers) with
+View the buffer list (all recorded buffers) with >
 
 	:buffers
 
-or
+or >
 
 	:ls
 
 Each line of the buffer list shows the following information, respectively:
 buffer number, flags, file name, and line number of last cursor position.
 
-The following list indicates the possible flags and their meanings. The flag in
-the leftmost column appears first in the flag field, the rightmost column last,
-and flags sharing a column are mutually exclusive.
+The following list indicates the possible flags and their meanings. The flag
+in the leftmost column appears first in the flag field, the rightmost column
+last, and flags sharing a column are mutually exclusive.
 
-	Flag	Meaning
+	Flag	Meaning ~
 	u	Buffer is unlisted.
 	 %	Current buffer.
 	 #	Alternate buffer.
@@ -94,17 +94,17 @@ and flags sharing a column are mutually exclusive.
 	   -	Buffer is not modifiable; the 'modifiable' option is off.
 	    +	Buffer has been modified.
 
-Edit a buffer with its number by using
+Edit a buffer with its number by using >
 
 	:buffer N
 
-Alternatively, fully or partially specify the file name of the buffer:
+Alternatively, fully or partially specify the file name of the buffer: >
 
 	:buffer buffer_name
 
 Partial specification works if and only if one match was found.
 
-Use
+Use >
 
 	:sbuffer N
 
@@ -112,13 +112,13 @@ instead of ":buffer" to open the buffer in a new window.
 
 Navigate the buffer list with the following commands:
 
-	Ex command   Go to
+	Ex command   Go to ~
 	:bnext	     the next buffer
 	:bprevious   the previous buffer
 	:bfirst      the first buffer
 	:blast	     the last buffer
 
-Remove a buffer from the list with
+Remove a buffer from the list with >
 
 	:bdelete N
 
