@@ -1,62 +1,60 @@
 # Names of the binaries to produce.
-debug_target =
-release_target = release_$(debug_target)
+debug_target :=
+release_target := release_$(debug_target)
 
 # Type of the files to compile.
-ft = cpp
+ft := cpp
 
-src_dir = .
-obj_dir = .
-bin_dir = .
+src_dir := .
+obj_dir := .
+bin_dir := .
 
-srcs = $(wildcard $(src_dir)/*.$(ft))
-objs = $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
+srcs := $(wildcard $(src_dir)/*.$(ft))
+objs := $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
 
 # Assert specific values for builtin variables.
-CC = gcc
-CFLAGS = -pedantic-errors -Wall -Wextra -Werror
+CC := gcc
+CFLAGS := -pedantic-errors -Wall -Wextra -Werror
 
-CXX = g++
-CXXFLAGS = -std=c++20 -pedantic-errors -Wall -Wextra -Werror
+CXX := g++
+CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror
 
-RM = rm -f
+RM := rm -f
 
-debug_flags = -O0 -g
-release_flags = -O2 -DNDEBUG
+debug_flags := -O0 -g
+release_flags := -O2 -DNDEBUG
 
 # Use the correct compiler and compiler flags.
 ifeq ($(ft), cpp)
-compiler = $(CXX)
-compiler_flags = $(CXXFLAGS)
+compiler := $(CXX)
+compiler_flags := $(CXXFLAGS)
 else
-compiler = $(CC)
-compiler_flags = $(CFLAGS)
+compiler := $(CC)
+compiler_flags := $(CFLAGS)
 endif
 
 # Determine appropriate recipes for targets "clean" and "fclean".
 ifeq ($(bin_dir), .)
-clean_recipe = $(RM) $(debug_target) $(release_target)
+clean_recipe := $(RM) $(debug_target) $(release_target)
 else
-clean_recipe = $(RM) -r $(bin_dir)
+clean_recipe := $(RM) -r $(bin_dir)
 endif
 
 ifeq ($(obj_dir), .)
-fclean_recipe = $(RM) $(objs)
+fclean_recipe := $(RM) $(notdir $(objs))
 else
-fclean_recipe = $(RM) -r $(obj_dir)
+fclean_recipe := $(RM) -r $(obj_dir)
 endif
 
 # Makefile rules.
 .PHONY: clean fclean debug release
 
-debug: compiler_flags+=$(debug_flags)
-debug: | $(obj_dir) $(bin_dir)
-debug: $(debug_target)
+debug: compiler_flags += $(debug_flags)
+debug: $(bin_dir)/$(debug_target)
 
-release: compiler_flags+=$(release_flags)
+release: compiler_flags += $(release_flags)
 release: fclean
-release: | $(obj_dir) $(bin_dir)
-release: $(release_target)
+release: $(bin_dir)/$(release_target)
 
 clean:
 	$(clean_recipe)
@@ -73,11 +71,11 @@ endif
 $(bin_dir):
 	@mkdir $@
 
-$(obj_dir)/%.o: $(src_dir)/%.$(ft)
+$(obj_dir)/%.o: $(src_dir)/%.$(ft) | $(obj_dir)
 	$(compiler) -c $(compiler_flags) -o $@ $<
 
-$(debug_target): $(objs)
-	$(compiler) -o $(bin_dir)/$@ $^
+$(bin_dir)/$(debug_target): $(objs) | $(bin_dir)
+	$(compiler) -o $@ $^
 
-$(release_target): $(objs)
-	$(compiler) -o $(bin_dir)/$@ $^
+$(bin_dir)/$(release_target): $(objs) | $(bin_dir)
+	$(compiler) -o $@ $^
