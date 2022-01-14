@@ -1,0 +1,436 @@
+*sum_usr_40.txt*	For Vim version 8.2	Last change: 2022 Jan 14
+
+What I learned:
+
+A mapping is a sequence of key strokes translated into another sequence of key
+strokes. For example, >
+
+	:map <F2> GoDate: <Esc>:read !date<CR>kJ
+
+Now, pressing <F2> types all the keys on the right-hand side of this command,
+starting with "G", verbatim in the current mode. That is, <F2> in Normal mode
+
+	1.  goes to the last line ("G");
+	2.  begins a new line in Insert mode ("o");
+	3.  inserts the text "Date: ";
+	4.  exits Insert mode;
+	5.  enters Command-line mode (":");
+	6.  types the Ex command "read !date";
+	7.  executes it via <CR>;
+	8.  moves up one line ("k"); and
+	9.  joins the current and subsequent lines.
+
+The result is a line like the following one at the end of the file:
+
+	Date: Fri Jun 15 12:54:34 CEST 2001 ~
+
+Notice that special keys are defined inside <>, which is called "angle-bracket
+notation". This notation makes mappings more readable and copying-pasting
+easier.
+
+See "map-which-keys" for guidance on which keys to use for mappings.
+
+Mappings can be defined to work only in certain modes. The previous mapping
+used ":map", which defines the mapping for Normal, Visual, Select, and
+Operator-pending modes. A similar version of that mapping but for Insert mode
+is >
+
+	:imap <F2> <CR>Date: <Esc>:read !date<CR>kJ
+
+This mapping is almost the same as the previous one, but it inserts the date
+below the cursor instead. Note that the <F2> mapping here and the one defined
+above are distinct: one does not override the other because they are defined
+for different modes.
+
+The following table summarizes the relationships between mapping commands and
+modes:
+
+	Command		Modes ~
+	:map		Normal, Visual and Operator-pending
+	:vmap		Visual
+	:nmap		Normal
+	:omap		Operator-pending
+	:map!		Insert and Command-line
+	:imap		Insert
+	:cmap		Command-line
+
+The mode "Operator-pending" is active when an operator command is entered
+(e.g., "d") and Vim is waiting for a movement or text object command.
+
+List all the defined mappings for the specified modes by issuing the
+corresponding ":map" command without any arguments. Such a command produces an
+output like the following:
+
+	   _g		 :call MyGrep(1)<CR> ~
+	v  <F2>		 :s/^/> /<CR>:noh<CR>`` ~
+	n  <F2>		 :.,$s/^/> /<CR>:noh<CR>`` ~
+	   <xHome>	 <Home>
+	   <xEnd>	 <End>
+
+The first column indicates in which mode the associated mapping is effective
+(i.e., "n" for Normal mode, "v" for Visual mode, etc.). A blank means the
+mapping was defined with ":map" and thus is effective in multiple modes.
+
+When a mapping is executed, Vim inspects it for other mappings. For example,
+the commands >
+
+	:map <F2> G<F3>
+	:imap <F2> <Esc><F3>
+	:map <F3>  oDate: <Esc>:read !date<CR>kJ
+
+makes <F2> in Normal mode go to the first line and execute the <F3> mapping.
+In Insert mode, <F2> exits Insert mode and then executes <F3>.
+
+To stop Vim from inspecting mappings for further mappings (called
+"remappings"), use ":noremap": >
+
+	:noremap gQ Q
+
+Similar commands exist for the mapping commands of other modes.
+
+Inserting the left-hand side of a ":map" command onto the right-hand side
+defines a recursive mapping, which runs indefinitely when triggered. This type
+of mapping is useful for repeating an action. For example, to replace a
+version number in a list of files, define the mapping >
+
+	:map ,, :1s/5.1/5.2/<CR>:wnext<CR>,,
+
+and then type ",,". Vim replaces the text "5.1" with "5.2" in the first line,
+executes ":wnext" to write the file and edit the next one, and performs the
+same process again. This process continues until an error occurs, which could
+happen when "5.1" is not found by ":substitute" or ":wnext" fails because
+there are no more files. An error causes the rest of the mapping to be
+discarded.
+
+A mapping can be interrupted manually with >
+
+	CTRL-C
+
+Remove a mapping with >
+
+	:unmap
+
+or a similar command for specific modes.
+
+Remove all mappings for the specified modes with >
+
+	:mapclear
+
+or a variation thereof.
+
+All mapping commands may be followed by another command by separating them
+with "|". This flexibility means that "|" cannot be typed inside a mapping
+command. Instead, use <Bar> (five characters): >
+
+	:map <F8> :write <Bar> !checkin %:S<CR>
+
+With ":unmap", care must be taken for trailing whitespace: >
+
+	:unmap a | unmap b
+	:unmap a| unmap b
+
+The former command attempts to unmap "a ", not the likely intended mapping
+"a".
+
+To use a space inside a mapping, type <Space> (seven characters): >
+
+	:map <Space> W
+
+Since a " on the right-hand side is considered to be part of the mapping,
+adding a comment after a mapping on the same line is impossible. However, the
+trick |" restores this capability because it starts a new, empty command with
+a comment: >
+
+	:map <Space> W| " Use spacebar to move forward a word
+
+Insert-mode mappings and abbreviations are similar because both convert one
+sequence of characters into another. However, they differ on when this
+conversion triggers: abbreviations are triggered by typing a non-word
+character after the word, whereas mappings are triggered after typing their
+last characters.
+
+Another difference is that abbreviations insert characters as they are typed,
+replacing them with what the abbreviations produce when they trigger.
+Mappings, on the other hand, do not insert anything until they are triggered.
+If 'showcmd' is set, however, what has been typed so far can be seen on the
+last line of the screen.
+
+If a mapping is ambiguous, Vim waits for a deciding character to be typed
+before triggering a mapping. For example, defining the mappings >
+
+	:imap aa foo
+	:imap aaa bar
+
+and then typing "aa" in Insert mode does not produce "foo". Instead, Vim waits
+for another character to be typed before triggering one of these mappings. If
+it is "a", "bar" is entered. Otherwise, "foo" is entered along with whatever
+deciding character was typed. (Note that this procedure is influenced further
+with the options 'timeout' and 'timeoutlen'.)
+
+Further readings:
+
+	o  ":map-<script>" to make a mapping local to a script;
+	o  ":map-<buffer>" to make a mapping local to a buffer; and
+	o  ":map-<unique>" to define a mapping only when it is unique.
+
+To make a key do nothing, map it to <Nop> (five character): >
+
+	:map <F7> <Nop>| map! <F7> <Nop>
+
+(<Nop> must have no trailing whitespace. The ":map!" command defines the
+mapping for Insert and Command-line modes.)
+
+
+Define a Command-line command with ":command": >
+
+	:command DeleteFirst 1delete
+
+Here, the command ":DeleteFirst" is defined; when executed, it deletes the
+first line in the current file.
+
+Notice that the above command name begins with a capital letter. All
+user-defined commands must start with a capital letter, and they cannot be
+":X", ":Next", or ":Print". Names may comprise only alphanumeric characters,
+but using numbers is discouraged.
+
+List all user-defined commands by invoking the command above without any
+arguments: >
+
+	:command
+
+Like built-in commands, user-defined commands can be abbreviated: type enough
+characters to identify them uniquely when executing them. Use Command-line
+completion via <Tab> to get their full names.
+
+By default, user-defined commands accept no arguments. Specify the number of
+arguments for a command when defining it with the -nargs option: >
+
+	:command -nargs=0 DeleteFirst 1delete
+
+This command is equivalent to that without -nargs. The following table shows
+all the possible values for -nargs:
+
+	Notation	Meaning ~
+	-nargs=0	No arguments
+	-nargs=1	One argument
+	-nargs=*	Any number of arguments
+	-nargs=?	Zero or one argument
+	-nargs=+	One or more arguments
+
+Refer to the arguments in a command definition with <args>: >
+
+	:command -nargs=+ Say :echo "<args>"
+
+This command results in the message "Hello, world!" when executing ":Say
+Hello, world!".
+
+Use <q-args> so that special characters can be used as an expression properly:
+>
+	:command -nargs=+ Say :echo <q-args>
+
+This version of ":Say" echoes "He said \"hello\"" as expected: >
+
+<	:Say He said "hello"
+	He said "hello" ~
+
+Use <f-args> when passing the arguments to a function (it contains the same
+information as <args> but in a format suitable for a function call): >
+
+	:command -nargs=* DoIt :call AFunction(<f-args>)
+	:DoIt a b c
+
+This invocation of ":DoIt" effectively executes >
+
+	:call AFunction("a", "b", "c")
+
+Specify the -range option when defining a command so that it may accept a
+range. The valid values for -range are summarized in the following table:
+
+	Notation	Meaning ~
+	-range		Range is allowed; default is the current line.
+	-range=%	Range is allowed; default is the whole file.
+	-range={count}	Range is allowed; the last number in it is used as a
+			single number whose default is {count}.
+
+Use <line1> and <line2> in a range-based command's definition to access the
+first and last line of the range: >
+
+	:command -range=% SaveIt :<line1>,<line2>write! save_file
+
+":SaveIt" writes the specified range into a file named "save_file".
+
+The following table describes some of the other options relevant for defining
+a command:
+
+	-count={number}		The command can take a count whose default is
+				{number}.  The resulting count can be used
+				through the <count> keyword.
+	-bang			Command accepts a !.  If present, using <bang>
+				will result in a !.
+	-register		Command accepts a register.  (The default is
+				the unnamed register.)
+				The register specification is available as
+				<reg> (i.e., <register>).
+	-complete={type}	Type of command-line completion used.  See
+				|:command-completion| for the list of possible
+				values.
+	-bar			The command can be followed by a | and another
+				command, or a " and a comment.
+	-buffer			The command is only available for the current
+				buffer.
+
+The <lt> keyword can be used to escape the special meaning of a <> item. It
+represents the '<' character.
+
+Redefine a command by appending ! to ":command": >
+
+	:command -nargs=+ Say :echo "<args>"
+	:command! -nargs=+ Say :echo <q-args>
+
+Delete a user-defined command with >
+
+	:delcommand SaveIt
+
+Delete all user-defined commands with >
+
+	:comclear
+
+See "user-commands" for more details about defining Command-line commands.
+
+
+An autocommand is a command executed automatically after an event (e.g., a
+file being read, written, or a buffer change). Autocommands are powerful: they
+can save a lot of rote typing, but they can also cause trouble if used
+carelessly.
+
+Suppose replacing a date stamp at the end of a file every time it is written
+is desired. First, define a function: >
+
+	:function DateInsert()
+	:  $delete
+	:  read !date
+	:endfunction
+
+Then, define the autocommand with the appropriate event to trigger this
+function: >
+
+	:autocmd BufWritePre *  call DateInsert()
+
+The event "BufWritePre" occurs just before writing a buffer to a file. The "*"
+is a pattern to match with the file name. It is useful when constraining the
+autocommand to work only for specific files. In this case, the autocommand
+works for all files.
+
+Now, invoking ":write" also executes ":call DateInsert()"; Vim looks for any
+matching "BufWritePre" autocommands and executes them whenever a ":write" is
+performed.
+
+The general form of ":autocmd" is as follows >
+
+	:autocmd [group] {events} {file-pattern} [++nested] {command}
+
+where items inside [] are optional, and items in {} are required. The [group]
+item is used for managing autocommands; {events} is a list of comma-separated
+events that trigger {command}; {file-pattern} is a list of comma-separated
+file patterns; and {command} is the command to be executed.
+
+See "autocmd-events" for a complete list of events.
+
+The {file-pattern} item accepts the usual file wildcards. The following table
+summarizes the most commonly used ones:
+
+	Wildcard	Meaning ~
+	*		Match any character any number of times
+	?		Match any character once
+	[abc]		Match the character a, b or c
+	.		Matches a dot
+	a{b,c}		Matches "ab" and "ac"
+
+When {file-pattern} includes a "/", Vim will compare directory names; both the
+full path and relative path of the file are checked. Without a "/", only the
+last part of a file name is used, e.g., "*.txt" matches
+"/home/biep/readme.txt".
+
+Delete an autocommand with >
+
+	:autocmd! FileWritePre *
+
+That is, take the same command used to define the autocommand, add a "!" to
+":autocmd", and omit {command}. When this command is executed, Vim deletes ALL
+autocommands defined with both the "FileWritePre" event and "*" pattern; thus,
+this command is not a direct inverse of that which defined the autocommand.
+
+List all defined autocommands with >
+
+	:autocmd
+
+Filter this list by specifying the group, event, and pattern. Examples:
+
+List all "BufNewFile" autocommands: >
+
+	:autocmd BufNewFile
+
+List all autocommands for C files: >
+
+	:autocmd * *.c
+
+where "*" for the event means all events.
+
+List all autocommands for the "cprograms" group: >
+
+	:autocmd cprograms
+
+To define several autocommands for a certain group, use ":augroup": >
+
+	:augroup cprograms
+	:  autocmd BufReadPost *.c,*.h :set sw=4 sts=4
+	:  autocmd BufReadPost *.cpp   :set sw=3 sts=3
+	:augroup END
+
+This series of commands is equivalent to >
+
+	:autocmd cprograms BufReadPost *.c,*.h :set sw=4 sts=4
+	:autocmd cprograms BufReadPost *.cpp   :set sw=3 sts=3
+
+By default, commands executed by an autocommand will not trigger other
+autocommands, e.g., a command that reads a file. Allow all autocommands to
+listen to an autocommand's commands by adding "++nested" to the autocommand's
+definition: >
+
+	:autocmd FileChangedShell * ++nested  edit
+
+Trigger an autocommand manually with ":doautocmd": >
+
+	:doautocmd BufReadPost tryout.c
+
+This command applies all autocommands defined with both the "BufReadPost"
+event and pattern "tryout.c" to the current buffer. For all buffers, use
+":doautoall".
+
+The Ex command ":normal" can be used to issue Normal-mode commands from the
+Command line. All characters given after this command are treated as if they
+were typed literally in Normal mode. This behavior includes |, which means no
+Ex commands may follow ":normal". Circumvent this limitation with the use of
+":execute", which merges its arguments into one line and executes it in the
+Command line: >
+
+	execute "normal ONew entry:\<Esc>" | 1read !date
+
+This method also allows unprintable characters to be entered in a readable
+format.
+
+If an autocommand jumps around the file, it is desirable to maintain the
+original view afterward. See "restore-position" for an example of achieving
+this goal.
+
+Prevent certain events from triggering autocommands with 'eventignore': >
+
+	:set eventignore=WinEnter,WinLeave
+
+Specify "all" to ignore all events, and reset 'eventignore' by making it
+empty: >
+
+	:set eventignore=
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
