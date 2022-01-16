@@ -121,8 +121,8 @@ augroup vimrc
 					\ | call s:set_header_macros()
 					\ | startinsert! | redrawstatus
 	autocmd BufNewFile  Makefile  call s:load_template_file("_makefile",
-					\ [2, 14])
-					\ | execute "normal! a "
+					\ [2, 1])
+					\ | execute "normal! A "
 					\ | startinsert! | redrawstatus
 	autocmd BufWritePre *	      silent call Trim_peripheral_blank_lines()
 					\ | silent call Trim_whitespace()
@@ -145,7 +145,13 @@ augroup vimrc
 	autocmd FileType make setlocal
 		\ autoindent
 		\ noexpandtab
-		\ textwidth=0
+		\ formatoptions-=t
+		\ textwidth=79
+
+	autocmd FileType python setlocal
+		\ autoindent
+		\ formatoptions=tcroqlj
+		\ textwidth=79
 
 	autocmd FileType vim setlocal
 		\ autoindent
@@ -203,6 +209,14 @@ nnoremap <special> <Leader>sp
 nnoremap <special> <Leader>ve
 	\ <Cmd>let &virtualedit = (empty(&virtualedit)) ? "all" : ""
 	\ <Bar> set virtualedit?<CR>
+
+" Toggle syntax highlighting: useful for editing help files.
+nnoremap <special> <Leader>x
+	\ <Cmd>if exists("g:syntax_on")
+		\ <Bar> syntax off
+	\ <Bar> else
+		\ <Bar> syntax enable
+	\ <Bar> endif<CR>
 
 " Access system clipboard.
 nnoremap <special> <Leader>p "+p
