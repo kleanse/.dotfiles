@@ -3,79 +3,108 @@ debug_target :=
 release_target := release_$(debug_target)
 
 # Type of the files to compile.
-ft := cpp
+FT := cpp
 
-src_dir := .
-obj_dir := .
-bin_dir := .
+# Consult Section 16.5 of the GNU "make" manual for more information about some
+# of these variables.
+prefix := .
+exec_prefix := $(prefix)
+bindir := $(exec_prefix)/.
+srcdir := .
+objdir := .
+incdir := .
 
-srcs := $(wildcard $(src_dir)/*.$(ft))
-objs := $(patsubst $(src_dir)/%.$(ft), $(obj_dir)/%.o, $(srcs))
+# Directory for Makefile prerequisite files (".d" files);
+# mnemonic: Dependency Directory
+depdir := .
 
-# Assert specific values for builtin variables.
-CC := gcc
-CFLAGS := -pedantic-errors -Wall -Wextra -Werror
-
-CXX := g++
-CXXFLAGS := -std=c++20 -pedantic-errors -Wall -Wextra -Werror
-
-RM := rm -f
+deps := $(wildcard $(depdir)/*.d)
+srcs := $(wildcard $(srcdir)/*.$(FT))
+objs := $(patsubst $(srcdir)/%.$(FT), $(objdir)/%.o, $(srcs))
 
 debug_flags := -O0 -g
 release_flags := -O2 -DNDEBUG
+compilation_flags := -pedantic-errors -Wall -Wextra -Werror -I$(incdir)
 
 # Use the correct compiler and compiler flags.
-ifeq ($(ft), cpp)
+ifeq ($(FT), cpp)
 compiler := $(CXX)
 compiler_flags := $(CXXFLAGS)
+compilation_flags += -std=c++20
 else
 compiler := $(CC)
 compiler_flags := $(CFLAGS)
 endif
 
-# Determine appropriate recipes for targets "clean" and "fclean".
-ifeq ($(bin_dir), .)
-clean_recipe := $(RM) $(debug_target) $(release_target)
+# Determine appropriate recipes for certain targets.
+ifeq ($(bindir), ./.)
+clean_recipe := rm -f $(debug_target) $(release_target)
 else
-clean_recipe := $(RM) -r $(bin_dir)
+clean_recipe := rm -rf $(bindir)
 endif
 
-ifeq ($(obj_dir), .)
-fclean_recipe := $(RM) $(notdir $(objs))
+ifeq ($(objdir), .)
+mostlyclean_recipe := rm -f $(notdir $(objs))
 else
-fclean_recipe := $(RM) -r $(obj_dir)
+mostlyclean_recipe := rm -rf $(objdir)
+endif
+
+ifeq ($(depdir), .)
+realclean_recipe := rm -f $(notdir $(deps))
+else
+realclean_recipe := rm -rf $(depdir)
 endif
 
 # Makefile rules.
-.PHONY: clean fclean debug release
+.PHONY: all
+all: debug
 
-debug: compiler_flags += $(debug_flags)
-debug: $(bin_dir)/$(debug_target)
+# Read the dependency (".d") files to get header prerequisites for object
+# files. No rule is defined for these files: they are updated in the rule for
+# object files.
+-include $(patsubst $(srcdir)/%.$(FT), $(depdir)/%.d, $(srcs))
 
-release: compiler_flags += $(release_flags)
-release: fclean
-release: $(bin_dir)/$(release_target)
+.PHONY: debug
+debug: compilation_flags += $(debug_flags)
+debug: $(bindir)/$(debug_target)
 
+.PHONY: release
+release: mostlyclean
+release: compilation_flags += $(release_flags)
+release: $(bindir)/$(release_target)
+
+.PHONY: clean
 clean:
 	$(clean_recipe)
 
-fclean: clean
-	$(fclean_recipe)
+.PHONY: mostlyclean
+mostlyclean: clean
+	$(mostlyclean_recipe)
 
-# Avoid duplicate targets.
-ifneq ($(obj_dir), $(bin_dir))
-$(obj_dir):
+.PHONY: realclean
+realclean: mostlyclean
+	$(realclean_recipe)
+
+ifneq ($(bindir), ./.)
+$(bindir):
 	@mkdir $@
 endif
 
-$(bin_dir):
+ifneq ($(objdir), .)
+$(objdir):
 	@mkdir $@
+endif
 
-$(obj_dir)/%.o: $(src_dir)/%.$(ft) | $(obj_dir)
-	$(compiler) -c $(compiler_flags) -o $@ $<
+ifneq ($(depdir), .)
+$(depdir):
+	@mkdir $@
+endif
 
-$(bin_dir)/$(debug_target): $(objs) | $(bin_dir)
-	$(compiler) -o $@ $^
+$(objdir)/%.o: $(srcdir)/%.$(FT) | $(objdir) $(depdir)
+	$(compiler) -o $@ -MMD -MF $(depdir)/$*.d -c $(compilation_flags) $(compiler_flags) $<
 
-$(bin_dir)/$(release_target): $(objs) | $(bin_dir)
-	$(compiler) -o $@ $^
+$(bindir)/$(debug_target): $(objs) | $(bindir)
+	$(compiler) -o $@ $(compiler_flags) $^
+
+$(bindir)/$(release_target): $(objs) | $(bindir)
+	$(compiler) -o $@ $(compiler_flags) $^
