@@ -170,6 +170,17 @@ colorscheme solarized
 inoreabbrev lc: Last change:
 " }}}
 
+" Commands {{{
+" Like ":retab", but behaves like 'expandtab' is inverted, i.e., <Tab>s become
+" spaces if 'expandtab' is off, and spaces become <Tab>s if 'expandtab' is on.
+" Mnemonic: Inverted retab
+" Use:
+"	:[range]Iretab[!] [new_tabstop]
+command -bang -range=% -nargs=? Iretab let &expandtab = !&expandtab
+				       \ | <line1>,<line2>retab<bang> <args>
+				       \ | let &expandtab = !&expandtab
+" }}}
+
 " Key mappings {{{
 let mapleader = ","
 let maplocalleader = mapleader
@@ -233,6 +244,22 @@ xnoremap <special> K :move '<-2<CR>gv=gv
 
 inoremap <special> <C-C> <Esc>
 xnoremap <special> <C-C> <Esc>
+
+" Use some common GNU-Readline keyboard shortcuts for the Command line.
+" Set meta-key keycodes to what the terminal receives (can be identified by
+" running "cat" without any arguments and entering the corresponding keys).
+execute "set <M-F>=\<Esc>f"
+execute "set <M-B>=\<Esc>b"
+" Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is not
+" useful; CTRL-B is replaced with CTRL-A; and CTRL-F is helpful for editing
+" complex commands quickly.
+cnoremap <special> <C-A> <Home>
+cnoremap <special> <C-B> <Left>
+cnoremap <special> <C-F> <Right>
+cnoremap <special> <M-B> <S-Left>
+cnoremap <special> <M-F> <S-Right>
+" Transfer the default behavior of Command-line CTRL-F to CTRL-X.
+cnoremap <special> <C-X> <C-F>
 
 " Trim trailing whitespace.
 " Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
