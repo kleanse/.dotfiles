@@ -1,4 +1,4 @@
-*sum_usr_27.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_27.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
@@ -20,7 +20,7 @@ sensitive. The following table exemplifies this behavior:
 	WoRd			WoRd
 
 To ignore case for one specific pattern, prepend it with "\c". Use "\C"
-instead to enforce case. These strings overrule 'ignorecase' and 'smartcase'.
+instead to enforce case. These flags overrule 'ignorecase' and 'smartcase'.
 
 By default, Vim's searches wrap around the file; this behavior allows
 searching indefinitely with the "n" command. To see when the cursor is back at
@@ -74,13 +74,13 @@ Append "*" to an item to search it zero or more times: >
 
 	/a*
 
-This pattern matches "a", "aa", "aaa", etc. and "" (the empty string) because
+This pattern matches "a", "aa", "aaa", etc., and "" (the empty string) because
 zero times is included. To apply this quantifier to a string, group the string
 with escaped parentheses: >
 
 	/\(ab\)*
 
-This pattern matches: "ab", "abab", "ababab", etc. and also "".
+This pattern matches "ab", "abab", "ababab", etc., and also "".
 
 Avoid matching the empty string with "\+", which matches the preceding item
 one or more times. Use "\=" (or "\?") to match an optional item: >
@@ -115,7 +115,7 @@ last "b".
 
 
 Specify alternatives in a pattern with "\|", which is a pattern's version of
-the "or" operator. For example, >
+the logical OR operator. For example, >
 
 	/foo\|bar
 
@@ -165,7 +165,7 @@ table presents some of them:
 	\u	uppercase alpha		[A-Z]
 	\U	non-uppercase alpha	[^A-Z]
 
-(Visit /\s for the whole list.)
+(Visit |/\s| for the whole list.)
 
 Note that these predefined ranges are more efficient than their equivalents.
 Also, they cannot be used inside [].

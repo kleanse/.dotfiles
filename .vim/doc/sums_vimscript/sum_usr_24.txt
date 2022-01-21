@@ -1,4 +1,4 @@
-*sum_usr_24.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_24.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
@@ -105,17 +105,17 @@ which now searches for files in that directory.
 Source code can be completed in an intelligent manner. In Microsoft Visual
 Studio, this completion is referred to as IntelliSense. In Vim, it is Omni
 completion. Omni completion requires some set up before it can be used (see
-ft-c-omni for using Omni completion with C files, e.g., :help ft-c-omni, and
-compl-omni-filetypes for other file types). It also only works for specific
-file types.
+|ft-c-omni| for using Omni completion with C files, e.g., ":help ft-c-omni",
+and |compl-omni-filetypes| for other file types). It also only works for
+specific file types.
 
 Perform Omni completion while in Insert mode with >
 
 	CTRL-X CTRL-O
 
 
-In Insert mode, immediately insert the text typed in the last Insert mode with
->
+In Insert mode, immediately insert the text typed in the last Insert mode with >
+
 	CTRL-A
 
 For example, inserting the string "word" followed by a space ' ', exiting
@@ -127,8 +127,8 @@ command CTRL-A produces
 The command CTRL-@ is equivalent to CTRL-A, but it also exits Insert mode.
 
 
-Insert the character that is immediately above the cursor in Insert mode with
->
+Insert the character that is immediately above the cursor in Insert mode with >
+
 	CTRL-Y
 
 Likewise, insert the character that is immediately below the cursor in Insert
@@ -142,7 +142,7 @@ Insert the contents of a register in Insert mode with >
 	CTRL-R {register}
 
 Special characters in the register, such as <BS>, are interpreted as if they
-have been typed manually. For example, the register b with the contents
+have been typed manually. For example, the register "b" with the contents
 
 	find<BS>
 
@@ -161,10 +161,10 @@ Quickly type a long word by defining an abbreviation for it: >
 
 	:iabbrev ad advertisement
 
-Vim will expand the abbreviation when a character that cannot part of a word
-is entered after the abbreviation. That is, only whole words are checked for
-abbreviations. For example, in this case, "ad" is inserted as "advertisement"
-when it is followed by a space:
+Vim will expand the abbreviation when a character that cannot be part of a
+word is entered after the abbreviation. That is, only whole words are checked
+for abbreviations. For example, in this case, "ad" is inserted as
+"advertisement" when it is followed by a space:
 
 	What is entered		   What you see
 	I saw the a		   I saw the a ~
@@ -186,13 +186,13 @@ abbreviations: >
 
 	:abbreviate
 
-The first column of the output contains characters indicating what mode their
-corresponding abbreviations can be used. These characters include
+The first column of the output contains characters indicating in what mode
+their corresponding abbreviations can be used. These characters include
 
-	Character    Appropriate mode			  Command ~
-	i	     Insert mode			  :iabbrev
-	c	     Command-line mode			  :cabbrev
-	!	     both Insert and Command-line mode	  :abbreviate
+	Character	Mode					Command ~
+	i		Insert mode				:iabbrev
+	c		Command-line mode			:cabbrev
+	!		both Insert and Command-line mode	:abbreviate
 
 Remove an abbreviation with >
 
@@ -206,7 +206,7 @@ Both ":unabbreviate" and ":abclear" have the same mode-specific variants as
 ":abbreviate", e.g., ":iunabbreviate" and ":cabclear".
 
 The resulting string of an abbreviation can be mapped. For example, after
-entering the following commands:
+entering the following commands >
 
 	:abbreviate @a adder
 	:imap dd disk-door

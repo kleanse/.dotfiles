@@ -1,4 +1,4 @@
-*sum_usr_29.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_29.txt*	For Vim version 8.2	Last change: 2022 Jan 20
 
 What I learned:
 
@@ -26,7 +26,7 @@ Display the tag stack--the list of tags recently traversed--with >
 
 	:tags
 
-Jump to the preceding tag in the tag stack with >
+Jump to the previous tag in the tag stack with >
 
 	CTRL-T
 
@@ -68,11 +68,10 @@ directory tree: >
 	ctags -R .
 
 One benefit of Exuberant ctags is that it recognizes file types besides C and
-C++ ones.
+C++.
 
 When a tag is defined multiple times, ":tag" will jump to the first one
-defined or, if a match exists in the current file, the match in the current
-file.
+defined or, if it exists, the match in the current file.
 
 Jump to the next match with >
 
@@ -94,8 +93,8 @@ The following list summarizes the commands used to move between matching tags:
 
 The number "1" is used if [count] is omitted.
 
-Exploit command-line completion to enter a long tag name without much typing:
->
+Exploit command-line completion to enter a long tag name without much typing: >
+
 	:tag write_<Tab>
 
 where "<Tab>" represents the tab key being pressed. A pattern may also be used
@@ -119,7 +118,7 @@ Now, start Vim and edit this file in a new window: >
 	:split functions
 
 Clean up the view with ":setlocal tabstop=99" (the additional information is
-not relevant). Then, define the mapping >
+irrelevant). Then, define the mapping >
 
 	:nnoremap <buffer> <CR> 0ye<C-W>w:tag <C-R>"<CR>
 
@@ -137,7 +136,7 @@ Use 'taglength' to specify the number of significant characters in a tag.
 
 Besides ctags, "cscope" can be used to find places where an identifier is
 declared; however, it can also find places where the identifier is used. (See
-"cscope" via ":help cscope" for more information.)
+|cscope| via ":help cscope" for more information.)
 
 
 Sometimes, it is desirable to jump to a tag without changing the current
@@ -226,8 +225,8 @@ For languages that support methods (e.g., C++ or Java) with the syntax
 		}
 	};
 
-jump to the start of the previous method when the cursor is in the class with
->
+jump to the start of the previous method when the cursor is in the class with >
+
 	[m
 
 and the start of the next method with >

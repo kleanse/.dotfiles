@@ -1,4 +1,4 @@
-*sum_usr_23.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_23.txt*	For Vim version 8.2	Last change: 2022 Jan 18
 
 What I learned:
 
@@ -7,14 +7,14 @@ the carriage return, <CR>, which moved the carriage back to the first
 character column, and the line feed, <LF>, which moved the paper up.
 
 With the advent of computers, storage was expensive; people questioned whether
-or not two characters were needed for the end-of-line. Computer communities
-became divided: the UNIX community decided <Line Feed> would indicate the
-end-of-line; the Apple community chose <CR>; and the MS-DOS community opted
-for the traditional <CR><LF>.
+two characters were needed for end-of-line. Computer communities became
+divided: the UNIX community decided <Line Feed> would indicate end-of-line;
+the Apple community chose <CR>; and the MS-DOS community opted for the
+traditional <CR><LF>.
 
-Since the end-of-line has different implementations, moving files from one
-machine to a different one will cause line-break problems. Fortunately, Vim
-can automatically recognize and handle different file formats. The option
+Since end-of-line has different implementations, moving files from one machine
+to a different one will cause line-break problems. Fortunately, Vim can
+automatically recognize and handle different file formats. The option
 'fileformats' contains the file formats to try when editing a new file. For
 example, >
 
@@ -46,7 +46,7 @@ editing a file: >
 
 	vim README.txt
 
-Then, change the file format to a different format with
+Then, change the file format to a different format with >
 
 	:set fileformat=unix
 	:write
@@ -107,7 +107,7 @@ View unprintable characters in a hexadecimal format with >
 
 	:set display=uhex
 
-Alternatively, use the "ga" normal-mode command to see the value of the
+Alternatively, use the "ga" Normal-mode command to see the value of the
 character under the cursor.
 
 Get the byte position of the cursor in the file with >
@@ -129,7 +129,7 @@ Convert it back to its normal appearance with >
 	:%!xxd -r
 
 which saves any changes made to the hexadecimal values; changes to the
-printable text of the hex dump are ignored. Alternatively, use the normal-mode
+printable text of the hex dump are ignored. Alternatively, use the Normal-mode
 command "u" to undo the hex dump conversion.
 
 

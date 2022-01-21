@@ -1,8 +1,8 @@
-*sum_usr_21.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_21.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
-On a Unix system, press >
+On a UNIX system, press >
 
 	CTRL-Z
 
@@ -31,7 +31,7 @@ Exiting the shell as normal with "exit" or CTRL-D returns control to Vim.
 
 Whenever Vim starts, it reads the viminfo file. When it ends, it writes to the
 viminfo file. The viminfo file is a file designed to store the status
-information of Vim, which includes the command-line and search pattern
+information of Vim, which includes the Command-line and search pattern
 histories, text in registers, marks, the buffer list, and global variables.
 
 Change the viminfo file's capacity with 'viminfo'.
@@ -39,9 +39,13 @@ Change the viminfo file's capacity with 'viminfo'.
 Since Vim writes the viminfo file when it ends, the last Vim instance to exit
 will overwrite any of the information that previous Vim instances stored.
 
-Return to the last cursor position when exiting Vim with >
+Return to the cursor position when Vim was last exited with >
 
 	'0
+
+Vim creates a mark every time it is quit. The latest one is '0; '1 is the
+position '0 had before; '2 is the position '1 had before; and so forth. Mark
+'9 is lost.
 
 Get a list of files edited recently with >
 
@@ -88,7 +92,7 @@ restore the session: >
 
 Although viminfo and Vim sessions share similar purposes, they store different
 information. Generally, sessions and viminfo should be used separately:
-preserving the command-line history and text in registers between sessions is
+preserving the Command-line history and text in registers between sessions is
 desirable.
 
 
@@ -126,7 +130,7 @@ editing the file that saved the view. Restore the view with >
 
 Even more limited and specific than views are modelines. A modeline is a line
 of text in a file that tells Vim the values of certain options when its file
-is being edited. For example, the modeline
+is being edited. For example, the modeline >
 
 	vim:set shiftwidth=4:
 
@@ -135,8 +139,8 @@ before the modeline. The modeline is valid only if the string "vim:" is not
 prefixed by any text.
 
 The 'modelines' option specifies the number of lines at the start and end of a
-file to scan for a modeline; 'modeline' determines whether or not modelines
-are sought at all.
+file to scan for a modeline; 'modeline' determines whether modelines are
+sought after at all.
 
 The format of a modeline is
 
@@ -146,10 +150,10 @@ where
 
 [text]	   is any text;
 {white}    is at least one blank character (<Space> or <Tab>);
->vim:	   is the string "vim:" verbatim;
+vim:	   is the string "vim:" verbatim;
 [white]    is optional whitespace; and
 {options}  is a list of option settings separated by whitespace or ':', where
-	   each setting between the ':' delimiters is the argument for a
+	   each setting between the ':' delimiters is an argument for the
 	   ":set" command (can be empty).
 
 

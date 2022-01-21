@@ -1,4 +1,4 @@
-*sum_usr_40.txt*	For Vim version 8.2	Last change: 2022 Jan 14
+*sum_usr_40.txt*	For Vim version 8.2	Last change: 2022 Jan 20
 
 What I learned:
 
@@ -10,15 +10,15 @@ strokes. For example, >
 Now, pressing <F2> types all the keys on the right-hand side of this command,
 starting with "G", verbatim in the current mode. That is, <F2> in Normal mode
 
-	1.  goes to the last line ("G");
-	2.  begins a new line in Insert mode ("o");
-	3.  inserts the text "Date: ";
-	4.  exits Insert mode;
-	5.  enters Command-line mode (":");
-	6.  types the Ex command "read !date";
-	7.  executes it via <CR>;
-	8.  moves up one line ("k"); and
-	9.  joins the current and subsequent lines.
+	1. goes to the last line ("G");
+	2. begins a new line in Insert mode ("o");
+	3. inserts the text "Date: ";
+	4. exits Insert mode;
+	5. enters Command-line mode (":");
+	6. types the Ex command "read !date";
+	7. executes it via <CR>;
+	8. moves up one line ("k"); and
+	9. joins the current and subsequent lines.
 
 The result is a line like the following one at the end of the file:
 
@@ -28,7 +28,7 @@ Notice that special keys are defined inside <>, which is called "angle-bracket
 notation". This notation makes mappings more readable and copying-pasting
 easier.
 
-See "map-which-keys" for guidance on which keys to use for mappings.
+See |map-which-keys| for guidance on which keys to use for mappings.
 
 Mappings can be defined to work only in certain modes. The previous mapping
 used ":map", which defines the mapping for Normal, Visual, Select, and
@@ -169,9 +169,9 @@ with the options 'timeout' and 'timeoutlen'.)
 
 Further readings:
 
-	o  ":map-<script>" to make a mapping local to a script;
-	o  ":map-<buffer>" to make a mapping local to a buffer; and
-	o  ":map-<unique>" to define a mapping only when it is unique.
+	o  |:map-<script>| to make a mapping local to a script;
+	o  |:map-<buffer>| to make a mapping local to a buffer; and
+	o  |:map-<unique>| to define a mapping only when it is unique.
 
 To make a key do nothing, map it to <Nop> (five character): >
 
@@ -224,14 +224,14 @@ Refer to the arguments in a command definition with <args>: >
 This command results in the message "Hello, world!" when executing ":Say
 Hello, world!".
 
-Use <q-args> so that special characters can be used as an expression properly:
->
+Use <q-args> so that special characters can be used as an expression properly: >
+
 	:command -nargs=+ Say :echo <q-args>
 
 This version of ":Say" echoes "He said \"hello\"" as expected: >
 
-<	:Say He said "hello"
-	He said "hello" ~
+	:Say He said "hello"
+<	He said "hello" ~
 
 Use <f-args> when passing the arguments to a function (it contains the same
 information as <args> but in a format suitable for a function call): >
@@ -295,7 +295,7 @@ Delete all user-defined commands with >
 
 	:comclear
 
-See "user-commands" for more details about defining Command-line commands.
+See |user-commands| for more details about defining Command-line commands.
 
 
 An autocommand is a command executed automatically after an event (e.g., a
@@ -316,10 +316,11 @@ function: >
 
 	:autocmd BufWritePre *  call DateInsert()
 
-The event "BufWritePre" occurs just before writing a buffer to a file. The "*"
-is a pattern to match with the file name. It is useful when constraining the
-autocommand to work only for specific files. In this case, the autocommand
-works for all files.
+The event "BufWritePre" occurs just before writing a buffer to a file.
+
+The "*" is a pattern to match with the file name. It is useful when
+constraining the autocommand to work only for specific files. In this case,
+the autocommand works for all files.
 
 Now, invoking ":write" also executes ":call DateInsert()"; Vim looks for any
 matching "BufWritePre" autocommands and executes them whenever a ":write" is
@@ -334,7 +335,7 @@ item is used for managing autocommands; {events} is a list of comma-separated
 events that trigger {command}; {file-pattern} is a list of comma-separated
 file patterns; and {command} is the command to be executed.
 
-See "autocmd-events" for a complete list of events.
+See |autocmd-events| for a complete list of events.
 
 The {file-pattern} item accepts the usual file wildcards. The following table
 summarizes the most commonly used ones:
@@ -420,8 +421,8 @@ This method also allows unprintable characters to be entered in a readable
 format.
 
 If an autocommand jumps around the file, it is desirable to maintain the
-original view afterward. See "restore-position" for an example of achieving
-this goal.
+original view afterward. See |restore-position| for an example achieving this
+goal.
 
 Prevent certain events from triggering autocommands with 'eventignore': >
 

@@ -1,18 +1,18 @@
-*sum_usr_20.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_20.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
-The command line is the line on which colon commands and search commands are
+The Command line is the line on which colon commands and search commands are
 entered. Press the <BS> (backspace) key (or CTRL-H) to delete the character
-before the cursor on the command line. Use navigation keys to traverse the
-command line:
+before the cursor on the Command line. Use navigation keys to traverse the
+Command line:
 
 	<Left>			one character left
 	<Right>			one character right
 	<S-Left> or <C-Left>	one word left
 	<S-Right> or <C-Right>	one word right
-	CTRL-B or <Home>	to begin of command line
-	CTRL-E or <End>		to end of command line
+	CTRL-B or <Home>	to beginning of Command line
+	CTRL-E or <End>		to end of Command line
 
 <S-Left> is the cursor left key with the Shift key pressed, and <C-Left> is
 the cursor left key with the Control key pressed. These keys do not work on
@@ -36,7 +36,7 @@ as >
 	:s[ubstitute]
 
 shows optional characters in brackets. These characters may be specified
-partially (e.g., ":su", and ":sub" invoke the ":substitute" command).
+partially (e.g., ":su" and ":sub" invoke the ":substitute" command).
 
 Writing the full names of commands in Vim scripts is recommended.
 
@@ -83,11 +83,11 @@ For search commands, use >
 	:history /
 
 
-Open the command line window with >
+Open the Command-line window with >
 
 	q:
 
-This command opens a window containing the command-line history. Press >
+This command opens a window containing the Command-line history. Press >
 
 	<Enter>
 

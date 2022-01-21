@@ -1,4 +1,4 @@
-*sum_usr_25.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_25.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
@@ -120,7 +120,7 @@ Turn each paragraph into a line with >
 
 which executes the ":join" command for all non-empty lines with the range from
 the current line (the non-empty line) to an empty one. (See
-edit-paragraph-join for more information.)
+|edit-paragraph-join| for more information.)
 
 
 Change 'virtualedit' with >

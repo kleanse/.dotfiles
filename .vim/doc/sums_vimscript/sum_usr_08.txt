@@ -1,4 +1,4 @@
-*sum_usr_08.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_08.txt*	For Vim version 8.2	Last change: 2022 Jan 14
 
 What I learned:
 
@@ -18,8 +18,8 @@ window edits the file specified. To open a new, empty window, enter >
 	:new
 
 
-Preceding ":split" with a count opens the new window that many lines high. Use
->
+Preceding ":split" with a count opens the new window that many lines high. Use >
+
 	CTRL-W +
 
 to increase the current window's height by one line and >
@@ -32,10 +32,10 @@ to decrease it. Use a count to scale these changes: >
 
 To set the current window's height, use >
 
-	{height}CTRL-W _
+	[height]CTRL-W _
 
-where {height} accepts an optional count. Providing no count sets the height
-to its max.
+where [height] is an optional count. Providing no count sets the height to its
+max.
 
 
 Instead of splitting horizontally (stacked), windows can be split vertically.
@@ -44,8 +44,8 @@ Use >
 	:vsplit
 
 to split a window vertically, leaving the cursor on the left one. This command
-accepts the same arguments as :split. Open a new, empty window vertically with
->
+accepts the same arguments as :split. Open a new, empty window vertically with >
+
 	:vnew
 
 Alternatively, use >
@@ -59,7 +59,7 @@ specified.)
 
 Prepend CTRL-W before a cursor key to move to the window in that direction:
 
-	Normal mode command    Move to the window ~
+	Normal-mode command    Move to the window ~
 	CTRL-W h	       on the left
 	CTRL-W j	       below
 	CTRL-W k	       above

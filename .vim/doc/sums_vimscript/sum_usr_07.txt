@@ -1,4 +1,4 @@
-*sum_usr_07.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_07.txt*	For Vim version 8.2	Last change: 2022 Jan 14
 
 What I learned:
 
@@ -6,10 +6,11 @@ Invoking >
 
 	:edit foo.txt
 
-opens a new file and closes the current one, where "foo.txt" is the name of the
-file to open. Attempting to edit a new file without saving the current file
-will generate an error; to resolve this error, write the file with the command
->
+opens a new file and closes the current one, where "foo.txt" is the name of
+the file to open. Attempting to edit a new file without saving the current
+file will generate an error; to resolve this error, write the file with the
+command >
+
 	:write
 
 or discard all changes by appending the force character '!': >
@@ -47,16 +48,17 @@ and the first: >
 
 	:first
 
-These last two commands do not have the shortcut to write simultaneously.
-The 'autowrite' option enables automatic writing of modified files when closing
+These last two commands do not have the shortcut to write simultaneously. The
+'autowrite' option enables automatic writing of modified files when closing
 them. Supplying filenames to :args prepares a new list of files to edit.
 
 
-When the current file was opened after editing a previous file, pressing CTRL-^
-jumps back to the previous file (known as the alternate file). Marks set with
-lowercase characters are local; with uppercase ones, they are global. Global
-marks behave like local ones, except they open the file that set them. To view
-set marks, enter >
+When the current file was opened after editing a previous file, pressing
+CTRL-^ jumps back to the previous file (known as the alternate file).
+
+Marks set with lowercase characters are local; with uppercase ones, they are
+global. Global marks behave like local ones, except they open the file that
+set them. To view set marks, enter >
 
 	:marks
 
@@ -69,8 +71,8 @@ This invocation shows the marks set for 'M', 'C', and 'P'.
 
 Copying text from one file to another can be done intuitively using the yank
 and put commands. A more sophisticated way is to use registers. Entering a
-double quotation mark and any alphabetical character before yanking or deleting
-text saves the text to that character register. For example, >
+double quotation mark and any alphabetical character before yanking or
+deleting text saves the text to that character register. For example, >
 
 	"ayas
 

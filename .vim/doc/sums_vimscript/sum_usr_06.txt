@@ -1,4 +1,4 @@
-*sum_usr_06.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_06.txt*	For Vim version 8.2	Last change: 2022 Jan 14
 
 What I learned:
 
@@ -23,7 +23,7 @@ The command >
 
 	:TOhtml
 
-produces a temporary html version of the current file. Saving it and then
+produces a temporary HTML version of the current file. Saving it and then
 opening it with a preferred web browser should display the file as seen in
 Vim. (With a dark background set, the file looks ugly by default.)
 

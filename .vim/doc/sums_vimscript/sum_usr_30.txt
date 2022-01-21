@@ -1,10 +1,10 @@
-*sum_usr_30.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_30.txt*	For Vim version 8.2	Last change: 2022 Jan 20
 
 What I learned:
 
 Vim provides a set of "quickfix" commands: they enable compiling a program
 from within Vim and stepping through errors generated (so that they may be
-fixed). (See "quickfix" for more information, i.e., ":help quickfix".)
+fixed). (See |quickfix| for more information, i.e., ":help quickfix".)
 
 Invoke >
 
@@ -12,15 +12,15 @@ Invoke >
 
 to run "make" (an external program) with the arguments specified, if any. If
 compiler errors were issued, Vim captures them and jumps to where the first
-error occurred; Vim knows which file and line number to go because the errors
-messages provide such information.
+error occurred; Vim knows which file and line number to go to because the
+error messages provide such information.
 
 Jump to the next error with >
 
 	:cnext
 
-If an error message is too long, Vim truncates it. See the whole message with
->
+If an error message is too long, Vim truncates it. See the whole message with >
+
 	:cc
 
 Get an overview of all the error messages containing file names and line
@@ -37,7 +37,7 @@ Return to the previous error with >
 
 or >
 
-	:cN
+	:cNext
 
 The following table shows other related commands for navigating the error
 list:
@@ -59,7 +59,7 @@ Special Vim keywords may also be used: >
 "%" here expands to the name of the current file; thus, when editing the file
 named "main.c", running ":make" executes "make main.c".
 
-See "filename-modifiers" for more information.
+See |filename-modifiers| for more information.
 
 Running ":make" multiple times, each after making changes to a file, produces
 different error lists. View the previous error list with >
@@ -74,7 +74,7 @@ Vim remembers up to ten error lists.
 
 Tell Vim the format of the error messages produced by a compiler with
 'errorformat'. The syntax of this option is complicated as it can support
-nearly any compiler. See "errorformat" for the details and explanation.
+nearly any compiler. See |errorformat| for the details and explanation.
 
 Instead of setting 'makeprg' and 'errorformat' to use a different compiler
 (the process can be tedious and complicated), use the ":compiler" command: >
@@ -83,7 +83,7 @@ Instead of setting 'makeprg' and 'errorformat' to use a different compiler
 
 The command here switches to the Microsoft Visual C++ compiler by finding the
 Vim script for the "msvc" compiler and then executing it. For information
-about writing these compiler scripts, see "write-compiler-plugin".
+about writing these compiler scripts, see |write-compiler-plugin|.
 
 If compiler error messages are stored in a file, Vim can read them with >
 
@@ -93,8 +93,8 @@ Afterward, jumping to errors works the same way as it does after using
 ":make".
 
 
-Vim provides automatic indenting for C and C-style programs through 'cindent':
->
+Vim provides automatic indenting for C and C-style programs through 'cindent': >
+
 	:set cindent shiftwidth=4
 
 'shiftwidth' determines the number of spaces used for each indent level made
@@ -121,7 +121,7 @@ Re-indent lines with the "=" operator: >
 
 To change the indent style enforced by 'cindent', mutate 'cinoptions', which
 is empty by default. For a list of all possible items of 'cinoptions' and
-their descriptions, see "cinoptions-values".
+their descriptions, see |cinoptions-values|.
 
 
 Enable 'cindent' automatically when editing C files with >
@@ -142,7 +142,7 @@ and adding the line >
 
 	:let b:did_indent = 1
 
-to it. Then, write this file with the following name at the given path:
+Then, write this file with the following name at the given path:
 
 	{directory}/indent/{filetype}.vim
 
@@ -154,7 +154,7 @@ with >
 
 (It is the name before the first comma.)
 
-To learn how to write a custom indent file, see "indent-expression".
+To learn how to write a custom indent file, see |indent-expression|.
 
 
 The simplest form of automatic indentation is enabled with the 'autoindent'
@@ -234,7 +234,7 @@ into spaces, use ":retab": >
 	:set expandtab
 	:retab
 
-(See sum_usr25.txt for an introduction to ":retab".)
+(See |sum_usr25.txt| for an introduction to ":retab".)
 
 This command only converts leading <Tab>s--<Tab>s in a line's indent--into
 spaces. To convert all <Tab> characters, append "!" to the above command.
@@ -282,7 +282,7 @@ to handle them; each is enabled by a flag in 'formatoptions':
 	o	insert the star when using "o" or "O" in Normal mode
 	c	break comment text according to 'textwidth'
 
-See "fo-table" for the rest of such flags.
+See |fo-table| for the rest of such flags.
 
 The 'comments' option defines what a comment looks like. Vim distinguishes
 between a single-line comment and a comment that has a different start, end,

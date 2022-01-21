@@ -1,4 +1,4 @@
-*sum_usr_28.txt*	For Vim version 8.2	Last change: 2022 Jan 07
+*sum_usr_28.txt*	For Vim version 8.2	Last change: 2022 Jan 17
 
 What I learned:
 
@@ -50,7 +50,7 @@ Likewise, close all folds with >
 
 	zM
 
-Disable folding ('foldenable') with "zn" and enable it with "zN". Toggle this
+Disable folding--'foldenable'--with "zn" and enable it with "zN". Toggle this
 option with "zi".
 
 
@@ -99,7 +99,7 @@ save folds, use >
 
 	:mkview
 
-(Visit sum_usr21.txt for a review of ":mkview".)
+(Visit |sum_usr_21.txt| for a review of ":mkview".)
 
 Load the view again when editing the same file with >
 
@@ -158,7 +158,7 @@ actual space, double quote, or backslash.)
 
 
 The final folding method is "diff". This method is useful when 'diff' is set
-for the same window (see "vimdiff"), e.g., >
+for the same window (see |vimdiff|), e.g., >
 
 	:setlocal diff foldmethod=diff scrollbind nowrap foldlevel=1
 
