@@ -125,6 +125,7 @@ bindkey "^Z" fg-ctrl-z
 alias c++std="g++ -std=c++17 -pedantic-errors -Wall -Wextra -Werror"
 alias cstd="gcc -pedantic-errors -Wall -Wextra -Werror"
 alias ds="dirs -v"
+alias py="python3"
 
 # ENVIRNOMENT VARIABLES
 [ -f ~/.env_vars ] && source ~/.env_vars
