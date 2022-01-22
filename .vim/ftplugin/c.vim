@@ -1,84 +1,75 @@
-" Vim filetype plugin for c files.
-" 2021 Dec 10 - Written by Kenny Lam.
+vim9script noclear
+
+# Vim filetype plugin for c files.
+# 2021 Dec 10 - Written by Kenny Lam.
 
 if exists("b:did_ftplugin")
 	finish
 endif
-let b:did_ftplugin = 1
+b:did_ftplugin = 1
 
-let s:save_cpo = &cpoptions
-set cpoptions&vim
+b:undo_ftplugin = "call " .. expand("<SID>") .. "Undo_ftplugin()"
 
-let b:undo_ftplugin = "call " .. expand("<SID>") .. "undo_ftplugin()"
+# Associates default key sequences with plugin mappings.
+const PLUG_NAMES = {
+	[g:maplocalleader .. 'c']: '<Plug>c_comment;',
+	[g:maplocalleader .. '<Space>']: '<Plug>c_make;',
+}
 
-" Associates default key sequences with plugin mappings.
-let s:plug_names = {
-	\ g:maplocalleader .. 'c': '<Plug>c_comment;',
-	\ g:maplocalleader .. '<Space>': '<Plug>c_make;',
-\ }
-
-" Associates plugin mappings with mapping modes (see "map-modes").
-let s:plug_modes = {
-	\ '<Plug>c_make;'   : 'n',
-	\ '<Plug>c_comment;': 'x',
-\ }
+# Associates plugin mappings with mapping modes (see "map-modes").
+const PLUG_MODES = {
+	'<Plug>c_make;': 'n',
+	'<Plug>c_comment;': 'x',
+}
 
 setlocal
 	\ cindent
+	\ cinoptions=:0,(0,u0
 	\ copyindent
 	\ formatoptions=tcroqlj
 	\ path+=include,../include
 	\ textwidth=79
 
-" Linux kernel coding style.
-setlocal cinoptions=:0,(0,u0
+# Internal functions {{{
+def Undo_ftplugin()
+	# Undo_ftplugin() implementation {{{
+	setlocal
+		\ cindent<
+		\ cinoptions<
+		\ copyindent<
+		\ formatoptions<
+		\ path<
+		\ textwidth<
 
-" Internal functions {{{
-if !exists("*s:undo_ftplugin")
-	function s:undo_ftplugin()
-		setlocal
-			\ cindent<
-			\ copyindent<
-			\ formatoptions<
-			\ path<
-			\ textwidth<
-
-		for [l:lhs, l:plug_name] in items(s:plug_names)
-			let l:mode = s:plug_modes[l:plug_name]
-			execute l:mode .. 'unmap <buffer>' l:plug_name
-			if maparg(l:lhs, l:mode) ==# l:plug_name
-				execute l:mode .. 'unmap <buffer>' l:lhs
-			endif
-		endfor
-	endfunction
-endif
-
-if !exists("*s:v_toggle_comment")
-endif
-" }}}
-
-" Mappings {{{
-" Comment out lines selected in Visual mode.
-if !exists("no_plugin_maps") && !exists("no_c_maps")
-	for [s:lhs, s:plug_name] in items(s:plug_names)
-		if !hasmapto(s:plug_name)
-			execute s:plug_modes[s:plug_name]
-			      \ .. 'map <buffer> <unique>' s:lhs s:plug_name
+	for [lhs, plug_name] in items(PLUG_NAMES)
+		const mode = PLUG_MODES[plug_name]
+		execute mode .. 'unmap <buffer>' plug_name
+		if maparg(lhs, mode) == plug_name
+			execute mode .. 'unmap <buffer>' lhs
 		endif
 	endfor
-	unlet s:lhs s:plug_name
+enddef
+#}}}
+#}}}
+
+# Mappings {{{
+if !exists("g:no_plugin_maps") && !exists("g:no_c_maps")
+	for [lhs, plug_name] in items(PLUG_NAMES)
+		if !hasmapto(plug_name)
+			execute PLUG_MODES[plug_name]
+				.. 'map <buffer> <unique>' lhs plug_name
+		endif
+	endfor
 	nnoremap <buffer> <unique> <Plug>c_make; <Cmd>make<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>c_comment;
 	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
-"}}}
+#}}}
 
-" Register commands.
-call setreg('c', "I// j")      " Comment
-call setreg('u', "^3xj")         " Uncomment
-call setreg('i', "F r{A};")    " Initialize
-call setreg('s', "F r{A},j$")  " comma-Separated initialize
-call setreg('n', "[{hD]}dd")     " No braces
-call setreg('b', "A {jo}k^") " Braces
-
-let &cpoptions = s:save_cpo
+# Register commands.
+call setreg('c', "I// \<Esc>j")			# Comment
+call setreg('u', "^3xj")			# Uncomment
+call setreg('i', "F r{A};\<Esc>")		# Initialize
+call setreg('s', "F r{A},\<Esc>j$")		# comma-Separated initialize
+call setreg('n', "[{hD]}dd")			# No braces
+call setreg('b', "A {\<Esc>jo}\<Esc>k^")	# Braces
