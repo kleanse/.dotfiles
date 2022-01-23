@@ -51,7 +51,7 @@ def Undo_ftplugin()
 		endif
 	endfor
 enddef
-#}}}
+# }}}
 
 if !exists("*s:v_toggle_comment")
 	# Comment out lines selected in Visual mode if the first of such lines
@@ -68,9 +68,9 @@ if !exists("*s:v_toggle_comment")
 		endif
 		nohlsearch
 	endfunction
-	#}}}
+	# }}}
 endif
-#}}}
+# }}}
 
 # Mappings {{{
 if !exists("g:no_plugin_maps") && !exists("g:no_cpp_maps")
@@ -86,7 +86,7 @@ if !exists("g:no_plugin_maps") && !exists("g:no_cpp_maps")
 	xnoremap <buffer> <silent> <unique> <Plug>cpp_multiline_comment;
 	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
-#}}}
+# }}}
 
 # Register commands.
 call setreg('c', "I// \<Esc>j")			# Comment

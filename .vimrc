@@ -57,7 +57,7 @@ def g:Trim_peripheral_blank_lines()
 			: n_lines_deleted .. " fewer lines"
 	endif
 enddef
-#}}}
+# }}}
 
 def g:Trim_whitespace()
 	# g:Trim_whitespace() implementation {{{
@@ -67,8 +67,8 @@ def g:Trim_whitespace()
 	winrestview(save_view)
 	setreg('/', save_search)
 enddef
-#}}}
-#}}}
+# }}}
+# }}}
 
 # Internal functions. {{{
 # Expects: the current buffer is empty.
@@ -81,7 +81,7 @@ def Load_template_file(ext: string, curpos: list<number>)
 	deletebufline("%", 1)
 	cursor(curpos)
 enddef
-#}}}
+# }}}
 
 def Set_header_macros()
 	# Set_header_macros() implementation {{{
@@ -91,7 +91,7 @@ def Set_header_macros()
 	setline(2, getline(2) .. macro_name)
 	setline('$', getline('$') .. ' //' .. macro_name)
 enddef
-#}}}
+# }}}
 
 def Set_spell_highlights()
 	# Set_spell_highlights() implementation {{{
@@ -101,7 +101,7 @@ def Set_spell_highlights()
 	highlight SpellLocal cterm=nocombine ctermfg=15 ctermbg=6
 	highlight MatchParen cterm=underline		ctermbg=7
 enddef
-#}}}
+# }}}
 
 def Update_last_change()
 	# Update_last_change() implementation {{{
@@ -110,8 +110,8 @@ def Update_last_change()
 			   '\v(Last change:).*$', '\1 ' .. Date(), ''))
 	endif
 enddef
-#}}}
-#}}}
+# }}}
+# }}}
 
 # Autocommands {{{
 augroup vimrc
@@ -168,14 +168,14 @@ augroup vimrc
 		\ textwidth=79
 
 augroup END
-#}}}
+# }}}
 
 set background=light
 colorscheme solarized
 
 # Abbreviations {{{
 inoreabbrev lc: Last change:
-#}}}
+# }}}
 
 # Commands {{{
 # Like ":retab", but behaves like 'expandtab' is inverted, i.e., <Tab>s become
@@ -186,7 +186,7 @@ inoreabbrev lc: Last change:
 command -bang -range=% -nargs=? Iretab let &expandtab = !&expandtab
 				       | <line1>,<line2>retab<bang> <args>
 				       | let &expandtab = !&expandtab
-#}}}
+# }}}
 
 # Key mappings {{{
 g:mapleader = ","
@@ -281,4 +281,4 @@ cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
 
 # Discard stdout from tee with '> /dev/null'
 cnoremap <special> <Leader>w! w !sudo tee > /dev/null %
-#}}}
+# }}}

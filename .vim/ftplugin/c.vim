@@ -49,8 +49,8 @@ def Undo_ftplugin()
 		endif
 	endfor
 enddef
-#}}}
-#}}}
+# }}}
+# }}}
 
 # Mappings {{{
 if !exists("g:no_plugin_maps") && !exists("g:no_c_maps")
@@ -64,7 +64,7 @@ if !exists("g:no_plugin_maps") && !exists("g:no_c_maps")
 	xnoremap <buffer> <silent> <unique> <Plug>c_comment;
 	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
-#}}}
+# }}}
 
 # Register commands.
 call setreg('c', "I// \<Esc>j")			# Comment
