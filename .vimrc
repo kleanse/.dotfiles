@@ -9,11 +9,12 @@ set
 	\ autoindent
 	\ copyindent
 	\ hlsearch
-	\ nojoinspaces
 	\ listchars=tab:--\|
-	\ textwidth=79
-	\ wildmode=longest,list
+	\ nojoinspaces
 	\ nowrapscan
+	\ textwidth=79
+	\ visualbell t_vb=
+	\ wildmode=longest,list
 
 filetype plugin indent on
 
@@ -135,7 +136,15 @@ augroup vimrc
 					| silent Trim_whitespace()
 					| retab
 	autocmd BufWritePre *.txt     silent Update_last_change()
-	autocmd ColorScheme solarized silent Set_spell_highlights()
+	autocmd ColorScheme solarized
+			| try
+				| silent Set_spell_highlights()
+	#\ Reloading a Vim9 script deletes all existing script-local
+	#\ functions and variables. Thus, this function will not exist when
+	#\ this autocmd triggers from a reload. (See "vim9-reload" for more
+	#\ info.)
+			| catch /^Vim(eval):E117:.*Set_spell_highlights/
+			| endtry
 
 	# Disable the insertion of spaces with <Tab> when editing a
 	# Makefile. Note that some options have been set already and
