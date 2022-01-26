@@ -18,6 +18,7 @@ set
 
 filetype plugin indent on
 
+
 # User-defined functions. {{{
 def g:Date(): string
 	return strftime("%Y %b %d")
@@ -71,7 +72,60 @@ enddef
 # }}}
 # }}}
 
+
 # Internal functions. {{{
+
+
+# Functions for mimicking GNU-Readline shortcuts {{{
+
+# Data used for the overloaded Command-line commands CTRL-U and CTRL-W and
+# overwritten Command-line command CTRL-Y.
+final cmdline = {
+	buf: "",	# String that can be pasted with Command-line CTRL-Y.
+	lastpos: -1,	# The position of the last post-backward-kill
+			# operation.
+	lastline: "",	# The line of the last post-backward-kill operation.
+}
+
+# Used for overloading Command-line CTRL-U and CTRL-W.
+# Expects: mode() == "c" && {delchar} is a backspacing character (e.g.,
+#	   "\<BS>", "\<C-H>", "\<C-W>", etc.).
+# Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
+#	   string effectively saves the string deleted by {delchar} into a
+#	   local buffer. If this function is invoked in succession, the deleted
+#	   strings are concatenated.
+def Backward_kill_pre(delchar: string): string
+	# Backward_kill_word_pre implementation {{{
+	const curpos = getcmdpos()
+	const curline = getcmdline()
+	if curpos != 1
+	   && (curpos != cmdline.lastpos || curline != cmdline.lastline)
+		cmdline.buf = ""
+	endif
+	return delchar .. "\<ScriptCmd>Backward_kill_post('"
+		.. curline->substitute("'", "''", "g") .. "', "
+		.. curpos .. ")\<CR>"
+enddef
+# }}}
+
+# Expects: {preline} is the Command-line line and {prepos} is the Command-line
+#	   position of a Backward_kill_pre operation.
+#	   mode == "c" && 1 <= {prepos} <= len({preline})
+# Ensures: the string between {prepos} and the current position on {preline} is
+#	   prepended to a local buffer.
+def Backward_kill_post(preline: string, prepos: number)
+	# Backward_kill_post implementation {{{
+	const curpos = getcmdpos()
+	const deleted_str = (prepos == 1) ? ""
+					  : preline[curpos - 1 : prepos - 2]
+	cmdline.buf = deleted_str .. cmdline.buf
+	cmdline.lastpos = curpos
+	cmdline.lastline = getcmdline()
+enddef
+# }}}
+# }}}
+
+
 # Expects: the current buffer is empty.
 # Ensures: read the template file with the extension or suffix {ext} into the
 #	   current buffer and set the cursor's position to {curpos}. See
@@ -113,6 +167,7 @@ def Update_last_change()
 enddef
 # }}}
 # }}}
+
 
 # Autocommands {{{
 augroup vimrc
@@ -179,12 +234,15 @@ augroup vimrc
 augroup END
 # }}}
 
+
 set background=light
 colorscheme solarized
+
 
 # Abbreviations {{{
 inoreabbrev lc: Last change:
 # }}}
+
 
 # Commands {{{
 # Like ":retab", but behaves like 'expandtab' is inverted, i.e., <Tab>s become
@@ -196,6 +254,7 @@ command -bang -range=% -nargs=? Iretab let &expandtab = !&expandtab
 				       | <line1>,<line2>retab<bang> <args>
 				       | let &expandtab = !&expandtab
 # }}}
+
 
 # Key mappings {{{
 g:mapleader = ","
@@ -277,6 +336,16 @@ cnoremap <special> <M-F> <S-Right>
 
 # Transfer the default behavior of Command-line CTRL-F to CTRL-X.
 cnoremap <special> <C-X> <C-F>
+
+# Overwrite Command-line CTRL-Y: its default behavior is currently not being
+# exploited. Also, overload Command-line CTRL-U and CTRL-W: their default
+# behaviors are preserved, but, in conjunction with CTRL-Y, they behave similar
+# to the corresponding GNU-Readline shortcut keys: text deleted via CTRL-U and
+# CTRL-W can be retrieved with CTRL-Y.
+cnoremap <special> <expr> <C-U> Backward_kill_pre("\<C-U>")
+cnoremap <special> <expr> <C-W> Backward_kill_pre("\<C-W>")
+cnoremap <special> <expr> <C-Y> "\<C-R>\<C-R>='"
+		\ .. cmdline.buf->substitute("'", "''", "g") .. "'\<CR>"
 
 # Trim trailing whitespace.
 # Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
