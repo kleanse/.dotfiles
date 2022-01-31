@@ -109,10 +109,11 @@ enddef
 # }}}
 
 # Expects: {preline} is the Command-line line and {prepos} is the Command-line
-#	   position of a Backward_kill_pre operation.
-#	   mode == "c" && 1 <= {prepos} <= len({preline})
+#	   position of a pre-backward-kill operation.
+#	   mode() == "c" && 1 <= {prepos} <= len({preline})
 # Ensures: the string between {prepos} and the current position on {preline} is
-#	   prepended to a local buffer.
+#	   prepended to a local buffer (not a register so that data is not
+#	   clobbered).
 def Backward_kill_post(preline: string, prepos: number)
 	# Backward_kill_post implementation {{{
 	const curpos = getcmdpos()
@@ -197,7 +198,7 @@ augroup vimrc
 	#\ Reloading a Vim9 script deletes all existing script-local
 	#\ functions and variables. Thus, this function will not exist when
 	#\ this autocmd triggers from a reload. (See "vim9-reload" for more
-	#\ info.)
+	#\ information.)
 			| catch /^Vim(eval):E117:.*Set_spell_highlights/
 			| endtry
 
