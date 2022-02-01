@@ -266,6 +266,11 @@ g:maplocalleader = g:mapleader
 noremap  + ;
 noremap  _ ,
 
+# Overwrite Normal-mode ";" to save the current buffer quickly and show all
+# listed buffers (so that a buffer switch may be performed without issuing
+# ":ls" first).
+nnoremap <special> ; <Cmd>update <Bar> buffers<CR>
+
 # Quickly edit and source the vimrc file.
 nnoremap <special> <Leader>ev :split $MYVIMRC<CR>
 nnoremap <special> <Leader>sv :source $MYVIMRC<CR>
