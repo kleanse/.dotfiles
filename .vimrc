@@ -124,6 +124,17 @@ def Backward_kill_post(preline: string, prepos: number)
 	cmdline.lastline = getcmdline()
 enddef
 # }}}
+
+# Expects: mode() == "c"
+# Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
+#	   string effectively pastes the content of cmdline.buf before the
+#	   cursor.
+def Put_cmdline_buffer(): string
+	# Put_cmdline_buffer implementation {{{
+	return "\<C-R>\<C-R>='"
+		.. cmdline.buf->substitute("'", "''", "g") .. "'\<CR>"
+enddef
+# }}}
 # }}}
 
 
@@ -348,10 +359,9 @@ cnoremap <special> <C-X> <C-F>
 # behaviors are preserved, but, in conjunction with CTRL-Y, they behave similar
 # to the corresponding GNU-Readline shortcut keys: text deleted via CTRL-U and
 # CTRL-W can be retrieved with CTRL-Y.
-cnoremap <special> <expr> <C-U> Backward_kill_pre("\<C-U>")
-cnoremap <special> <expr> <C-W> Backward_kill_pre("\<C-W>")
-cnoremap <special> <expr> <C-Y> "\<C-R>\<C-R>='"
-		\ .. cmdline.buf->substitute("'", "''", "g") .. "'\<CR>"
+cnoremap <special> <expr> <C-U> <SID>Backward_kill_pre("\<C-U>")
+cnoremap <special> <expr> <C-W> <SID>Backward_kill_pre("\<C-W>")
+cnoremap <special> <expr> <C-Y> <SID>Put_cmdline_buffer()
 
 # Trim trailing whitespace.
 # Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
