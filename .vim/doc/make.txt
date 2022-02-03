@@ -419,12 +419,12 @@ using one long line, but is easier to read. |make-03.1.1|
 
 	make
 
-   To use this makefile to delete the executable file and all the object files
+<   To use this makefile to delete the executable file and all the object files
 from the directory, type: >
 
 	make clean
 
-   In the example makefile, the targets include the executable file "edit",
+<   In the example makefile, the targets include the executable file "edit",
 and the object files "main.o" and "kbd.o".  The prerequisites are files such
 as "main.c" and "defs.h".  In fact, each ".o" file is both a target and a
 prerequisite.  Recipes include "cc -c main.c" and "cc -c kbd.c".
@@ -637,7 +637,7 @@ that the directory is "clean".
 	clean:
 		rm edit $(objects)
 
-   In practice, we might want to write the rule in a somewhat more complicated
+<   In practice, we might want to write the rule in a somewhat more complicated
 manner to handle unanticipated situations.  We would do this: >
 
 	.PHONY : clean
@@ -758,12 +758,12 @@ characters dollar sign/backslash/newline: >
 	var := one$\
 	       word
 
-   After "make" removes the backslash/newline and condenses the following line
+<   After "make" removes the backslash/newline and condenses the following line
 into a single space, this is equivalent to: >
 
 	var := one$ word
 
-   Then "make" will perform variable expansion.  The variable reference "$ "
+<   Then "make" will perform variable expansion.  The variable reference "$ "
 refers to a variable with the one-character name " " (space) which does not
 exist, and so expands to the empty string, giving a final assignment which is
 the equivalent of: >
@@ -827,7 +827,7 @@ contain any variable or function references, they are expanded.
 
 	include foo a.mk b.mk c.mk bish bash
 
-   When "make" processes an "include" directive, it suspends reading of the
+<   When "make" processes an "include" directive, it suspends reading of the
 containing makefile and reads from each listed file in turn.  When that is
 finished, "make" resumes reading the makefile in which the directive appears.
 
@@ -863,7 +863,7 @@ of "include", like this: >
 
 	-include FILENAMES...
 
-   This acts like "include" in every way except that there is no error (not
+<   This acts like "include" in every way except that there is no error (not
 even a warning) if any of the FILENAMES (or any prerequisites of any of the
 FILENAMES) do not exist or cannot be remade.
 
@@ -1096,7 +1096,7 @@ A rule is always expanded the same way, regardless of the form: >
 	IMMEDIATE : IMMEDIATE ; DEFERRED
 		DEFERRED
 
-   That is, the target and prerequisite sections are expanded immediately, and
+<   That is, the target and prerequisite sections are expanded immediately, and
 the recipe used to build the target is always deferred.  This is true for
 explicit rules, pattern rules, suffix rules, static pattern rules, and simple
 prerequisite definitions.
@@ -1176,7 +1176,7 @@ to the secondary expansion phase.  For example, consider this makefile: >
 	TWOVAR = twofile
 	myfile: $(ONEVAR) $$(TWOVAR)
 
-   After the first expansion phase the prerequisites list of the "myfile"
+<   After the first expansion phase the prerequisites list of the "myfile"
 target will be "onefile" and "$(TWOVAR)"; the first (unescaped) variable
 reference to ONEVAR is expanded, while the second (escaped) variable reference
 is simply unescaped, without being recognized as a variable reference.  Now
@@ -1197,7 +1197,7 @@ variables are reset; consider this example: >
 	twofile: $$(AVAR)
 	AVAR = bottom
 
-   Here the prerequisite of "onefile" will be expanded immediately, and
+<   Here the prerequisite of "onefile" will be expanded immediately, and
 resolve to the value "top", while the prerequisite of "twofile" will not be
 full expanded until the secondary expansion and yield a value of "bottom".
 
@@ -1341,7 +1341,7 @@ Here is an example of a rule: >
 	foo.o : foo.c defs.h	# module for twiddling the frobs
 		cc -c -g foo.c
 
-   Its target is "foo.o" and its prerequisites are "foo.c" and "defs.h".  It
+<   Its target is "foo.o" and its prerequisites are "foo.c" and "defs.h".  It
 has one command in the recipe: "cc -c -g foo.c".  The recipe starts with a tab
 to identify it as a recipe.
 
@@ -1370,7 +1370,7 @@ or like this: >
 		RECIPE
 		...
 
-   The TARGETS are file names, separated by spaces.  Wildcard characters may
+<   The TARGETS are file names, separated by spaces.  Wildcard characters may
 be used (|make-04.4|) and a name of the form "A(M)" represents member M in
 archive file A (|make-11.1|).  Usually there is only one target per rule, but
 occasionally there is a reason to have more (|make-04.10|).
@@ -1432,7 +1432,7 @@ order-only: >
 
 	TARGETS : NORMAL-PREREQUISITES | ORDER-ONLY-PREREQUISITES
 
-   The normal prerequisites section may of course be empty.  Also, you may
+<   The normal prerequisites section may of course be empty.  Also, you may
 still declare multiple lines of prerequisites for the same target: they are
 appended appropriately (normal prerequisites are appended to the list of
 normal prerequisites; order-only prerequisites are appended to the list of
@@ -1501,7 +1501,7 @@ shell.  For example, here is a rule to delete all the object files: >
 	clean:
 		rm -f *.o
 
-   Wildcards are also useful in the prerequisites of a rule.  With the
+<   Wildcards are also useful in the prerequisites of a rule.  With the
 following rule in the makefile, "make print" will print all the ".c" files
 that have changed since the last time you printed them: >
 
@@ -1558,7 +1558,7 @@ separate directories in pathnames, like so: >
 
 	c:\foo\bar\baz.c
 
-   This is equivalent to the Unix-style "c:/foo/bar/baz.c" (the "c:" part is
+<   This is equivalent to the Unix-style "c:/foo/bar/baz.c" (the "c:" part is
 the so-called drive letter).  When "make" runs on these systems, it supports
 backslashes as well as the Unix-style forward slashes in pathnames.  However,
 this support does _not_ include the wildcard expansion, where backslash is a
@@ -1585,7 +1585,7 @@ files in a directory, like this: >
 
 	$(wildcard *.c)
 
-   We can change the list of C source files into a list of object files by
+<   We can change the list of C source files into a list of object files by
 replacing the ".c" suffix with ".o" in the result, like this: >
 
 	$(patsubst %.c,%.o,$(wildcard *.c))
@@ -1983,7 +1983,7 @@ will always have their recipe run.
 		rm $(objects)
 	FORCE:
 
-   Here the target "FORCE" satisfies the special conditions, so the target
+<   Here the target "FORCE" satisfies the special conditions, so the target
 "clean" that depends on it is forced to run its recipe.  There is nothing
 special about the name "FORCE", but that is one name commonly used this way.
 
@@ -2119,7 +2119,7 @@ Certain names have special meanings if they appear as targets.
 		dst: src
 			cp -p src dst
 
-     Since "cp -p" discards the sub-second part of "src"'s time stamp, "dst"
+<     Since "cp -p" discards the sub-second part of "src"'s time stamp, "dst"
      is typically slightly older than "src" even when it is up to date.  The
      ".LOW_RESOLUTION_TIME" line causes "make" to consider "dst" to be up to
      date if its time stamp is at the start of the same second that "src"'s
@@ -2744,7 +2744,7 @@ use this for a command whose only effect is to print something, such as an
 
 	@echo About to make distribution files
 
-   When "make" is given the flag "-n" or "--just-print" it only echoes most
+<   When "make" is given the flag "-n" or "--just-print" it only echoes most
 recipes, without executing them |make-09.7|.  In this case even the recipe
 lines starting with "@" are printed.  This flag is useful for finding out which
 recipes "make" thinks are necessary without actually doing them.
@@ -2835,7 +2835,7 @@ or >
 		my @f = qw(a b c);
 		print "@f\n";
 
-   As a special feature, if "SHELL" is determined to be a POSIX-style shell,
+<   As a special feature, if "SHELL" is determined to be a POSIX-style shell,
 the special prefix characters in "internal" recipe lines will be _removed_
 before the recipe is processed.  This feature is intended to allow existing
 makefiles to add the ".ONESHELL" special target and still run properly without
@@ -2848,7 +2848,7 @@ functionality.  For example, this works as expected: >
 		@cd $(@D)
 		@gobble $(@F) > ../$@
 
-   Even with this special feature, however, makefiles with ".ONESHELL" will
+<   Even with this special feature, however, makefiles with ".ONESHELL" will
 behave differently in ways that could be noticeable.  For example, normally if
 any line in the recipe fails, that causes the rule to fail and no more recipe
 lines are processed.  Under ".ONESHELL" a failure of any but the final recipe
@@ -3207,7 +3207,7 @@ or, equivalently, this (|make-09.7|): >
 	subsystem:
 		$(MAKE) -C subdir
 
-   You can write recursive "make" commands just by copying this example, but
+<   You can write recursive "make" commands just by copying this example, but
 there are many things to know about how they work and why, and about how the
 sub-"make" relates to the top-level "make".  You may also find it useful to
 declare targets that invoke recursive "make" commands as ".PHONY" (for more
@@ -3231,7 +3231,7 @@ explicit command name "make", as shown here: >
 	subsystem:
 		cd subdir && $(MAKE)
 
-   The value of this variable is the file name with which "make" was invoked.
+<   The value of this variable is the file name with which "make" was invoked.
 If this file name was "/bin/make", then the recipe executed is "cd subdir &&
 /bin/make".  If you use a special version of "make" to run the top-level
 makefile, the same special version will be executed for recursive invocations.
@@ -3423,7 +3423,7 @@ of "MAKEFLAGS", like this: >
 	subsystem:
 		cd subdir && $(MAKE) MAKEFLAGS=
 
-   The command line variable definitions really appear in the variable
+<   The command line variable definitions really appear in the variable
 "MAKEOVERRIDES", and "MAKEFLAGS" contains a reference to this variable.  If
 you do want to pass flags down normally, but don't want to pass down the
 command line variable definitions, you can reset "MAKEOVERRIDES" to empty,
@@ -3774,7 +3774,7 @@ recipe then looks like this: >
 	${subdirs}:
 		${MAKE} -C $@ all
 
-   Simply expanded variables generally make complicated makefile programming
+<   Simply expanded variables generally make complicated makefile programming
 more predictable because they work like variables in most programming
 languages.  They allow you to redefine a variable using its own value (or its
 value processed in some way by one of the expansion functions) and to use the
@@ -4051,7 +4051,7 @@ and >
 	FOO = bar
 	endif
 
-   The shell assignment operator "!=" can be used to execute a shell script
+<   The shell assignment operator "!=" can be used to execute a shell script
 and set a variable to its output.  This operator first evaluates the
 right-hand side, then passes that result to the shell for execution.  If the
 result of the execution ends in a newline, that one newline is removed; all
@@ -4061,7 +4061,7 @@ into the named recursively-expanded variable.  For example: >
 	hash != printf "\043"
 	file_list != find . -name "*.c"
 
-   If the result of the execution could produce a "$", and you don"t intend
+<   If the result of the execution could produce a "$", and you don"t intend
 what follows that to be interpreted as a make variable or function reference,
 then you must replace every "$" with "$$" as part of the execution.
 Alternatively, you can set a simply expanded variable to the result of running
@@ -4070,7 +4070,7 @@ a program using the "shell" function call |make-08.13|.  For example: >
 	hash := $(shell printf "\043")
 	var := $(shell find . -name "*.c")
 
-   As with the "shell" function, the exit status of the just-invoked shell
+<   As with the "shell" function, the exit status of the just-invoked shell
 script is stored in the ".SHELLSTATUS" variable.
 
 
@@ -4117,7 +4117,7 @@ is exactly equivalent to: >
 	variable := value
 	variable := $(variable) more
 
-   On the other hand, when you use "+=" with a variable that you defined first
+<   On the other hand, when you use "+=" with a variable that you defined first
 to be recursively-expanded using plain "=", "make" does something a bit
 different.  Recall that when you define a recursively-expanded variable,
 "make" does not expand the value you set for variable and function references
@@ -4197,7 +4197,7 @@ directive: >
 
 	override CFLAGS += -g
 
-   You can also use "override" directives with "define" directives.  This is
+<   You can also use "override" directives with "define" directives.  This is
 done as you might expect: >
 
 	override define foo =
@@ -4252,7 +4252,7 @@ such a line will not be considered "make" directives. >
 	echo $(bar)
 	endef
 
-   When used in a recipe, the previous example is functionally equivalent to
+<   When used in a recipe, the previous example is functionally equivalent to
 this: >
 
 	two-lines = echo foo; echo $(bar)
@@ -4355,7 +4355,7 @@ other target-specific assignments).
 
 	TARGET ... : VARIABLE-ASSIGNMENT
 
-   Target-specific variable assignments can be prefixed with any or all of the
+<   Target-specific variable assignments can be prefixed with any or all of the
 special keywords "export", "override", or "private"; these apply their normal
 behavior to this instance of the variable only.
 
@@ -6665,7 +6665,7 @@ Linking a single object file
 		rm -f y.o
 		rm -f z.o
 
-     In more complicated cases, such as when there is no object file whose
+<     In more complicated cases, such as when there is no object file whose
      name derives from the executable file name, you must write an explicit
      recipe for linking.
 
@@ -7900,7 +7900,7 @@ your makefile using the "guile" function: >
 
 	$(guile (load "guileio.scm"))
 
-   An advantage to this method is that when editing "guileio.scm", your editor
+<   An advantage to this method is that when editing "guileio.scm", your editor
 will understand that this file contains Scheme syntax rather than makefile
 syntax.
 
@@ -7914,7 +7914,7 @@ utility you're using accepts the list as input as well: >
 		 $(guile (mkclose))
 		$(LINK) < tmp.out
 
-   A more comprehensive suite of file manipulation procedures is possible of
+<   A more comprehensive suite of file manipulation procedures is possible of
 course.  You could, for example, maintain multiple output files at the same
 time by choosing a symbol for each one and using it as the key to a hash
 table, where the value is a port, then returning the symbol to be stored in a
@@ -9507,7 +9507,7 @@ installdirs
 			    $(DESTDIR)$(libdir) $(DESTDIR)$(infodir) \
 			    $(DESTDIR)$(mandir)
 
-     This rule should not modify the directories where compilation is done.
+<     This rule should not modify the directories where compilation is done.
      It should do nothing but create installation directories.
 
 
