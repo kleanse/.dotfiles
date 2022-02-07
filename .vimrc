@@ -174,12 +174,11 @@ def Update_last_change()
 	# Update_last_change() implementation {{{
 	if &filetype == "help"
 		setline(1, getline(1)->substitute(
-			   '\v(Last change:).*$', '\1 ' .. Date(), ''))
+			   '\v(Last change:).*$', '\1 ' .. g:Date(), ''))
 	endif
 enddef
 # }}}
 # }}}
-
 
 # Autocommands {{{
 augroup vimrc
@@ -199,8 +198,8 @@ augroup vimrc
 					| execute "normal! A "
 					| startinsert!
 					| redrawstatus
-	autocmd BufWritePre *	      silent Trim_peripheral_blank_lines()
-					| silent Trim_whitespace()
+	autocmd BufWritePre *	      silent g:Trim_peripheral_blank_lines()
+					| silent g:Trim_whitespace()
 					| retab
 	autocmd BufWritePre *.txt     silent Update_last_change()
 	autocmd ColorScheme solarized
@@ -365,10 +364,10 @@ cnoremap <special> <expr> <C-Y> <SID>Put_cmdline_buffer()
 
 # Trim trailing whitespace.
 # Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
-cnoremap <special> <Leader>tws call Trim_whitespace()
+cnoremap <special> <Leader>tws call g:Trim_whitespace()
 # Trim blank lines at the start and end of a file.
 # Mnemonic: "Trim Blank Lines".
-cnoremap <special> <Leader>tbl call Trim_peripheral_blank_lines()
+cnoremap <special> <Leader>tbl call g:Trim_peripheral_blank_lines()
 # Trim blank lines at the start and end of a file and trailing whitespace.
 # Mnemonic: "Trim All Excess".
 cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
