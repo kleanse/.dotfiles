@@ -37,12 +37,14 @@ def g:Trim_peripheral_blank_lines()
 	endfor
 
 	var n_ending_blank_lines = 0
-	for i in range(total_lines, 1, -1)
-		if getline(i) =~ '\S'
-			break
-		endif
-		++n_ending_blank_lines
-	endfor
+	if n_starting_blank_lines != total_lines
+		for i in range(total_lines, 1, -1)
+			if getline(i) =~ '\S'
+				break
+			endif
+			++n_ending_blank_lines
+		endfor
+	endif
 
 	# Delete ending lines first; doing the reverse messes the line count
 	# for the ending lines.
