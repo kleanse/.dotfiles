@@ -98,6 +98,41 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Set custom colors for "less" via ANSI escape sequences. The following text
+# describes these sequences' format:
+# ESC [ Ps ;...; Ps m     Select Graphic Rendition
+#       Ps = None or 0    Default Rendition
+#            1            Bold
+#            2            Faint
+#            3            Standout Mode (ANSI: Italicized)
+#            4            Underlined
+#            5            Blinking
+#            7            Negative Image
+#            22           Normal Intensity
+#            23           Standout Mode off (ANSI: Italicized off)
+#            24           Not Underlined
+#            25           Not Blinking
+#            27           Positive Image
+#            30           Foreground Black
+#            31           Foreground Red
+#            32           Foreground Green
+#            33           Foreground Yellow
+#            34           Foreground Blue
+#            35           Foreground Magenta
+#            36           Foreground Cyan
+#            37           Foreground White
+#            39           Foreground Default
+#            40           Background Black
+#            ...          ...
+#            49           Background Default
+# (A '$' in front of a string tells the shell to interpret escape sequences.)
+export LESS_TERMCAP_md=$'\x1b[1;31m'	# begin bold
+export LESS_TERMCAP_us=$'\x1b[3;32m'	# begin underline
+export LESS_TERMCAP_so=$'\x1b[1;37;43m'	# begin standout
+export LESS_TERMCAP_me=$'\x1b[0m'	# end mode
+export LESS_TERMCAP_ue=$'\x1b[0m'	# end underline
+export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
+
 fg-ctrl-z() {
 	if [[ $#BUFFER -eq 0 ]]; then
 		BUFFER="fg"
@@ -125,9 +160,10 @@ bindkey "^Z" fg-ctrl-z
 alias c++std="g++ -std=c++17 -pedantic-errors -Wall -Wextra -Werror"
 alias cstd="gcc -pedantic-errors -Wall -Wextra -Werror"
 alias ds="dirs -v"
+alias gdtl="git difftool"
 alias py="python3"
 
-# ENVIRNOMENT VARIABLES
+# ENVIRONMENT VARIABLES
 [ -f ~/.env_vars ] && source ~/.env_vars
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
