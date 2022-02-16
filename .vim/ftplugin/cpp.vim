@@ -53,13 +53,13 @@ def Undo_ftplugin()
 enddef
 # }}}
 
-if !exists("*s:v_toggle_comment")
+if !exists("*s:V_toggle_comment")
 	# Comment out lines selected in Visual mode if the first of such lines
 	# is not commented. Otherwise, uncomment them. The comment style is
 	# C++. (Note that this function is defined with ":function" so that
 	# "range" can be used; legacy syntax is in force.)
-	function s:v_toggle_comment() range
-		" s:v_toggle_comment() implementation {{{
+	function s:V_toggle_comment() range
+		" s:V_toggle_comment() implementation {{{
 		let l:range = a:firstline .. ',' .. a:lastline
 		if getline(a:firstline) =~ '\v^\s*//'
 			execute l:range .. 'substitute`\v^\s*\zs// ?``'
@@ -82,7 +82,7 @@ if !exists("g:no_plugin_maps") && !exists("g:no_cpp_maps")
 	endfor
 	nnoremap <buffer> <unique> <Plug>cpp_make; <Cmd>make<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>cpp_comment;
-	       \ :<Home>silent <End>call <SID>v_toggle_comment()<CR>
+	       \ :<Home>silent <End>call <SID>V_toggle_comment()<CR>
 	xnoremap <buffer> <silent> <unique> <Plug>cpp_multiline_comment;
 	       \ :<Home>silent <End>call klen#ft#c#v_toggle_comment()<CR>
 endif
