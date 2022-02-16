@@ -263,9 +263,11 @@ inoreabbrev lc: Last change:
 # Mnemonic: Inverted retab
 # Use:
 #	:[range]Iretab[!] [new_tabstop]
-command -bang -range=% -nargs=? Iretab let &expandtab = !&expandtab
-				       | <line1>,<line2>retab<bang> <args>
-				       | let &expandtab = !&expandtab
+command -bang -range=% -nargs=? Iretab {
+		&expandtab = !&expandtab
+		:<line1>,<line2>retab<bang> <args>
+		&expandtab = !&expandtab
+	}
 # }}}
 
 
