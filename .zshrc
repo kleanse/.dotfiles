@@ -133,20 +133,16 @@ export LESS_TERMCAP_me=$'\x1b[0m'	# end mode
 export LESS_TERMCAP_ue=$'\x1b[0m'	# end underline
 export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
 
-fg-ctrl-z() {
-	if [[ $#BUFFER -eq 0 ]]; then
-		BUFFER="fg"
-		zle accept-line
-	else
-		zle push-input
-		zle clear-screen
-	fi
+resume-job() {
+	zle push-input
+	BUFFER="fg"
+	zle accept-line
 }
-zle -N fg-ctrl-z
+zle -N resume-job
 
 # Zsh keybinds
 bindkey "^U" backward-kill-line
-bindkey "^Z" fg-ctrl-z
+bindkey "^Z" resume-job
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -164,7 +160,7 @@ alias gdtl="git difftool"
 alias py="python3"
 
 # ENVIRONMENT VARIABLES
-[ -f ~/.env_vars ] && source ~/.env_vars
+[[ -f ~/.env_vars ]] && source ~/.env_vars
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
