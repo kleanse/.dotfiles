@@ -172,12 +172,30 @@ def Set_spell_highlights()
 enddef
 # }}}
 
-def Update_last_change()
+# Ensures: updates the date found after the first occurrence of the string
+#	   "Last change:" in the first 20 lines of the current file. The format
+#	   of the new date may be specified (see strftime() for valid formats).
+#	   If no format is given, the date returned by g:Date() is used.
+def Update_last_change(format = '')
 	# Update_last_change() implementation {{{
-	if &filetype == "help"
-		setline(1, getline(1)->substitute(
-			   '\v(Last change:).*$', '\1 ' .. g:Date(), ''))
+	const pat = '\vLast [Cc]hange:'
+	var limit = 20	# Number of starting lines to read.
+	if line('$') < limit
+		limit = line('$')
 	endif
+	for i in range(1, limit)
+		const line = getline(i)
+		if line =~ pat
+			var c = ""
+			if line !~ pat .. '\s'
+				c = "\t"
+			endif
+			setline(i, line->substitute(pat .. '\s*\zs.*$',
+				   c .. ((format->empty())
+					? g:Date() : strftime(format)), ''))
+			break
+		endif
+	endfor
 enddef
 # }}}
 # }}}
@@ -202,8 +220,8 @@ augroup vimrc
 					| redrawstatus
 	autocmd BufWritePre *	      silent g:Trim_peripheral_blank_lines()
 					| silent g:Trim_whitespace()
+					| silent Update_last_change()
 					| retab
-	autocmd BufWritePre *.txt     silent Update_last_change()
 	autocmd ColorScheme solarized
 			| try
 				| silent Set_spell_highlights()
