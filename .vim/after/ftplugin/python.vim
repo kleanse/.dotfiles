@@ -1,25 +1,21 @@
-vim9script noclear
+vim9script
+# Script overruling and adding to the distributed "python.vim" ftplugin.
+# Language:	Python
+# Maintainer:	Kenny Lam
+# Last Change:	2022 Feb 22
 
-# Vim filetype plugin for python files.
-# 2022 Feb 16 - Written by Kenny Lam.
+# Along with the side effects of the distributed ftplugin, undo the side
+# effects of this script.
+b:undo_ftplugin ..= "| call " .. expand("<SID>") .. "Undo_ftplugin()"
 
-if exists("b:did_ftplugin")
-	finish
-endif
-b:did_ftplugin = 1
+setlocal formatoptions+=tcroqlj
+setlocal textwidth=79
 
-b:undo_ftplugin = "call " .. expand("<SID>") .. "Undo_ftplugin()"
-
-setlocal
-	\ autoindent
-	\ formatoptions=tcroqlj
-	\ textwidth=79
-
+if !exists("*Undo_ftplugin")
 def Undo_ftplugin()
 	# Undo_ftplugin() implementation {{{
-	setlocal
-		\ autoindent<
-		\ formatoptions<
-		\ textwidth<
+	setlocal formatoptions<
+	setlocal textwidth<
 enddef
 # }}}
+endif
