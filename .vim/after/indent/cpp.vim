@@ -2,9 +2,9 @@ vim9script
 # Script overruling and adding to the distributed "cpp.vim" indent file.
 # Language:	C++
 # Maintainer:	Kenny Lam
-# Last Change:	2022 Feb 22
+# Last Change:	2022 Feb 28
 
-let b:undo_indent ..= "| setl cino<"
+b:undo_indent ..= "| setl cino<"
 
 # 'cindent' is enabled in the distributed "cpp.vim" indent script.
 
