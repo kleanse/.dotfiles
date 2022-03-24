@@ -98,6 +98,9 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Zsh options
+setopt EXTENDED_GLOB
+
 # Set custom colors for "less" via ANSI escape sequences. The following text
 # describes these sequences' format:
 # ESC [ Ps ;...; Ps m     Select Graphic Rendition
@@ -141,11 +144,22 @@ resume-job() {
 	BUFFER="fg"
 	zle accept-line
 }
+
+show-jobs() {
+	zle push-input
+	BUFFER="jobs -l"
+	zle accept-line
+}
+
 zle -N resume-job
+zle -N show-jobs
 
 # Zsh keybinds
 bindkey "^U" backward-kill-line
 bindkey "^Z" resume-job
+bindkey "^[j" show-jobs
+bindkey "^[r" redo
+bindkey "^[u" undo
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -156,15 +170,25 @@ bindkey "^Z" resume-job
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Print directory stack
+alias ds="dirs -v"
 # Compiler aliases
 alias c++std="g++ -std=c++17 -pedantic-errors -Wall -Wextra -Werror"
 alias cstd="gcc -pedantic-errors -Wall -Wextra -Werror"
-# Print directory stack
-alias ds="dirs -v"
 # Git aliases
 alias gdtl="git difftool"
+# Preferred PDF viewer
+alias pdf="zathura"
 # Preferred Python interpreter
 alias py="python3"
+# Preferred web browser
+alias wb="firefox"
+
+# Set "vim" as an alias to "vimx" if the latter exists.
+if [[ -x "$(command -v vimx)" ]]; then
+	alias vim='vimx'
+	alias view='vimx -R'
+fi
 
 # ENVIRONMENT VARIABLES
 [[ -f ~/.env_vars ]] && source ~/.env_vars
