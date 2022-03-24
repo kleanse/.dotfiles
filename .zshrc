@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/kenny/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -153,10 +153,14 @@ bindkey "^Z" resume-job
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Compiler aliases
 alias c++std="g++ -std=c++17 -pedantic-errors -Wall -Wextra -Werror"
 alias cstd="gcc -pedantic-errors -Wall -Wextra -Werror"
+# Print directory stack
 alias ds="dirs -v"
+# Git aliases
 alias gdtl="git difftool"
+# Preferred Python interpreter
 alias py="python3"
 
 # ENVIRONMENT VARIABLES
