@@ -132,6 +132,9 @@ export LESS_TERMCAP_so=$'\x1b[1;37;43m'	# begin standout
 export LESS_TERMCAP_me=$'\x1b[0m'	# end mode
 export LESS_TERMCAP_ue=$'\x1b[0m'	# end underline
 export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
+# Disable SGR escape sequences; needed for some terminals (visit
+# https://unix.stackexchange.com/a/6357 for more information).
+export GROFF_NO_SGR=1
 
 resume-job() {
 	zle push-input
