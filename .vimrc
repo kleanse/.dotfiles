@@ -127,6 +127,18 @@ def Backward_kill_post(preline: string, prepos: number)
 enddef
 # }}}
 
+# Expects: none
+# Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
+#	   string effectively deletes the character under the cursor if such a
+#	   character exists; otherwise, it lists the names that match the
+#	   pattern in front of the cursor (i.e., the behavior of Command-line
+#	   CTRL-D).
+def Delete_char_or_list(): string
+	# Delete_char_or_list() implementation {{{
+	return (getcmdpos() > getcmdline()->len()) ? "\<C-D>" : "\<Del>"
+enddef
+# }}}
+
 # Expects: mode() == "c"
 # Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
 #	   string effectively pastes the content of cmdline.buf before the
@@ -363,6 +375,10 @@ cnoremap <special> <C-X> <C-F>
 cnoremap <special> <expr> <C-U> <SID>Backward_kill_pre("\<C-U>")
 cnoremap <special> <expr> <C-W> <SID>Backward_kill_pre("\<C-W>")
 cnoremap <special> <expr> <C-Y> <SID>Put_cmdline_buffer()
+# Overload Command-line CTRL-D: it still performs its normal behavior, but if a
+# character is under the cursor, it executes the GNU-Readline behavior (i.e.,
+# delete the character).
+cnoremap <special> <expr> <C-D> <SID>Delete_char_or_list()
 
 # Trim trailing whitespace.
 # Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
