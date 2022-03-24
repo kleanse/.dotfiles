@@ -311,11 +311,22 @@ nnoremap <special> <Leader>x
 	\ <Bar> endif<CR>
 
 # Access system clipboard.
-nnoremap <special> <Leader>p "+p
-nnoremap <special> <Leader>P "+P
-xnoremap <special> <Leader>p "-d"+P
-xnoremap <special> <Leader>y "+y
-xnoremap <special> <Leader>x "+d
+nmap <special> <Leader>p "+p
+nmap <special> <Leader>P "+P
+xmap <special> <Leader>p "-d"+P
+xmap <special> <Leader>y "+y
+xmap <special> <Leader>x "+d
+
+# Enable system-clipboard access for the Wayland window system (requires the
+# "wl-clipboard" utility program).
+if exists("$WAYLAND_DISPLAY")
+	nnoremap <special> "+p
+			 \ <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+p
+	nnoremap <special> "+P
+			 \ <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+P
+	xnoremap <special> "+y "+y<Cmd>call system('wl-copy', @+)<CR>
+	xnoremap <special> "+d "+d<Cmd>call system('wl-copy', @+)<CR>
+endif
 
 # Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 # former command, use ":join" instead. The latter might not need addressed:
