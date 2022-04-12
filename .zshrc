@@ -177,6 +177,8 @@ alias c++std="g++ -std=c++17 -pedantic-errors -Wall -Wextra -Werror"
 alias cstd="gcc -pedantic-errors -Wall -Wextra -Werror"
 # Git aliases
 alias gdtl="git difftool"
+# Preferred image viewer
+alias imv="imv"
 # Preferred PDF viewer
 alias pdf="zathura"
 # Preferred Python interpreter
