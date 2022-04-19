@@ -80,11 +80,11 @@ enddef
 
 # Functions for mimicking GNU-Readline shortcuts {{{
 
-# Data used for the overloaded Command-line commands CTRL-U and CTRL-W and
-# overwritten Command-line command CTRL-Y.
-final cmdline = {
+# Data used for the overloaded Command-line keys CTRL-U and CTRL-W and
+# overwritten Command-line key CTRL-Y.
+final CMDLINE = {
 	buf: "",	# String that can be pasted with Command-line CTRL-Y.
-	lastpos: -1,	# The position of the last post-backward-kill
+	lastpos: -1,	# The cursor position of the last post-backward-kill
 			# operation.
 	lastline: "",	# The line of the last post-backward-kill operation.
 }
@@ -97,12 +97,12 @@ final cmdline = {
 #	   local buffer. If this function is invoked in succession, the deleted
 #	   strings are concatenated.
 def Backward_kill_pre(delchar: string): string
-	# Backward_kill_word_pre implementation {{{
+	# Backward_kill_pre() implementation {{{
 	const curpos = getcmdpos()
 	const curline = getcmdline()
 	if curpos != 1
-	   && (curpos != cmdline.lastpos || curline != cmdline.lastline)
-		cmdline.buf = ""
+	   && (curpos != CMDLINE.lastpos || curline != CMDLINE.lastline)
+		CMDLINE.buf = ""
 	endif
 	return delchar .. "\<ScriptCmd>Backward_kill_post('"
 		.. curline->substitute("'", "''", "g") .. "', "
@@ -117,13 +117,13 @@ enddef
 #	   prepended to a local buffer (not a register so that data is not
 #	   clobbered).
 def Backward_kill_post(preline: string, prepos: number)
-	# Backward_kill_post implementation {{{
+	# Backward_kill_post() implementation {{{
 	const curpos = getcmdpos()
 	const deleted_str = (prepos == 1) ? ""
 					  : preline[curpos - 1 : prepos - 2]
-	cmdline.buf = deleted_str .. cmdline.buf
-	cmdline.lastpos = curpos
-	cmdline.lastline = getcmdline()
+	CMDLINE.buf = deleted_str .. CMDLINE.buf
+	CMDLINE.lastpos = curpos
+	CMDLINE.lastline = getcmdline()
 enddef
 # }}}
 
@@ -131,8 +131,8 @@ enddef
 # Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
 #	   string effectively deletes the character under the cursor if such a
 #	   character exists; otherwise, it lists the names that match the
-#	   pattern in front of the cursor (i.e., the behavior of Command-line
-#	   CTRL-D).
+#	   pattern in front of the cursor (i.e., the default behavior of
+#	   Command-line CTRL-D).
 def Delete_char_or_list(): string
 	# Delete_char_or_list() implementation {{{
 	return (getcmdpos() > getcmdline()->len()) ? "\<C-D>" : "\<Del>"
@@ -141,21 +141,21 @@ enddef
 
 # Expects: mode() == "c"
 # Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
-#	   string effectively pastes the content of cmdline.buf before the
+#	   string effectively pastes the content of CMDLINE.buf before the
 #	   cursor.
 def Put_cmdline_buffer(): string
 	# Put_cmdline_buffer implementation {{{
 	return "\<C-R>\<C-R>='"
-		.. cmdline.buf->substitute("'", "''", "g") .. "'\<CR>"
+		.. CMDLINE.buf->substitute("'", "''", "g") .. "'\<CR>"
 enddef
 # }}}
 # }}}
 
 
 # Expects: the current buffer is empty.
-# Ensures: read the template file with the extension or suffix {ext} into the
-#	   current buffer and set the cursor's position to {curpos}. See
-#	   TEMPLATE_PATH for where template files are searched.
+# Ensures: read the template file with the extension {ext} into the current
+#	   buffer and set the cursor's position to {curpos}. See TEMPLATE_PATH
+#	   for where template files are searched.
 def Load_template_file(ext: string, curpos: list<number>)
 	# Load_template_file() implementation {{{
 	silent execute "read" TEMPLATE_PATH .. "template" .. ext
@@ -164,6 +164,10 @@ def Load_template_file(ext: string, curpos: list<number>)
 enddef
 # }}}
 
+# Expects: current buffer is the template file with the ".h" extension found in
+#	   TEMPLATE_PATH.
+# Ensures: sets the values for the "ifndef" guard in the current file based on
+#	   the file's name and current date (mmddyyyy).
 def Set_header_macros()
 	# Set_header_macros() implementation {{{
 	const macro_name = ' ' .. expand("%:t")->toupper()->substitute(
@@ -174,6 +178,8 @@ def Set_header_macros()
 enddef
 # }}}
 
+# Expects: none
+# Ensures: change the highlighting of spelling highlight groups.
 def Set_spell_highlights()
 	# Set_spell_highlights() implementation {{{
 	highlight SpellBad   cterm=nocombine ctermfg=15 ctermbg=1
@@ -184,6 +190,7 @@ def Set_spell_highlights()
 enddef
 # }}}
 
+# Expects: none
 # Ensures: updates the date found after the first occurrence of the string
 #	   "Last change:" in the first 20 lines of the current file. The format
 #	   of the new date may be specified (see strftime() for valid formats).
@@ -238,9 +245,9 @@ augroup vimrc
 			| try
 				| silent Set_spell_highlights()
 	#\ Reloading a Vim9 script deletes all existing script-local
-	#\ functions and variables. Thus, this function will not exist when
-	#\ this autocmd triggers from a reload. (See "vim9-reload" for more
-	#\ information.)
+	#\ functions and variables. Thus, the above function will not exist
+	#\ when this autocmd triggers from a reload. (See "vim9-reload" for
+	#\ more information.)
 			| catch /^Vim(eval):E117:.*Set_spell_highlights/
 			| endtry
 augroup END
@@ -263,10 +270,10 @@ inoreabbrev lc: Last change:
 # Use:
 #	:[range]Iretab[!] [new_tabstop]
 command -bang -range=% -nargs=? Iretab {
-		&expandtab = !&expandtab
-		:<line1>,<line2>retab<bang> <args>
-		&expandtab = !&expandtab
-	}
+	&expandtab = !&expandtab
+	:<line1>,<line2>retab<bang> <args>
+	&expandtab = !&expandtab
+}
 # }}}
 
 
@@ -390,6 +397,8 @@ cnoremap <special> <Leader>tbl call g:Trim_peripheral_blank_lines()
 # Mnemonic: "Trim All Excess".
 cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
 
-# Discard stdout from tee with '> /dev/null'
+# Clever trick to write files belonging to the root user when Vim was launched
+# without super user privileges. Ignore standard output from 'tee' by piping it
+# to /dev/null, i.e., '> /dev/null'.
 cnoremap <special> <Leader>w! w !sudo tee > /dev/null %
 # }}}
