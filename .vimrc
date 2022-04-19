@@ -167,11 +167,11 @@ enddef
 # Expects: current buffer is the template file with the ".h" extension found in
 #	   TEMPLATE_PATH.
 # Ensures: sets the values for the "ifndef" guard in the current file based on
-#	   the file's name and current date (mmddyyyy).
+#	   the file's name and current date (yyyymmdd).
 def Set_header_macros()
 	# Set_header_macros() implementation {{{
 	const macro_name = ' ' .. expand("%:t")->toupper()->substitute(
-				  '\.', '_' .. strftime("%m%d%Y") .. '_', '')
+				  '\.', '_' .. strftime("%Y%m%d") .. '_', '')
 	setline(1, getline(1) .. macro_name)
 	setline(2, getline(2) .. macro_name)
 	setline('$', getline('$') .. ' //' .. macro_name)
@@ -400,5 +400,5 @@ cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
 # Clever trick to write files belonging to the root user when Vim was launched
 # without super user privileges. Ignore standard output from 'tee' by piping it
 # to /dev/null, i.e., '> /dev/null'.
-cnoremap <special> <Leader>w! w !sudo tee > /dev/null %
+cnoremap <special> <Leader>w! w !sudo tee "%" > /dev/null
 # }}}
