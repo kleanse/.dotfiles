@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2022 Mar 31
+# Last change:	2022 Apr 20
 
 ### Variables {{{
 #
@@ -359,6 +359,16 @@ mode "resize" {
     bindsym $mod+r		mode "default"
 }
 bindsym $mod+r mode "resize"
+#
+# Reading images
+#
+    # Color picker: select a pixel on the screen and copy its RGB hexadecimal
+    # code into the clipboard.
+    bindsym $mod+Shift+c exec grim -g "$(slurp -p)" -t ppm - \
+				| convert - -format '%[pixel:p{0,0}]' txt:- \
+				| tail --lines=1 \
+				| cut --delimiter=' ' --fields=4 \
+				| wl-copy --trim-newline
 # }}}
 
 
