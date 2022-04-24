@@ -81,15 +81,20 @@ enddef
 # Functions for mimicking GNU-Readline shortcuts {{{
 
 # Data used for the overloaded Command-line keys CTRL-U and CTRL-W and
-# overwritten Command-line key CTRL-Y.
+# overwritten Command-line keys CTRL-Y and ALT-D.
 final CMDLINE = {
 	buf: "",	# String that can be pasted with Command-line CTRL-Y.
-	lastpos: -1,	# The cursor position of the last post-backward-kill
-			# operation.
-	lastline: "",	# The line of the last post-backward-kill operation.
+	lastpos: -1,	# The cursor position of the last kill operation.
+	lastline: "",	# The line of the last kill operation.
+	killop: 0,	# Type of the last kill operation.
 }
 
-# Used for overloading Command-line CTRL-U and CTRL-W.
+# The backward-kill operation is separated into two functions because they use
+# the implementations of the backspacing characters defined in Vim. Executing
+# the backspacing character between the calls to these functions and then
+# comparing the initial line with the resulting one enables deducing the
+# backspacing character's effective change.
+
 # Expects: mode() == "c" && {delchar} is a backspacing character (e.g.,
 #	   "\<BS>", "\<C-H>", "\<C-W>", etc.).
 # Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
@@ -100,7 +105,7 @@ def Backward_kill_pre(delchar: string): string
 	# Backward_kill_pre() implementation {{{
 	const curpos = getcmdpos()
 	const curline = getcmdline()
-	if curpos != 1
+	if CMDLINE.killop != 2 || curpos != 1
 	   && (curpos != CMDLINE.lastpos || curline != CMDLINE.lastline)
 		CMDLINE.buf = ""
 	endif
@@ -124,6 +129,7 @@ def Backward_kill_post(preline: string, prepos: number)
 	CMDLINE.buf = deleted_str .. CMDLINE.buf
 	CMDLINE.lastpos = curpos
 	CMDLINE.lastline = getcmdline()
+	CMDLINE.killop = 2
 enddef
 # }}}
 
@@ -136,6 +142,38 @@ enddef
 def Delete_char_or_list(): string
 	# Delete_char_or_list() implementation {{{
 	return (getcmdpos() > getcmdline()->len()) ? "\<C-D>" : "\<Del>"
+enddef
+# }}}
+
+# Expects: mode() == "c"
+# Ensures: returns a string to be interpreted in the {rhs} of a mapping. This
+#	   string effectively cuts the text up to and including the first word
+#	   after the cursor and appends it to a local buffer.
+def Kill_word_pre(): string
+	# Kill_word_pre() implementation {{{
+	const curpos = getcmdpos()
+	const curline = getcmdline()
+	# String to delete.
+	const cutstr = curline->matchstr('\v\W*\w*', curpos - 1)
+	if CMDLINE.killop != 1 || curpos != curline->len() + 1
+	   && (curpos != CMDLINE.lastpos || curline != CMDLINE.lastline)
+		CMDLINE.buf = ""
+	endif
+	CMDLINE.buf ..= cutstr
+	return repeat("\<Del>", cutstr->len())
+		.. "\<ScriptCmd>Kill_word_post()\<CR>"
+enddef
+# }}}
+
+# Expects: mode() == "c"
+# Ensures: updates lastpos, lastline, and killop for CMDLINE. Each call to this
+#	   function is intended to be matched with a corresponding call to
+#	   Kill_word_pre().
+def Kill_word_post()
+	# Kill_word_post() implementation {{{
+	CMDLINE.lastpos = getcmdpos()
+	CMDLINE.lastline = getcmdline()
+	CMDLINE.killop = 1
 enddef
 # }}}
 
@@ -218,6 +256,7 @@ def Update_last_change(format = '')
 enddef
 # }}}
 # }}}
+
 
 # Autocommands {{{
 augroup vimrc
@@ -360,16 +399,18 @@ xnoremap <special> <C-C> <Esc>
 # Use some common GNU-Readline keyboard shortcuts for the Command line.
 #     Set meta-key keycodes to what the terminal receives (can be identified by
 # running "cat" without any arguments and entering the corresponding keys).
-execute "set <M-F>=\<Esc>f"
 execute "set <M-B>=\<Esc>b"
+execute "set <M-D>=\<Esc>d"
+execute "set <M-F>=\<Esc>f"
 # Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is not
 # useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites editing
 # complex commands.
-cnoremap <special> <C-A> <Home>
-cnoremap <special> <C-B> <Left>
-cnoremap <special> <C-F> <Right>
-cnoremap <special> <M-B> <S-Left>
-cnoremap <special> <M-F> <S-Right>
+cnoremap <special>	  <C-A> <Home>
+cnoremap <special>	  <C-B> <Left>
+cnoremap <special>	  <C-F> <Right>
+cnoremap <special>	  <M-B> <S-Left>
+cnoremap <special>	  <M-F> <S-Right>
+cnoremap <special> <expr> <M-D> <SID>Kill_word_pre()
 
 # Transfer the default behavior of Command-line CTRL-F to CTRL-X.
 cnoremap <special> <C-X> <C-F>
