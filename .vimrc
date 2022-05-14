@@ -443,3 +443,14 @@ cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
 # to /dev/null, i.e., '> /dev/null'.
 cnoremap <special> <Leader>w! w !sudo tee "%" > /dev/null
 # }}}
+
+
+# Plugins {{{
+# Turn Autodeli on for the initial buffers.
+g:startup_autodeli = 1
+
+# Toggle Autodeli.
+nnoremap <special> <Leader>a
+	\ <Cmd>execute (g:Autodeli_on()) ? "Autodeli off" : "Autodeli on"
+	\ <Bar> execute "Autodeli"<CR>
+# }}}
