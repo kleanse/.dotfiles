@@ -1,0 +1,117 @@
+*sum_usr_43.txt*	For Vim version 8.2	Last change: 2022 Jun 07
+
+What I learned:
+
+The content of |add-filetype-plugin| discussed how to start using filetype
+plugins. The text here gives an example of writing a filetype plugin.
+
+Suppose for C files 'softtabstop' should be set to 4 and a mapping that
+inserts a three-line comment should be defined. These preferences can be
+realized in two steps: create a runtime directory, and then create the file
+"c.vim" in that directory.
+
+For the first step, the runtime directory on UNIX is "~/.vim". One more
+directory should be created within this directory: "ftplugin". Thus, the
+following shell commands should be issued: >
+
+	mkdir ~/.vim
+	mkdir ~/.vim/ftplugin
+
+On a non-UNIX system, check 'runtimepath' to see where Vim will look for the
+"ftplugin" directory: >
+
+	set runtimepath
+
+It is the first directory name (before the first comma). A directory's name
+may be prepended to 'runtimepath' if a different runtime location is desired.
+
+For the second step, write the file "c.vim" in "ftplugin" with the contents >
+
+	setlocal softtabstop=4
+	noremap <buffer> <LocalLeader>c o/**************<CR><CR>/<Esc>
+	let b:undo_ftplugin = "setl softtabstop< | unmap <buffer> <LocalLeader>c"
+
+Now, editing a C file will set 'softtabstop' to 4 and the key sequence "\c"
+can be entered in Normal mode to insert a block comment. However, editing a
+different file resets 'softtabstop' to 0 and typing "\c" will not do anything:
+":setlocal" was used, which sets an option only for the current buffer, and
+<buffer> was specified for ":map", making the mapping effective only for the
+current buffer.
+
+The variable "b:undo_ftplugin" is relevant when the current file's filetype
+changes; it is given the commands that undo all preferences.
+
+For more examples of filetype plugins, visit >
+
+	$VIMRUNTIME/ftplugin/
+
+See |write-filetype-plugin| for the details about writing a filetype plugin.
+
+
+Custom filetypes may be specified for Vim to recognize. For example, writing
+the following text into the file "filetype.vim" >
+
+	augroup filetypedetect
+	au BufNewFile,BufRead *.xyz	setf xyz
+	augroup END
+
+defines the "xyz" filetype: whenever a file with the extension ".xyz" is
+edited, 'filetype' is set to "xyz" via ":setfiletype"; using this command over
+setting 'filetype' directly ensures that 'filetype' is not set more than once.
+The ":augroup" commands surrounding the autocommand defines the autocommand
+under the "filetypedetect" group. This method allows all filetype detection
+autocommands to be removed when invoking ":filetype off".
+
+The names of files to define under a custom filetype may include patterns and
+directory names (see |autocmd-patterns| for more details). For example,
+suppose all files in "/usr/share/scripts/" are "ruby" files, even if they do
+not have the expected filename extension. To recognize them as such, the
+following line can be appended after the "xyz" autocommand in "filetype.vim": >
+
+	au BufNewFile,BufRead /usr/share/scripts/*	setf ruby
+
+This command, however, does more than desired. If the file
+"/usr/share/scripts/README.txt" is edited, Vim will treat the file as a "ruby"
+file, despite it being plain text. Therefore, to prevent certain files from
+being erroneously interpreted as "ruby" files, move "filetype.vim" into a
+directory listed after $VIMRUNTIME in 'runtimepath'. In UNIX, this directory
+can be "~/.vim/after/". Now, when editing "/usr/share/scripts/README.txt", Vim
+correctly interprets the file as "text".
+
+This solution works because whenever a file is opened, Vim executes the
+filetype detection autocommands in the order in which they are defined. These
+autocommands are defined in "filetype.vim" files, and Vim searches for these
+files in each directory of 'runtimepath', searching in the order the
+directories are listed. In this case, Vim finds the "filetype.vim" in
+$VIMRUNTIME and then the "filetype.vim" in "~/.vim/after/".
+
+When "/usr/share/scripts/README.txt" is edited, the autocommand with the
+pattern "*.txt" defined in the "filetype.vim" of $VIMRUNTIME triggers, setting
+'filetype' to "text". The autocommand with the pattern "/usr/share/scripts/*"
+also triggers, which executes the "setf ruby" command; since 'filetype' was
+already set, however, this command does nothing.
+
+Besides the filename, Vim can recognize a file's filetype from its contents.
+Many files begin with a shebang, e.g.,
+
+	#!/bin/xyz ~
+
+This initial line says that the file is an "xyz" file. To help Vim interpret
+this line, write the file "scripts.vim" in the same place as the
+"filetype.vim" file with the following contents: >
+
+	if did_filetype()
+	  finish
+	endif
+	if getline(1) =~ '^#!.*[/\\]xyz\>'
+	  setf xyz
+	endif
+
+The first conditional statement is included to save time from deducing the
+file's filetype if it was already detected.
+
+All "scripts.vim" files in 'runtimepath' are sourced by the default
+"filetype.vim" file.
+
+
+ vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
