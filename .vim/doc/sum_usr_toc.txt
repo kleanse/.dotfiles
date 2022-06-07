@@ -1,4 +1,4 @@
-*sum_usr_toc.txt*	For Vim version 8.2	Last change: 2022 Jan 03
+*sum_usr_toc.txt*	For Vim version 8.2	Last change: 2022 Jun 07
 
 		       Chapter summaries - by Kenny Lam
 
@@ -10,6 +10,19 @@ original "usr_04.txt" document, "sum_usr_05.txt" a summary of "usr_05.txt",
 and so forth. All original material, and more generally the Vim user manual,
 can be found in |usr_toc.txt| or at the tag |user-manual|. The works provided
 here are NOT endorsed by Bram Moolenaar.
+
+Each summary is intended to be read in a single sitting, from start to end.
+Some "summaries" are long, so do not take this suggestion too seriously; split
+the summaries into manageable chunks and then apply the suggestion to each
+chunk. Without continuity, it is easy to lose your place in these summaries.
+Additionally, while reading, try the commands given: just reading the
+capabilities and commands of Vim is not enough to learn them.
+
+The summaries do not have section headings, so they are not good references.
+Where the original documents begin a new section, however, the summaries show
+two blank lines--subtle enough to protect the reader's attention, but also
+unique to indicate that the subsequent texts do not quite relate to the
+previous ones.
 
 			      Table Of Contents
 
@@ -41,7 +54,6 @@ Editing Effectively
 Tuning Vim
 |sum_usr_40.txt|  Make new commands
 |sum_usr_41.txt|  Write a Vim script
-|sum_usr_42.txt|  Add new menus
 |sum_usr_43.txt|  Using filetypes
 |sum_usr_44.txt|  Your own syntax highlighted
 |sum_usr_45.txt|  Select your language (locale)
