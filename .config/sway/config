@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2022 Apr 20
+# Last change:	2022 Jun 11
 
 ### Variables {{{
 #
@@ -210,6 +210,11 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     bindsym $mod+Shift+e exec swaynag --type=warning --message='You pressed \
 the exit shortcut. Do you really want to exit sway? This will end your \
 Wayland session.' --button 'Yes, exit sway' 'swaymsg exit'
+
+    # Power off the computer
+    bindsym $mod+Shift+p exec swaynag --type=warning --message='You pressed \
+the poweroff shortcut. Do you want to power off your computer? All unsaved \
+changes will be lost.' --button 'Yes, power off' 'poweroff'
 #
 # Media and Function+Fn keys:
 #
