@@ -1,0 +1,6 @@
+# Whitelist system: ignore all files within this ".scratchpad" directory by
+# default. If a particular file wishes to be tracked, specify it below the
+# first rule and prefix it with an '!'.
+/*
+!/.gitignore
+!/.zshrc
