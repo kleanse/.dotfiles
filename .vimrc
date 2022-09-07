@@ -84,6 +84,9 @@ enddef
 # overwritten Command-line keys CTRL-Y and ALT-D.
 final CMDLINE = {
 	buf: "",	# String that can be pasted with Command-line CTRL-Y.
+	prepos: "",	# The cursor position of the last pre-backward-kill
+			#  operation.
+	preline: "",	# The line of the last pre-backward-kill operation.
 	lastpos: -1,	# The cursor position of the last kill operation.
 	lastline: "",	# The line of the last kill operation.
 	killop: 0,	# Type of the last kill operation.
@@ -109,23 +112,21 @@ def Backward_kill_pre(delchar: string): string
 	   && (curpos != CMDLINE.lastpos || curline != CMDLINE.lastline)
 		CMDLINE.buf = ""
 	endif
-	return delchar .. "\<ScriptCmd>Backward_kill_post('"
-		.. curline->substitute("'", "''", "g") .. "', "
-		.. curpos .. ")\<CR>"
+	CMDLINE.prepos = curpos
+	CMDLINE.preline = curline
+	return delchar .. "\<ScriptCmd>Backward_kill_post()\<CR>"
 enddef
 # }}}
 
-# Expects: {preline} is the Command-line line and {prepos} is the Command-line
-#	   position of a pre-backward-kill operation.
-#	   mode() == "c" && 1 <= {prepos} <= len({preline})
-# Ensures: the string between {prepos} and the current position on {preline} is
-#	   prepended to a local buffer (not a register so that data is not
-#	   clobbered).
-def Backward_kill_post(preline: string, prepos: number)
+# Expects: mode() == "c" && 1 <= CMDLINE.prepos <= len(CMDLINE.preline)
+# Ensures: the string between CMDLINE.prepos and the current position on
+#	   CMDLINE.preline is prepended to a local buffer (not a register so
+#	   that data is not clobbered).
+def Backward_kill_post()
 	# Backward_kill_post() implementation {{{
 	const curpos = getcmdpos()
-	const deleted_str = (prepos == 1) ? ""
-					  : preline[curpos - 1 : prepos - 2]
+	const deleted_str = (CMDLINE.prepos == 1) ? ""
+		: CMDLINE.preline[curpos - 1 : CMDLINE.prepos - 2]
 	CMDLINE.buf = deleted_str .. CMDLINE.buf
 	CMDLINE.lastpos = curpos
 	CMDLINE.lastline = getcmdline()
@@ -182,13 +183,21 @@ enddef
 #	   string effectively pastes the content of CMDLINE.buf before the
 #	   cursor.
 def Put_cmdline_buffer(): string
-	# Put_cmdline_buffer implementation {{{
-	return "\<C-R>\<C-R>='"
-		.. CMDLINE.buf->substitute("'", "''", "g") .. "'\<CR>"
+	# Put_cmdline_buffer() implementation {{{
+	# Use an accessor function when pasting the Command-line buffer;
+	# otherwise, unprintable characters (specifically <C-M> and <NUL>) in
+	# the buffer causes errors.
+	return "\<C-R>\<C-R>=" .. expand("<SID>")
+		.. "Get_cmdline_buffer()\<CR>"
+enddef
+# }}}
+
+def Get_cmdline_buffer(): string
+	# Get_cmdline_buffer() implementation {{{
+	return CMDLINE.buf
 enddef
 # }}}
 # }}}
-
 
 # Expects: the current buffer is empty.
 # Ensures: read the template file with the extension {ext} into the current
