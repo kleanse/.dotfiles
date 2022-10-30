@@ -59,7 +59,7 @@ assign [app_id="$pdf"] workspace 7
 workspace 1
     exec $gamma
     # Start tmux
-    exec $term -e -- sh -c tmux
+    exec $term -e tmux
 workspace 2
     exec $browser
 # Return to the first workspace

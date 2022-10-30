@@ -19,7 +19,7 @@ set
 filetype plugin indent on
 
 
-# User-defined functions. {{{
+# User-defined functions {{{
 def g:Date(): string
 	return strftime("%Y %b %d")
 enddef
@@ -75,7 +75,7 @@ enddef
 # }}}
 
 
-# Internal functions. {{{
+# Internal functions {{{
 
 
 # Functions for mimicking GNU-Readline shortcuts {{{
