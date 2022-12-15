@@ -1,4 +1,5 @@
 vim9script
+$FZF_DEFAULT_COMMAND = 'find . \! \( -type d -path \*/.git -prune \) \! -type d \! -name ''*.tags'' -printf ''%P\n'''
 unlet! g:skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
