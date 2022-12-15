@@ -338,11 +338,11 @@ noremap  _ ,
 # Overwrite Normal-mode ";" to save the current buffer quickly and show all
 # listed buffers (so that a buffer switch may be performed without issuing
 # ":ls" first).
-nnoremap <special> ; <Cmd>update <Bar> buffers<CR>
+nnoremap ; <Cmd>update <Bar> buffers<CR>
 
 # Quickly edit and source the vimrc file.
-nnoremap <special> <Leader>ev :split $MYVIMRC<CR>
-nnoremap <special> <Leader>sv :source $MYVIMRC<CR>
+nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 # Make "Y" consistent with "C" and "D".
 nnoremap Y y$
@@ -353,25 +353,25 @@ nnoremap n nzvzz
 nnoremap N Nzvzz
 
 # Disable highlighting for 'hlsearch'.
-nnoremap <special> <Leader>h <Cmd>nohlsearch<CR>
+nnoremap <Leader>h <Cmd>nohlsearch<CR>
 
 # Toggle 'colorcolumn'.
-nnoremap <special> <Leader>cc
+nnoremap <Leader>cc
 	\ <Cmd>let &colorcolumn = (empty(&colorcolumn)) ? "+1" : ""<CR>
 
 # Toggle 'list'
-nnoremap <special> <Leader>l <Cmd>let &list = !&list<CR>
+nnoremap <Leader>l <Cmd>let &list = !&list<CR>
 
 # Toggle 'spell'
-nnoremap <special> <Leader>sp <Cmd>let &spell = !&spell<CR>
+nnoremap <Leader>sp <Cmd>let &spell = !&spell<CR>
 
 # Toggle 'virtualedit'.
-nnoremap <special> <Leader>ve
+nnoremap <Leader>ve
 	\ <Cmd>let &virtualedit = (empty(&virtualedit)) ? "all" : ""
 	\ <Bar> set virtualedit?<CR>
 
 # Toggle syntax highlighting: useful for editing help files.
-nnoremap <special> <Leader>x
+nnoremap <Leader>x
 	\ <Cmd>if exists("g:syntax_on")
 		\ <Bar> syntax off
 	\ <Bar> else
@@ -379,32 +379,30 @@ nnoremap <special> <Leader>x
 	\ <Bar> endif<CR>
 
 # Access system clipboard.
-nmap <special> <Leader>p "+p
-nmap <special> <Leader>P "+P
-xmap <special> <Leader>p "-d"+P
-xmap <special> <Leader>y "+y
-xmap <special> <Leader>x "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+xmap <Leader>p "-d"+P
+xmap <Leader>y "+y
+xmap <Leader>x "+d
 
 # Enable system-clipboard access for the Wayland window system (requires the
 # "wl-clipboard" utility program).
 if exists("$WAYLAND_DISPLAY")
-	nnoremap <special> "+p
-			 \ <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+p
-	nnoremap <special> "+P
-			 \ <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+P
-	xnoremap <special> "+y "+y<Cmd>call system('wl-copy', @+)<CR>
-	xnoremap <special> "+d "+d<Cmd>call system('wl-copy', @+)<CR>
+	nnoremap "+p <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+p
+	nnoremap "+P <Cmd>let @+ = system('wl-paste --no-newline')<CR>"+P
+	xnoremap "+y "+y<Cmd>call system('wl-copy', @+)<CR>
+	xnoremap "+d "+d<Cmd>call system('wl-copy', @+)<CR>
 endif
 
 # Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 # former command, use ":join" instead. The latter might not need addressed:
 # Visual-mode "K" is rare.
-xnoremap <special> J :move '>+1<CR>gv=gv
-xnoremap <special> K :move '<-2<CR>gv=gv
+xnoremap J :move '>+1<CR>gv=gv
+xnoremap K :move '<-2<CR>gv=gv
 
 # Use CTRL-C for <Esc>: it is easier to reach.
-inoremap <special> <C-C> <Esc>
-xnoremap <special> <C-C> <Esc>
+inoremap <C-C> <Esc>
+xnoremap <C-C> <Esc>
 
 # Use some common GNU-Readline keyboard shortcuts for the Command line.
 #     Set meta-key keycodes to what the terminal receives (can be identified by
@@ -415,43 +413,43 @@ execute "set <M-F>=\<Esc>f"
 # Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is not
 # useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites editing
 # complex commands.
-cnoremap <special>	  <C-A> <Home>
-cnoremap <special>	  <C-B> <Left>
-cnoremap <special>	  <C-F> <Right>
-cnoremap <special>	  <M-B> <S-Left>
-cnoremap <special>	  <M-F> <S-Right>
-cnoremap <special> <expr> <M-D> <SID>Kill_word_pre()
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-F> <Right>
+cnoremap <M-B> <S-Left>
+cnoremap <M-F> <S-Right>
+cnoremap <expr> <M-D> <SID>Kill_word_pre()
 
 # Transfer the default behavior of Command-line CTRL-F to CTRL-X.
-cnoremap <special> <C-X> <C-F>
+cnoremap <C-X> <C-F>
 
 # Overwrite Command-line CTRL-Y: its default behavior is currently not being
 # exploited. Also, overload Command-line CTRL-U and CTRL-W: their default
 # behaviors are preserved, but, in conjunction with CTRL-Y, they behave similar
 # to the corresponding GNU-Readline shortcut keys: text deleted via CTRL-U and
 # CTRL-W can be retrieved with CTRL-Y.
-cnoremap <special> <expr> <C-U> <SID>Backward_kill_pre("\<C-U>")
-cnoremap <special> <expr> <C-W> <SID>Backward_kill_pre("\<C-W>")
-cnoremap <special> <expr> <C-Y> <SID>Put_cmdline_buffer()
+cnoremap <expr> <C-U> <SID>Backward_kill_pre("\<C-U>")
+cnoremap <expr> <C-W> <SID>Backward_kill_pre("\<C-W>")
+cnoremap <expr> <C-Y> <SID>Put_cmdline_buffer()
 # Overload Command-line CTRL-D: it still performs its normal behavior, but if a
 # character is under the cursor, it executes the GNU-Readline behavior (i.e.,
 # delete the character).
-cnoremap <special> <expr> <C-D> <SID>Delete_char_or_list()
+cnoremap <expr> <C-D> <SID>Delete_char_or_list()
 
 # Trim trailing whitespace.
 # Mnemonic: "Trim WhiteSpace" or "Trailing WhiteSpace".
-cnoremap <special> <Leader>tws call g:Trim_whitespace()
+cnoremap <Leader>tws call g:Trim_whitespace()
 # Trim blank lines at the start and end of a file.
 # Mnemonic: "Trim Blank Lines".
-cnoremap <special> <Leader>tbl call g:Trim_peripheral_blank_lines()
+cnoremap <Leader>tbl call g:Trim_peripheral_blank_lines()
 # Trim blank lines at the start and end of a file and trailing whitespace.
 # Mnemonic: "Trim All Excess".
-cmap     <special> <Leader>tae <Leader>tbl <Bar> <Leader>tws
+cmap     <Leader>tae <Leader>tbl <Bar> <Leader>tws
 
 # Clever trick to write files belonging to the root user when Vim was launched
 # without super user privileges. Ignore standard output from 'tee' by piping it
 # to /dev/null, i.e., '> /dev/null'.
-cnoremap <special> <Leader>w! w !sudo tee "%" > /dev/null
+cnoremap <Leader>w! w !sudo tee "%" > /dev/null
 # }}}
 
 
@@ -460,7 +458,7 @@ cnoremap <special> <Leader>w! w !sudo tee "%" > /dev/null
 g:startup_autodeli = 1
 
 # Toggle Autodeli.
-nnoremap <special> <Leader>a
+nnoremap <Leader>a
 	\ <Cmd>execute (g:Autodeli_on()) ? "Autodeli off" : "Autodeli on"
 	\ <Bar> execute "Autodeli"<CR>
 # }}}
