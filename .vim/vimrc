@@ -448,8 +448,9 @@ cmap     <Leader>tae <Leader>tbl <Bar> <Leader>tws
 
 # Clever trick to write files belonging to the root user when Vim was launched
 # without super user privileges. Ignore standard output from 'tee' by piping it
-# to /dev/null, i.e., '> /dev/null'.
-cnoremap <Leader>w! w !sudo tee "%" > /dev/null
+# to /dev/null, i.e., '> /dev/null'. The subsequent ":edit!" command reloads
+# the changed file.
+cnoremap <Leader>w! execute 'silent w !sudo tee "%" > /dev/null' <Bar> edit!
 # }}}
 
 
