@@ -8,10 +8,13 @@ const TEMPLATE_PATH = '~/vim/'
 # Set options in alphabetical order.
 set
 	\ autoindent
+	\ colorcolumn=+1
 	\ copyindent
+	\ hidden
 	\ hlsearch
 	\ listchars=tab:--\|
 	\ nojoinspaces
+	\ nostartofline
 	\ nowrapscan
 	\ textwidth=79
 	\ visualbell t_vb=
