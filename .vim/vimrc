@@ -467,4 +467,7 @@ g:startup_autodeli = 1
 nnoremap <Leader>a
 	\ <Cmd>execute (g:Autodeli_on()) ? "Autodeli off" : "Autodeli on"
 	\ <Bar> execute "Autodeli"<CR>
+
+# Launch fzf.
+nnoremap <Leader>f <Cmd>FZF<CR>
 # }}}
