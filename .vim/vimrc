@@ -338,10 +338,8 @@ g:maplocalleader = g:mapleader
 noremap  + ;
 noremap  _ ,
 
-# Overwrite Normal-mode ";" to save the current buffer quickly and show all
-# listed buffers (so that a buffer switch may be performed without issuing
-# ":ls" first).
-nnoremap ; <Cmd>update <Bar> buffers<CR>
+# Overwrite Normal-mode ";" to save the current buffer quickly.
+nnoremap ; <Cmd>update<CR>
 
 # Quickly edit and source the vimrc file.
 nnoremap <Leader>ev :split $MYVIMRC<CR>
@@ -396,6 +394,10 @@ if exists("$WAYLAND_DISPLAY")
 	xnoremap "+y "+y<Cmd>call system('wl-copy', @+)<CR>
 	xnoremap "+d "+d<Cmd>call system('wl-copy', @+)<CR>
 endif
+
+# Show all listed buffers and prepare the ":buffer" command for rapid buffer
+# switching.
+nnoremap <Leader>b <Cmd>buffers<CR>:buffer<Space>
 
 # Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 # former command, use ":join" instead. The latter might not need addressed:
