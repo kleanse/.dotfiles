@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2022 Sep 02
+# Last change:	2023 Mar 02
 
 ### Variables {{{
 #
@@ -24,7 +24,7 @@ set $launcher rofi -show run
 # opened on the original workspace that the command was run on.
 set $menu $launcher | xargs swaymsg exec --
 # Your preferred web browser
-set $browser firefox
+set $browser librewolf
 # Your preferred gamma controller
 set $gamma gammastep
 # Your preferred image viewer
@@ -82,7 +82,7 @@ exec $mixer set Master 30% unmute
 #
 # Default wallpaper (more resolutions are available in
 # /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1366x768.png fill
+output * bg ~/Pictures/wallpapers/Sway_Wallpaper_Blue_1366x768.png fill
 #
 # Example configuration:
 #
