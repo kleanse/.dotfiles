@@ -192,9 +192,6 @@ if [[ -x "$(command -v vimx)" ]]; then
 	alias view='vimx -R'
 fi
 
-# ENVIRONMENT VARIABLES
-[[ -f ~/.envvars ]] && source ~/.envvars
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
