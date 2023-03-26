@@ -22,5 +22,5 @@ export RTP="$HOME/.vim"
 export VISUAL="vim"
 export EDITOR="$VISUAL"
 
-# Append the ~/bin folder to the PATH environment variable.
-export PATH="$PATH:$HOME/bin"
+# Include user-exclusive binaries and scripts for the shell.
+export PATH="$PATH:$HOME/.local/bin"
