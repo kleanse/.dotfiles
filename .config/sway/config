@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2023 Apr 03
+# Last change:	2023 Apr 28
 
 ### Variables {{{
 #
@@ -387,7 +387,7 @@ bindsym $mod+r mode "resize"
 
 ### Title bar configuration {{{
 #
-font pango:Menlo 9
+font pango:monospace 9
 # }}}
 
 
@@ -396,7 +396,7 @@ font pango:Menlo 9
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position bottom
-    font pango:Menlo 9
+    font pango:monospace 9
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
