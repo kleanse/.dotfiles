@@ -184,7 +184,7 @@ alias pdf="zathura"
 # Preferred Python interpreter
 alias py="python3"
 # Preferred web browser
-alias wb="firefox"
+alias wb="librewolf"
 
 # Set "vim" as an alias to "vimx" if the latter exists.
 if [[ -x "$(command -v vimx)" ]]; then
