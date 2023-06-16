@@ -334,10 +334,6 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
 #
 # Layout stuff:
 #
-    # "split" the current object of your focus horizontally or vertically.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
-
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
     bindsym $mod+t layout tabbed
