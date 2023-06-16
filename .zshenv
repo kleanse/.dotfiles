@@ -9,14 +9,6 @@ export LESS="-Fj.5R"
 export FZF_DEFAULT_COMMAND='find . \! \( -type d -path \*/.git\* -prune \) \! -type d \! -name '\''*.tags'\'' -printf '\''%P\n'\'
 export FZF_ALT_C_COMMAND='find . \! \( -type d -path \*/.git\* -prune \) -type d -printf '\''%P\n'\'
 
-# Environment variables for quick access to specific directories.
-export CPP="$HOME/Programs/learning/PPaPU_cpp"
-export C="$HOME/Programs/learning/TCPL"
-export LUA="$HOME/Programs/learning/Pi_Lua"
-export PY="$HOME/Programs/learning/cs50/AToP/exercises"
-export LC="$HOME/Programs/learning/leetcode"
-export RTP="$HOME/.vim"
-
 # Environment variables that set the default text editor for command-line
 # programs.
 export VISUAL="vim"
