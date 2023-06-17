@@ -19,7 +19,7 @@ set $right l
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
-set $launcher rofi -show run
+set $launcher rofi -show combi -modes combi -combi-modes window\,drun
 # Note: pass the final command to swaymsg so that the resulting window can be
 # opened on the original workspace that the command was run on.
 set $menu $launcher | xargs swaymsg exec --
