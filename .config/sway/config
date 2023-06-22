@@ -57,21 +57,20 @@ assign [app_id="$image"] workspace 6
 # Launch your preferred PDF viewer in workspace 7.
 assign [app_id="$pdf"] workspace 7
 workspace 1
+    # Run `kanshi` at start, and restart it when reloading `sway`.
+    # See https://www.reddit.com/r/swaywm/comments/ua72so/starting_kanshi_from_sway/
+    # for more information.
+    exec_always 'pkill kanshi; kanshi'
     exec $gamma
-    # Start tmux
-    exec $term -e tmux
+    # Restart tmux server
+    exec tmux kill-server
 workspace 2
     exec $browser
 # Return to the first workspace
 workspace 1
-    # Open an ASCII table in the scratchpad for reference.
-    # Delay opening this terminal window until the initial terminal window is
-    # opened to ensure Sway shifts focus to this window.
-    exec "sleep 1; $term -e tmux new-session"
-    # Sleep again here so that the new `tmux` session completes initialization
-    # before sending keys to it. (Sleep for double the time because these
-    # "exec" commands execute simultaneously.)
-    exec "sleep 2; tmux send-keys 'source ~/.scratchpad/.zshrc' Enter"
+    # Wait for `kanshi` to set some `sway` configuration variables, and then
+    # initialize terminal windows and `tmux` sessions.
+    exec 'sleep 1; ~/.config/sway/startup.sh'
 
 # Enable system's master speakers and set their volume to 30%.
 exec $mixer set Master 30% unmute
@@ -205,7 +204,7 @@ input "1133:16532:Logitech_M325" {
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec $term $$term_options
 
     # Kill focused window
     bindsym $mod+Shift+q kill
