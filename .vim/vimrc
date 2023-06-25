@@ -3,7 +3,7 @@ $FZF_DEFAULT_COMMAND = 'find . \! \( -type d -path \*/.git -prune \) \! -type d 
 unlet! g:skip_defaults_vim
 source $VIMRUNTIME/defaults.vim
 
-const TEMPLATE_PATH = '~/vim/'
+const TEMPLATE_PATH = '~/.templates/'
 
 # Set options in alphabetical order.
 set
