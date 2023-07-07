@@ -210,21 +210,7 @@ input "1133:16532:Logitech_M325" {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    # Technique to allow a key binding to track a state: define a unique mode
-    # for the key binding to enter, and then overload this key binding in the
-    # new mapping layer. Defining the key binding to exit this mode makes the
-    # key binding toggled. In this case, the specified key binding is used to
-    # enter and exit this configuration file's application launcher.
-    mode "launcher" {
-	set $exit_launcher exec pkill --full --exact "$launcher", \
-			   mode "default"
-	bindsym Escape		    $exit_launcher
-	bindsym Control+bracketleft $exit_launcher
-	bindsym Control+g	    $exit_launcher
-	bindsym Control+c	    $exit_launcher
-	bindsym $mod+Space	    $exit_launcher
-    }
-    bindsym $mod+Space exec $menu, mode "launcher"
+    bindsym $mod+Space exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
