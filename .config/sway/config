@@ -56,21 +56,12 @@ set $dim	XF86MonBrightnessDown
 assign [app_id="$image"] workspace 6
 # Launch your preferred PDF viewer in workspace 7.
 assign [app_id="$pdf"] workspace 7
-workspace 1
-    # Run `kanshi` at start, and restart it when reloading `sway`.
-    # See https://www.reddit.com/r/swaywm/comments/ua72so/starting_kanshi_from_sway/
-    # for more information.
-    exec_always 'pkill kanshi; kanshi'
-    exec $gamma
-    # Restart tmux server
-    exec tmux kill-server
-workspace 2
-    exec $browser
-# Return to the first workspace
-workspace 1
-    # Wait for `kanshi` to set some `sway` configuration variables, and then
-    # initialize terminal windows and `tmux` sessions.
-    exec 'sleep 1; ~/.config/sway/startup.sh'
+# Run `kanshi` at start, and restart it when reloading `sway`.
+# See https://www.reddit.com/r/swaywm/comments/ua72so/starting_kanshi_from_sway/
+# for more information.
+exec_always 'pkill kanshi; kanshi'
+exec $gamma
+exec ~/.config/sway/startup.sh
 
 # Enable system's master speakers and set their volume to 30%.
 exec $mixer set Master 30% unmute
