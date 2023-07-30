@@ -14,4 +14,7 @@ return {
       return vim.fn.executable 'make' == 1
     end,
   },
+
+  -- Read or write files with `sudo`
+  { 'lambdalisue/suda.vim' },
 }
