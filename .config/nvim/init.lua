@@ -145,12 +145,6 @@ vim.keymap.set('c', '<M-f>', '<S-Right>')
 -- Transfer the default behavior of Command-line CTRL-F to CTRL-X.
 vim.keymap.set('c', '<C-X>', '<C-F>')
 
--- Clever trick to write files belonging to the root user when Vim was launched
--- without super user privileges. Ignore standard output from 'tee' by piping
--- it to /dev/null, i.e., '> /dev/null'. The subsequent ":edit!" command
--- reloads the changed file.
-vim.keymap.set('c', '<Leader>w!', "execute 'silent w !sudo tee \"%\" > /dev/null' <Bar> edit!")
-
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
