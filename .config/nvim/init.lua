@@ -398,6 +398,16 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'buffer', keyword_length = 5 },
   },
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.menu = ({
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        luasnip = "[snip]",
+      })[entry.source.name]
+      return vim_item
+    end
+  },
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
