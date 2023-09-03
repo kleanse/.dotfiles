@@ -284,7 +284,8 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $mod+Control+Left	workspace prev_on_output
     bindsym $mod+Control+Right	workspace next_on_output
     # Switch to the alternate (last used) workspace
-    bindsym $mod+Control+6 workspace back_and_forth
+    bindsym $mod+b workspace back_and_forth
+    bindsym $mod+Control+b workspace back_and_forth
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
