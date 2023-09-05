@@ -2,7 +2,7 @@ profile wired {
 	output LVDS-1 disable
 	output VGA-1 mode 1920x1080@60Hz
 	exec swaymsg 'set $term_options --override="font=monospace:size=16"'
-	exec swaymsg 'set $floating_x 1312; set $floating_y 889'
+	exec swaymsg 'set $floating_x 1421; set $floating_y 925'
 }
 
 profile nomad {
