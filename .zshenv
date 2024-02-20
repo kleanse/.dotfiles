@@ -3,8 +3,13 @@
 export VISUAL="vim"
 export EDITOR="$VISUAL"
 
-# Include user-exclusive binaries and scripts for the shell.
-export PATH="$PATH:$HOME/.local/bin"
+# Include
+#  user-exclusive binaries and scripts;
+PATH="$HOME/.local/bin:$PATH"
+#  and user applications.
+PATH="$HOME/apps/io-lang/bin:$PATH"
+PATH="$HOME/apps/neovim/bin:$PATH"
+export PATH
 
 # XDG environment variables.
 export XDG_SCREENSHOTS_DIR="$HOME/Pictures"
