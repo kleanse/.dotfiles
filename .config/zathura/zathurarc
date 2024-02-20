@@ -1,0 +1,25 @@
+# Mappings
+map d scroll half-down
+map <C-d> scroll half-down
+map u scroll half-up
+map <C-u> scroll half-up
+map f scroll full-down
+map <C-f> scroll full-down
+map b scroll full-up
+map <C-b> scroll full-up
+
+map <C-n> navigate next
+map <C-p> navigate previous
+
+map P snap_to_page
+map p snap_to_page
+
+map gF display_link
+map gf follow
+
+unmap t
+map td toggle_page_mode
+map ti toggle_inputbar
+map ts toggle_statusbar
+
+map <C-l> reload
