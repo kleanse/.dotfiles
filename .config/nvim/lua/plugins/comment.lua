@@ -4,3 +4,5 @@ return {
     opts = {},
   },
 }
+
+-- vim:sw=2:et:
