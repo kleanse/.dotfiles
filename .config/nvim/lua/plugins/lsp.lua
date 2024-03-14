@@ -1,10 +1,8 @@
 return {
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
+      -- Automatically install LSPs and related tools to stdpath for Neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -13,8 +11,9 @@ return {
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and
-      -- plugins used for completion, annotations and signatures of Neovim apis
+      -- `neodev` configures Lua LSP for your Neovim config, runtime, and
+      -- plugins used for completion, annotations, and signatures of Neovim
+      -- APIs
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
