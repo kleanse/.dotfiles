@@ -1,6 +1,5 @@
 return {
-  -- Fuzzy Finder (files, lsp, etc)
-  {
+  { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
@@ -74,8 +73,9 @@ return {
     end
   },
 
-  -- Read or write files with `sudo`
-  { 'lambdalisue/suda.vim' },
+  { -- Read or write files with `sudo`
+    'lambdalisue/suda.vim',
+  },
 }
 
 -- vim:sw=2:et:

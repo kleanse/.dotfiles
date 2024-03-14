@@ -1,6 +1,5 @@
 return {
-  -- Harpoon: rapid file navigation
-  {
+  { -- Harpoon: rapid file navigation
     'ThePrimeagen/harpoon',
     config = function()
       local harpmark = require('harpoon.mark')
