@@ -1,11 +1,3 @@
---[[
-  If you don't know anything about Lua, I recommend taking some time to read
-  through a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-  And then you can explore or search through `:help lua-guide`
---]]
-
 -- Set "," as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will
@@ -13,9 +5,9 @@
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
--- Install package manager
+-- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
+--    See `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -29,30 +21,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup('plugins')
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below automatically adds your own plugins, configuration,
-  --    etc from `lua/custom/plugins/*.lua` You can use this folder to prevent
-  --    any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see:
-  --    https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  --
-  --    An additional note is that if you only copied in the `init.lua`, you
-  --    can just comment this line to get rid of the warning telling you that
-  --    there are not plugins in `lua/custom/plugins/`.
-  -- { import = 'custom.plugins' },
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -66,7 +35,7 @@ vim.o.undofile = true      -- Save undo history
 vim.o.wrapscan = false
 vim.wo.breakindent = true  -- Enable break indent
 vim.wo.colorcolumn = '+1'
-vim.wo.signcolumn = 'yes'  -- Keep signcolumn on by default.
+vim.wo.signcolumn = 'yes'  -- Keep signcolumn on by default
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone'
