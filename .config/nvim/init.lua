@@ -21,14 +21,36 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('plugins')
+require('lazy').setup('plugins', {
+  ui = {
+    -- If using a Nerd Font, set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons; otherwise, define a Unicode
+    -- icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
+  },
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
 vim.o.background = 'light'
 vim.o.copyindent = true
-vim.o.listchars = 'tab:--|,trail:_'
+vim.o.listchars = 'tab:--|,trail:·'
 vim.o.mouse = 'a'          -- Enable mouse mode
+vim.o.showmode = false     -- Redundant with nvim-lualine/lualine.nvim
 vim.o.termguicolors = true -- Check if your terminal supports this
 vim.o.textwidth = 79
 vim.o.undofile = true      -- Save undo history
@@ -116,13 +138,13 @@ vim.keymap.set('c', '<C-X>', '<C-F>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.cmd.highlight('InitLuaYankHighlight cterm=reverse gui=reverse guifg=#d8ccc4 guibg=#eee8d5')
 vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
+  group = vim.api.nvim_create_augroup('yank-highlight', { clear = true }),
   pattern = '*',
+  callback = function()
+    vim.highlight.on_yank { higroup = 'InitLuaYankHighlight' }
+  end,
 })
 
 -- Diagnostic keymaps
