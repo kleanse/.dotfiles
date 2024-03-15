@@ -40,16 +40,6 @@ return {
     },
   },
 
-  { -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    main = 'ibl',
-    opts = {
-      indent = {
-        char = '▏',
-      },
-    },
-  },
-
   { -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
     dependencies = {
