@@ -44,6 +44,9 @@ require('lazy').setup('plugins', {
   },
 })
 
+-- [[ Import custom utility functions ]]
+require('utils')
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 vim.o.background = 'light'
