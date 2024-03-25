@@ -106,16 +106,24 @@ vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv")
 vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv")
 
 -- Toggle settings
-vim.keymap.set('n', '<Leader>l', function() vim.wo.list = not vim.wo.list end, { desc = "Toggle '[l]ist'" })
-vim.keymap.set('n', '<Leader>sc', function() vim.wo.spell = not vim.wo.spell end, { desc = "Toggle '[s]pell' [c]heck" })
-vim.keymap.set('n', '<Leader>cc', function()
+vim.keymap.set('n', '<leader>l', function()
+  vim.wo.list = not vim.wo.list
+end, { desc = "Toggle '[l]ist'" })
+
+vim.keymap.set('n', '<leader>sc', function()
+  vim.wo.spell = not vim.wo.spell
+end, { desc = "Toggle '[s]pell' [c]heck" })
+
+vim.keymap.set('n', '<leader>cc', function()
   vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and '+1' or ''
 end, { desc = "Toggle '[c]olor[c]olumn'" })
-vim.keymap.set('n', '<Leader>ve', function()
+
+vim.keymap.set('n', '<leader>ve', function()
   vim.wo.virtualedit = #vim.wo.virtualedit == 0 and 'all' or ''
   vim.cmd('set virtualedit?')
 end, { desc = "Toggle '[v]irtual[e]dit'" })
-vim.keymap.set('n', '<Leader>x', function()
+
+vim.keymap.set('n', '<leader>x', function()
   if vim.g.syntax_on then
     vim.cmd('syntax off | TSDisable highlight')
   else
