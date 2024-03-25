@@ -38,18 +38,35 @@ return {
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        local gs = require('gitsigns')
-        local function nbmap(lhs, rhs, opts)
-          opts.buffer = bufnr
-          vim.keymap.set('n', lhs, rhs, opts)
+        local function map(mode, lhs, rhs, desc)
+          desc = desc and 'Gitsigns: ' .. desc
+          vim.keymap.set(mode, lhs, rhs, { desc = desc, buffer = bufnr })
         end
-        nbmap('<Leader>hb', gs.blame_line, { desc = '`gitsigns` blame line' })
-        nbmap('<Leader>hn', gs.next_hunk, { desc = '`gitsigns` next hunk' })
-        nbmap('<Leader>hp', gs.prev_hunk, { desc = '`gitsigns` prev hunk' })
-        nbmap('<Leader>hv', gs.preview_hunk, { desc = '`gitsigns` preview hunk' })
-        nbmap('<Leader>hr', gs.reset_hunk, { desc = '`gitsigns` reset hunk' })
-        nbmap('<Leader>hs', gs.stage_hunk, { desc = '`gitsigns` stage hunk' })
-        nbmap('<Leader>hu', gs.undo_stage_hunk, { desc = '`gitsigns` undo stage hunk' })
+        local gs = require 'gitsigns'
+
+        map('n', '<Leader>b', gs.blame_line, '[B]lame line')
+        map('n', '<Leader>hr', gs.reset_hunk, '[H]unk [R]eset')
+        map('n', '<Leader>hs', gs.stage_hunk, '[H]unk [S]tage')
+        map('n', '<Leader>hu', gs.undo_stage_hunk, '[H]unk [U]ndo stage')
+        map('n', '<Leader>hv', gs.preview_hunk, '[H]unk [V]iew')
+        map({ 'n', 'x' }, '<Leader>hn', gs.next_hunk, '[H]unk [N]ext')
+        map({ 'n', 'x' }, '<Leader>hp', gs.prev_hunk, '[H]unk [P]rev')
+
+        -- Mappings to stage and reset hunks in Visual mode
+        map('x', '<Leader>hr', function()
+          -- Exit Visual mode to update the marks '< and '>
+          vim.cmd.execute [["normal \<esc>"]]
+          local vstart = vim.api.nvim_buf_get_mark(0, '<')
+          local vend = vim.api.nvim_buf_get_mark(0, '>')
+          gs.reset_hunk({ vstart[1], vend[1] })
+        end, '[H]unk [R]eset selected range')
+
+        map('x', '<Leader>hs', function()
+          vim.cmd.execute [["normal \<esc>"]]
+          local vstart = vim.api.nvim_buf_get_mark(0, '<')
+          local vend = vim.api.nvim_buf_get_mark(0, '>')
+          gs.stage_hunk({ vstart[1], vend[1] })
+        end, '[H]unk [S]tage selected range')
       end
     },
   },
