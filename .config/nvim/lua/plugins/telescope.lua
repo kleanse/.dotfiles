@@ -65,6 +65,7 @@ return {
         vim.keymap.set('n', keys, func, { desc = desc })
       end
       local builtin = require 'telescope.builtin'
+      local themes = require 'telescope.themes'
 
       nmap('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
       nmap('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
@@ -82,7 +83,7 @@ return {
       nmap('<leader>/', function()
         -- You can pass additional configuration to telescope to change theme,
         -- layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        builtin.current_buffer_fuzzy_find(themes.get_dropdown {
           winblend = 10,
           previewer = false,
         })
@@ -99,6 +100,21 @@ return {
           prompt_title = 'Live Grep in Open Files',
         }
       end, '[S]earch in [O]pen files')
+
+      -- Search tracked files and list objects in the Git repository of the
+      -- current working directory
+      nmap('<leader>gf', builtin.git_files, 'Search [G]it [F]iles')
+      nmap('<leader>gc', function()
+        builtin.git_commits(themes.get_ivy {
+          layout_config = { height = 0.8 },
+        })
+      end, '[G]it [C]ommits')
+      nmap('<leader>gb', function()
+        builtin.git_branches {
+          layout_strategy = 'vertical',
+          layout_config = { mirror = true, prompt_position = 'top' },
+        }
+      end, '[G]it [B]ranches')
     end
   },
 }
