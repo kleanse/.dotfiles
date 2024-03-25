@@ -79,8 +79,8 @@ vim.o.clipboard = 'unnamedplus'
 --  See `:help vim.keymap.set()`
 -- Remap Normal-mode commands ";" and "," to different keys for delay-free ","
 -- behavior while using such a key for mapleader.
-vim.keymap.set('n', '+', ';')
-vim.keymap.set('n', '_', ',')
+vim.keymap.set('', '+', ';')
+vim.keymap.set('', '_', ',')
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
