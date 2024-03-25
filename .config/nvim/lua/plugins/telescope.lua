@@ -68,12 +68,15 @@ return {
 
       nmap('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
       nmap('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
+      nmap('<leader>sc', builtin.command_history, '[S]earch [C]ommand history')
       nmap('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')
       nmap('<leader>sf', builtin.find_files, '[S]earch [F]iles')
       nmap('<leader>sg', builtin.live_grep, '[S]earch by [G]rep')
       nmap('<leader>sh', builtin.help_tags, '[S]earch [H]elp')
       nmap('<leader>sk', builtin.keymaps, '[S]earch [K]eymaps')
+      nmap('<leader>sm', builtin.man_pages, '[S]earch [M]anpages')
       nmap('<leader>sr', builtin.resume, '[S]earch [R]esume')
+      nmap('<leader>ss', builtin.builtin, '[S]earch [S]elect Telescope')
       nmap('<leader>sw', builtin.grep_string, '[S]earch current [W]ord')
 
       nmap('<leader>/', function()
@@ -89,6 +92,13 @@ return {
       nmap('<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, '[S]earch [N]eovim files')
+
+      nmap('<leader>so', function()
+        builtin.live_grep {
+          grep_open_files = true,
+          prompt_title = 'Live Grep in Open Files',
+        }
+      end, '[S]earch in [O]pen files')
     end
   },
 }
