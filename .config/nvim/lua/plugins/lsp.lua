@@ -32,10 +32,7 @@ return {
           -- mappings specific for LSP related items. It sets the mode, buffer,
           -- and description for us each time.
           local nmap = function(keys, func, desc)
-            if desc then
-              desc = 'LSP: ' .. desc
-            end
-
+            desc = desc and 'LSP: ' .. desc
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = desc })
           end
           local builtin = require 'telescope.builtin'
