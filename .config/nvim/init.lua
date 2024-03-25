@@ -116,13 +116,10 @@ vim.keymap.set('n', '<Leader>ve', function()
   vim.cmd('set virtualedit?')
 end, { desc = "Toggle '[v]irtual[e]dit'" })
 vim.keymap.set('n', '<Leader>x', function()
-  local treesitter = require('vim.treesitter')
   if vim.g.syntax_on then
-    vim.cmd('syntax off')
-    treesitter.stop()
+    vim.cmd('syntax off | TSDisable highlight')
   else
-    vim.cmd('syntax on')
-    treesitter.start()
+    vim.cmd('syntax on | TSEnable highlight')
   end
 end, { desc = "Toggle synta[x]" })
 
