@@ -25,12 +25,28 @@ return {
     config = function()
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      -- Function to scroll the previewer of the open picker one page at a time
+      local full_page_scroll = function(prompt_bufnr, direction)
+        local previewer = require("telescope.actions.state").get_current_picker(prompt_bufnr).previewer
+        local status = require("telescope.state").get_status(prompt_bufnr)
+
+        -- Check if we actually have a previewer and a preview window
+        if type(previewer) ~= "table" or previewer.scroll_fn == nil or status.preview_win == nil then
+          return
+        end
+
+        local speed = vim.api.nvim_win_get_height(status.preview_win)
+        previewer:scroll_fn(speed * direction)
+      end
+
       require('telescope').setup {
         defaults = {
           mappings = {
             i = {
               ['<C-u>'] = false,
               ['<C-d>'] = false,
+              ['<C-b>'] = function(bufnr) full_page_scroll(bufnr, -1) end,
+              ['<C-f>'] = function(bufnr) full_page_scroll(bufnr, 1) end,
             },
           },
         },
