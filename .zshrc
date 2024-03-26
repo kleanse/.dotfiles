@@ -139,6 +139,12 @@ export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
 # https://unix.stackexchange.com/a/6357 for more information).
 export GROFF_NO_SGR=1
 
+# Use a more useful run-help function; see `man zshcontrib` under Accessing
+# On-Line Help in the "UTILITIES" section
+unalias run-help
+autoload run-help
+export HELPDIR="/usr/share/zsh/5.9/help/"
+
 resume-job() {
 	zle push-input
 	BUFFER="fg"
