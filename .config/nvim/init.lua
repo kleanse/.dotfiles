@@ -102,8 +102,8 @@ vim.keymap.set('x', '<C-C>', '<Esc>')
 -- Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 -- former command, use ":join" instead. The latter might not need addressed:
 -- Visual-mode "K" is rare.
-vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv")
-vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv")
+vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv", { desc = 'Move selected text down one line' })
+vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv", { desc = 'Move selected text up one line' })
 
 -- Toggle settings
 vim.keymap.set('n', '<leader>tl', function()
