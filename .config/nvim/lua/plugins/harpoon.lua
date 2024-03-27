@@ -2,16 +2,19 @@ return {
   { -- Harpoon: rapid file navigation
     'ThePrimeagen/harpoon',
     config = function()
-      local harpmark = require('harpoon.mark')
-      local harpui = require('harpoon.ui')
+      local nmap = function(keys, func, desc)
+        desc = desc and 'Harpoon: ' .. desc
+        vim.keymap.set('n', keys, func, { desc = desc })
+      end
+      local mark = require('harpoon.mark')
+      local ui = require('harpoon.ui')
 
-      vim.keymap.set('n', '<M-m>', function() harpmark.add_file() end, { desc = '`harpoon` mark current file' })
-      vim.keymap.set('n', '<M-l>', function() harpui.toggle_quick_menu() end, { desc = '`harpoon` toggle quick menu' })
-
-      vim.keymap.set('n', '<M-h>', function() harpui.nav_file(1) end, { desc = '`harpoon` edit file 1' })
-      vim.keymap.set('n', '<M-t>', function() harpui.nav_file(2) end, { desc = '`harpoon` edit file 2' })
-      vim.keymap.set('n', '<M-n>', function() harpui.nav_file(3) end, { desc = '`harpoon` edit file 3' })
-      vim.keymap.set('n', '<M-s>', function() harpui.nav_file(4) end, { desc = '`harpoon` edit file 4' })
+      nmap('<M-m>', function() mark.add_file() end, 'mark current file')
+      nmap('<M-l>', function() ui.toggle_quick_menu() end, 'toggle quick menu')
+      nmap('<M-h>', function() ui.nav_file(1) end, 'edit file 1')
+      nmap('<M-t>', function() ui.nav_file(2) end, 'edit file 2')
+      nmap('<M-n>', function() ui.nav_file(3) end, 'edit file 3')
+      nmap('<M-s>', function() ui.nav_file(4) end, 'edit file 4')
     end
   },
 }
