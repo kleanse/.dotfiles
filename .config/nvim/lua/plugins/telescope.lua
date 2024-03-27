@@ -67,8 +67,8 @@ return {
       local builtin = require 'telescope.builtin'
       local themes = require 'telescope.themes'
 
-      nmap('<leader><space>', builtin.buffers, '[ ] Find existing buffers')
-      nmap('<leader>?', builtin.oldfiles, '[?] Find recently opened files')
+      nmap('<leader><space>', builtin.resume, '[ ] Search Resume')
+      nmap('<leader>sb', builtin.buffers, '[S]earch [B]uffers')
       nmap('<leader>sc', builtin.command_history, '[S]earch [C]ommand history')
       nmap('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')
       nmap('<leader>sf', builtin.find_files, '[S]earch [F]iles')
@@ -76,7 +76,7 @@ return {
       nmap('<leader>sh', builtin.help_tags, '[S]earch [H]elp')
       nmap('<leader>sk', builtin.keymaps, '[S]earch [K]eymaps')
       nmap('<leader>sm', builtin.man_pages, '[S]earch [M]anpages')
-      nmap('<leader>sr', builtin.resume, '[S]earch [R]esume')
+      nmap('<leader>sr', builtin.oldfiles, '[S]earch [R]ecently opened files')
       nmap('<leader>ss', builtin.builtin, '[S]earch [S]elect Telescope')
       nmap('<leader>sw', builtin.grep_string, '[S]earch current [W]ord')
 
