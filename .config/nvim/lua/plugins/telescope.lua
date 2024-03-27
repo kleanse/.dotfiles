@@ -104,11 +104,13 @@ return {
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
       nmap('<leader>gf', builtin.git_files, 'Search [G]it [F]iles')
+
       nmap('<leader>gc', function()
         builtin.git_commits(themes.get_ivy {
           layout_config = { height = 0.8 },
         })
       end, '[G]it [C]ommits')
+
       nmap('<leader>gb', function()
         builtin.git_branches {
           layout_strategy = 'vertical',
