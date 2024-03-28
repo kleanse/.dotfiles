@@ -134,6 +134,14 @@ vim.keymap.set('n', '<leader>tx', function()
   end
 end, { desc = "[T]oggle synta[x] highlighting" })
 
+vim.keymap.set('n', '<leader>td', function()
+  if vim.diagnostic.is_disabled() then
+    vim.diagnostic.enable()
+  else
+    vim.diagnostic.disable()
+  end
+end, { desc = "[T]oggle [D]iagnostics" })
+
 -- Use some common GNU-Readline keyboard shortcuts for the Command line.
 -- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
 -- not useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites
