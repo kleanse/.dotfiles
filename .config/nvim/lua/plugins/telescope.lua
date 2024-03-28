@@ -41,6 +41,16 @@ return {
 
       require('telescope').setup {
         defaults = {
+          -- Format path as "file.txt (relative/path/to/parent)"
+          path_display = function(_, path)
+            local parent = require('plenary.path').new(path):parent()
+            local relpath = require('telescope.utils').transform_path({
+              path_display = {}
+            }, parent.filename)
+            local tail = require('telescope.utils').path_tail(path)
+
+            return string.format('%s (%s)', tail, relpath)
+          end,
           mappings = {
             i = {
               ['<C-u>'] = false,
