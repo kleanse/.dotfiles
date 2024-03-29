@@ -202,9 +202,5 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Enable fzf.
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Ignore the CTRL-T key binding made by fzf and keep the Zsh default behavior
-# for the key.
-bindkey "^T" transpose-chars
+# Set up fzf key bindings and fuzzy completion; disable its CTRL-T key binding
+FZF_CTRL_T_COMMAND= eval "$(fzf --zsh)"
