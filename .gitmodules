@@ -4,6 +4,3 @@
 [submodule ".vim/pack/klenlib/start/klenlib"]
 	path = .vim/pack/klenlib/start/klenlib
 	url = https://github.com/kleanse/klenlib
-[submodule ".vim/pack/fzf/start/fzf"]
-	path = .vim/pack/fzf/start/fzf
-	url = https://github.com/junegunn/fzf.git
