@@ -124,7 +124,11 @@ return {
       nmap('<leader>gb', function()
         builtin.git_branches {
           layout_strategy = 'vertical',
-          layout_config = { mirror = true, prompt_position = 'top' },
+          layout_config = {
+            mirror = true,
+            prompt_position = 'top',
+            preview_cutoff = 30,
+          },
         }
       end, '[G]it [B]ranches')
     end
