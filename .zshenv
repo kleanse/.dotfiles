@@ -20,7 +20,3 @@ export LS_COLORS='rs=0:di=01;34:ln=00;35:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 
 # Default options for "less".
 export LESS='--quit-if-one-screen --ignore-case --jump-target=.5 --RAW-CONTROL-CHARS'
-
-# Default commands for "fzf" key bindings.
-export FZF_DEFAULT_COMMAND='find . \! \( -type d -path \*/.git\* -prune \) \! -type d \! -name '\''*.tags'\'' -printf '\''%P\n'\'
-export FZF_ALT_C_COMMAND='find . \! \( -type d -path \*/.git\* -prune \) -type d -printf '\''%P\n'\'
