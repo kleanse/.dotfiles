@@ -38,6 +38,9 @@ return {
       -- Register i_CTRL-H as a MiniPairs backspacing key so it can delete
       -- adjacent pairs
       vim.keymap.set('i', '<C-h>', 'v:lua.MiniPairs.bs()', { expr = true, replace_keycodes = false })
+
+      -- Evaluate, exchange, multiply, replace, and sort text
+      require('mini.operators').setup()
     end
   },
 }

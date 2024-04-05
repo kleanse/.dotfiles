@@ -38,7 +38,7 @@ return {
           local builtin = require 'telescope.builtin'
 
           nmap('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
-          nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
+          nmap('gR', builtin.lsp_references, '[G]oto [R]eferences')
           nmap('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
           nmap('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
           nmap('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
