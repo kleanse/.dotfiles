@@ -43,6 +43,20 @@ return {
       require('mini.operators').setup()
 
       require('mini.statusline').setup()
+
+      -- Statusline highlight groups
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = vim.api.nvim_create_augroup('highlight-mini-statusline', { clear = true }),
+        pattern = 'solarized',
+        callback = function()
+          vim.cmd.highlight('MiniStatuslineModeNormal gui=bold guifg=#282c34 guibg=#98c379')
+          vim.cmd.highlight('MiniStatuslineModeInsert gui=bold guifg=#282c34 guibg=#61afef')
+          vim.cmd.highlight('MiniStatuslineModeVisual gui=bold guifg=#282c34 guibg=#c678dd')
+          vim.cmd.highlight('MiniStatuslineModeReplace gui=bold guifg=#282c34 guibg=#e06c75')
+          vim.cmd.highlight('MiniStatuslineModeCommand gui=bold guifg=#282c34 guibg=#e5c07b')
+          vim.cmd.highlight('MiniStatuslineModeOther gui=bold guifg=#282c34 guibg=#56b6c2')
+        end,
+      })
     end
   },
 }
