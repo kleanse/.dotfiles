@@ -41,6 +41,8 @@ return {
 
       -- Evaluate, exchange, multiply, replace, and sort text
       require('mini.operators').setup()
+
+      require('mini.statusline').setup()
     end
   },
 }
