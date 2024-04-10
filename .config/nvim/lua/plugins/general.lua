@@ -29,7 +29,7 @@ return {
       --                 line prompt)
       -- - shl}        - highlight (`sh`) last (`l`) brace (`}`)
       -- - 2sfnt       - find (`sf`) second (`2`) next (`n`) tag (`t`)
-      require('mini.surround').setup()
+      require('mini.surround').setup { respect_selection_type = true }
 
       -- Automatically insert and delete adjacent pairs (brackets, quotes,
       -- etc.) in Insert mode
