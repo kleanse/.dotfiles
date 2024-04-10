@@ -172,5 +172,11 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+-- Pretty prints a Lua object
+function P(object)
+	print(vim.inspect(object))
+	return object
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim:ts=2:sts=2:sw=2:et:

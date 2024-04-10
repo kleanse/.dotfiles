@@ -1,11 +1,3 @@
--- Pretty prints a Lua object.
----@param object any
----@return any
-function P(object)
-	print(vim.inspect(object))
-	return object
-end
-
 ---@return string|osdate date Today's date in "yyyy Jan dd" format
 function Date()
 	return os.date('%Y %b %d')
