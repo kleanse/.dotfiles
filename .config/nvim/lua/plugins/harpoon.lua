@@ -7,7 +7,11 @@ return {
     },
     config = function()
       local harpoon = require 'harpoon'
-      harpoon:setup()
+      harpoon:setup {
+        settings = {
+          save_on_toggle = true,
+        },
+      }
 
       local nmap = function(keys, func, desc)
         desc = desc and 'Harpoon: ' .. desc
