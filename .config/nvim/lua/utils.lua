@@ -1,5 +1,9 @@
+-- Module containing general-purpose functions
+
+local utils = {}
+
 ---@return string|osdate date Today's date in "yyyy Jan dd" format
-function Date()
+utils.date = function()
 	return os.date('%Y %b %d')
 end
 
@@ -14,9 +18,9 @@ end
 --6
 --7
 -- ```
--- Trim_peripheral_blank_lines() will delete four lines: one at the start (line
--- 1) and three at the end (lines 5, 6, and 7).
-function Trim_peripheral_blank_lines()
+-- utils.trim_peripheral_blank_lines() will delete four lines: one at the start
+-- (line 1) and three at the end (lines 5, 6, and 7).
+utils.trim_peripheral_blank_lines = function()
 	local curbuf = vim.fn.bufnr()
 	local total_lines = vim.fn.line('$')
 
@@ -55,7 +59,7 @@ function Trim_peripheral_blank_lines()
 end
 
 -- Deletes trailing whitespace in the current buffer.
-function Trim_trailing_whitespace()
+utils.trim_trailing_whitespace = function()
 	local save_view = vim.fn.winsaveview()
 	local save_search = vim.fn.getreg('/')
 	vim.cmd([[%substitute/\v\s+$//e]])
@@ -65,7 +69,7 @@ end
 
 -- Sets the values for the "ifndef" guard in the current file based on the
 -- file's name and current date (yyyymmdd).
-function Set_header_macros()
+utils.set_header_macros = function()
 	local macro_name = string.gsub(string.upper(vim.fn.expand('%:t')),
 					'%.', '_' .. os.date('%Y%m%d') .. '_')
 	vim.fn.setline(1, vim.fn.getline(1) .. macro_name)
@@ -76,9 +80,9 @@ end
 -- Updates the date found after the first occurrence of the string
 -- "Last change:" in the first 20 lines of the current file. The format of the
 -- new date may be specified (see strftime() for valid formats). If no format
--- is given, the date returned by Date() is used.
+-- is given, the date returned by utils.date() is used.
 ---@param format? string Format of the new date
-function Update_last_change(format)
+utils.update_last_change = function(format)
 	local pat = 'Last [Cc]hange:'
 	local limit = 20
 	if vim.fn.line('$') < limit then
@@ -92,9 +96,11 @@ function Update_last_change(format)
 				c = '\t'
 			end
 			local updated_line = string.gsub(line, '(' .. pat .. ')%s*.*$',
-				'%1' .. c .. (format and os.date(format) or Date()))
+				'%1' .. c .. (format and os.date(format) or utils.date()))
 			vim.fn.setline(i, updated_line)
 			break
 		end
 	end
 end
+
+return utils
