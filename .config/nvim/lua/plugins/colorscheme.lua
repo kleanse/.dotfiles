@@ -12,6 +12,19 @@ return {
           GruvboxPurpleUnderline = { fg='#8f3f71' },
           GruvboxRedUnderline    = { fg='#9d0006' },
           GruvboxYellowUnderline = { fg='#b57614' },
+
+          GruvboxAquaUnderlineItalic   = { undercurl=true, italic=true, fg='#427b58', sp='#427b58' },
+          GruvboxBlueUnderlineItalic   = { undercurl=true, italic=true, fg='#076678', sp='#076678' },
+          GruvboxGreenUnderlineItalic  = { undercurl=true, italic=true, fg='#79740e', sp='#79740e' },
+          GruvboxOrangeUnderlineItalic = { undercurl=true, italic=true, fg='#af3a03', sp='#af3a03' },
+          GruvboxPurpleUnderlineItalic = { undercurl=true, italic=true, fg='#8f3f71', sp='#8f3f71' },
+          GruvboxRedUnderlineItalic    = { undercurl=true, italic=true, fg='#9d0006', sp='#9d0006' },
+          GruvboxYellowUnderlineItalic = { undercurl=true, italic=true, fg='#b57614', sp='#b57614' },
+
+          SpellBad   = { link='GruvboxRedUnderlineItalic' },
+          SpellCap   = { link='GruvboxBlueUnderlineItalic' },
+          SpellRare  = { link='GruvboxPurpleUnderlineItalic' },
+          SpellLocal = { link='GruvboxAquaUnderlineItalic' },
         },
       }
 
