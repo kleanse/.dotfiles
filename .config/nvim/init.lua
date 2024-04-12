@@ -95,6 +95,7 @@ vim.keymap.set('n', 'n', 'nzvzz')
 vim.keymap.set('n', 'N', 'Nzvzz')
 
 vim.keymap.set('n', ';', vim.cmd.update, { desc = '":update" file' })
+vim.keymap.set('n', '<M-b>', '<C-^>')
 vim.keymap.set('n', '<M-e>', vim.cmd.Explore, { desc = 'Netrw explore directory of current file' })
 vim.keymap.set('n', '<M-o>', vim.cmd.Rexplore, { desc = 'Netrw return to or from Explorer' })
 
