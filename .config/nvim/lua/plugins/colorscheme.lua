@@ -11,6 +11,14 @@ return {
           vim.cmd.highlight('clear Search')
           vim.cmd.highlight('IncSearch cterm=standout gui=standout guifg=#cb4b16')
           vim.cmd.highlight('Search cterm=reverse gui=reverse guifg=#b58900')
+
+          -- mini.statusline highlight groups
+          vim.cmd.highlight('MiniStatuslineModeNormal gui=bold guifg=#282c34 guibg=#98c379')
+          vim.cmd.highlight('MiniStatuslineModeInsert gui=bold guifg=#282c34 guibg=#61afef')
+          vim.cmd.highlight('MiniStatuslineModeVisual gui=bold guifg=#282c34 guibg=#c678dd')
+          vim.cmd.highlight('MiniStatuslineModeReplace gui=bold guifg=#282c34 guibg=#e06c75')
+          vim.cmd.highlight('MiniStatuslineModeCommand gui=bold guifg=#282c34 guibg=#e5c07b')
+          vim.cmd.highlight('MiniStatuslineModeOther gui=bold guifg=#282c34 guibg=#56b6c2')
         end,
       })
       vim.cmd.colorscheme 'solarized'
