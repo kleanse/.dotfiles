@@ -157,12 +157,11 @@ vim.keymap.set('c', '<C-X>', '<C-F>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-vim.cmd.highlight('InitLuaYankHighlight cterm=reverse gui=reverse guifg=#d8ccc4 guibg=#eee8d5')
 vim.api.nvim_create_autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup('yank-highlight', { clear = true }),
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   pattern = '*',
   callback = function()
-    vim.highlight.on_yank { higroup = 'InitLuaYankHighlight' }
+    vim.highlight.on_yank()
   end,
 })
 
