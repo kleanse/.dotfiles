@@ -1,27 +1,23 @@
 return {
-  { -- Solarized colorscheme
-    'shaunsingh/solarized.nvim',
+  { -- gruvbox color scheme
+    'ellisonleao/gruvbox.nvim',
     priority = 1000,
     config = function()
       vim.api.nvim_create_autocmd('ColorScheme', {
         group = vim.api.nvim_create_augroup('highlight-colorscheme', { clear = true }),
-        pattern = 'solarized',
+        pattern = 'gruvbox',
         callback = function()
-          vim.cmd.highlight('clear IncSearch')
-          vim.cmd.highlight('clear Search')
-          vim.cmd.highlight('IncSearch cterm=standout gui=standout guifg=#cb4b16')
-          vim.cmd.highlight('Search cterm=reverse gui=reverse guifg=#b58900')
-
           -- mini.statusline highlight groups
-          vim.cmd.highlight('MiniStatuslineModeNormal gui=bold guifg=#282c34 guibg=#98c379')
-          vim.cmd.highlight('MiniStatuslineModeInsert gui=bold guifg=#282c34 guibg=#61afef')
-          vim.cmd.highlight('MiniStatuslineModeVisual gui=bold guifg=#282c34 guibg=#c678dd')
-          vim.cmd.highlight('MiniStatuslineModeReplace gui=bold guifg=#282c34 guibg=#e06c75')
-          vim.cmd.highlight('MiniStatuslineModeCommand gui=bold guifg=#282c34 guibg=#e5c07b')
-          vim.cmd.highlight('MiniStatuslineModeOther gui=bold guifg=#282c34 guibg=#56b6c2')
+          vim.cmd.highlight('MiniStatuslineModeNormal gui=bold guifg=#fbf1c7 guibg=#928374')
+          vim.cmd.highlight('MiniStatuslineModeInsert gui=bold guifg=#fbf1c7 guibg=#076678')
+          vim.cmd.highlight('MiniStatuslineModeVisual gui=bold guifg=#fbf1c7 guibg=#8f3f71')
+          vim.cmd.highlight('MiniStatuslineModeReplace gui=bold guifg=#fbf1c7 guibg=#9d0006')
+          vim.cmd.highlight('MiniStatuslineModeCommand gui=bold guifg=#fbf1c7 guibg=#b57614')
+          vim.cmd.highlight('MiniStatuslineModeOther gui=bold guifg=#fbf1c7 guibg=#79740e')
         end,
       })
-      vim.cmd.colorscheme 'solarized'
+
+      vim.cmd.colorscheme 'gruvbox'
     end,
   },
 }
