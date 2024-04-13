@@ -7,6 +7,16 @@ utils.date = function()
 	return os.date('%Y %b %d')
 end
 
+-- Sets the values for the "ifndef" guard in the current file based on the
+-- file's name and current date (yyyymmdd).
+utils.set_header_macros = function()
+	local macro_name = string.gsub(string.upper(vim.fn.expand('%:t')),
+					'%.', '_' .. os.date('%Y%m%d') .. '_')
+	vim.fn.setline(1, vim.fn.getline(1) .. macro_name)
+	vim.fn.setline(2, vim.fn.getline(2) .. macro_name)
+	vim.fn.setline(vim.fn.line('$'), vim.fn.getline('$') .. ' //' .. macro_name)
+end
+
 -- Deletes starting and ending blank lines in the current buffer. For example,
 -- for the following buffer,
 -- ```
@@ -65,16 +75,6 @@ utils.trim_trailing_whitespace = function()
 	vim.cmd([[%substitute/\v\s+$//e]])
 	vim.fn.winrestview(save_view)
 	vim.fn.setreg('/', save_search)
-end
-
--- Sets the values for the "ifndef" guard in the current file based on the
--- file's name and current date (yyyymmdd).
-utils.set_header_macros = function()
-	local macro_name = string.gsub(string.upper(vim.fn.expand('%:t')),
-					'%.', '_' .. os.date('%Y%m%d') .. '_')
-	vim.fn.setline(1, vim.fn.getline(1) .. macro_name)
-	vim.fn.setline(2, vim.fn.getline(2) .. macro_name)
-	vim.fn.setline(vim.fn.line('$'), vim.fn.getline('$') .. ' //' .. macro_name)
 end
 
 -- Updates the date found after the first occurrence of the string
