@@ -28,8 +28,8 @@ end
 --6
 --7
 -- ```
--- utils.trim_peripheral_blank_lines() will delete four lines: one at the start
--- (line 1) and three at the end (lines 5, 6, and 7).
+-- `utils.trim_peripheral_blank_lines()` will delete four lines: one at the
+-- start (line 1) and three at the end (lines 5, 6, and 7).
 utils.trim_peripheral_blank_lines = function()
 	local curbuf = vim.fn.bufnr()
 	local total_lines = vim.fn.line('$')
@@ -79,8 +79,8 @@ end
 
 -- Updates the date found after the first occurrence of the string
 -- "Last change:" in the first 20 lines of the current file. The format of the
--- new date may be specified (see strftime() for valid formats). If no format
--- is given, the date returned by utils.date() is used.
+-- new date may be specified (see `strftime()` for valid formats). If no format
+-- is given, the date returned by `utils.date()` is used.
 ---@param format? string Format of the new date
 utils.update_last_change = function(format)
 	local pat = 'Last [Cc]hange:'
