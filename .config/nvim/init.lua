@@ -53,6 +53,7 @@ require('utils')
 -- [[ Set options ]]
 -- See `:help vim.o`
 vim.o.background = 'light'
+vim.o.cedit = vim.api.nvim_replace_termcodes('<C-X>', true, true, true)
 vim.o.copyindent = true
 vim.o.listchars = 'tab:--|,trail:·'
 vim.o.mouse = 'a'          -- Enable mouse mode
@@ -152,9 +153,6 @@ vim.keymap.set('c', '<C-B>', '<Left>')
 vim.keymap.set('c', '<C-F>', '<Right>')
 vim.keymap.set('c', '<M-b>', '<S-Left>')
 vim.keymap.set('c', '<M-f>', '<S-Right>')
-
--- Transfer the default behavior of Command-line CTRL-F to CTRL-X.
-vim.keymap.set('c', '<C-X>', '<C-F>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
