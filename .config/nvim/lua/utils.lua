@@ -1,10 +1,31 @@
 -- Module containing general-purpose functions
 
+local Path = require 'plenary.path'
+
 local utils = {}
 
 ---@return string|osdate date Today's date in "yyyy Jan dd" format
 utils.date = function()
 	return os.date('%Y %b %d')
+end
+
+-- Read the template file with the extension `ext` into the current buffer and
+-- set the cursor's position to `curpos`, which uses (1,0) indexing
+-- |api-indexing|. By default, template files are searched for in
+-- `stdpath("config")/templates`; set `vim.g.template_path` to change this
+-- search path.
+---@param ext string Extension of template file, e.g., ".c" or ".mk"
+---@param curpos number[] (row, col) tuple indicating the new position
+utils.read_template_file = function(ext, curpos)
+	local filename = 'template' .. ext
+	local path = vim.g.template_path
+		and Path:new(vim.g.template_path)
+		or Path:new(vim.fn.stdpath('config'), 'templates')
+	path = path:joinpath(filename)
+
+	vim.cmd.read(path.filename)
+	vim.api.nvim_buf_set_lines(0, 0, 1, false, {})
+	vim.api.nvim_win_set_cursor(0, curpos)
 end
 
 -- Sets the values for the "ifndef" guard in the current file based on the

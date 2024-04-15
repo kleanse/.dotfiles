@@ -8,6 +8,9 @@ vim.g.maplocalleader = ','
 -- Set to true if you have installed and are using a Nerd Font
 vim.g.have_nerd_font = true
 
+-- Directory containing template files
+vim.g.template_path = '~/.templates'
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    See `:help lazy.nvim.txt` for more info
