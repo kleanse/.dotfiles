@@ -43,7 +43,7 @@ return {
         defaults = {
           -- Format path as "file.txt (relative/path/to/parent)"
           path_display = function(_, path)
-            local parent = require('plenary.path').new(path):parent()
+            local parent = require('plenary.path'):new(path):parent()
             local relpath = require('telescope.utils').transform_path({
               path_display = {}
             }, parent.filename)
