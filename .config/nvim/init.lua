@@ -157,7 +157,21 @@ vim.keymap.set('c', '<C-F>', '<Right>')
 vim.keymap.set('c', '<M-b>', '<S-Left>')
 vim.keymap.set('c', '<M-f>', '<S-Right>')
 
--- [[ Highlight on yank ]]
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+-- [[ Functions ]]
+-- Pretty prints a Lua object
+function P(object)
+	print(vim.inspect(object))
+	return object
+end
+
+-- [[ Autocommands ]]
+-- Highlight yanked text briefly
 -- See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
@@ -166,18 +180,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-
--- Pretty prints a Lua object
-function P(object)
-	print(vim.inspect(object))
-	return object
-end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim:ts=2:sts=2:sw=2:et:
