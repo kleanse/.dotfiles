@@ -1,6 +1,6 @@
 -- Set "," as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will
+--  NOTE: Must happen before plugins are required (otherwise, wrong leader will
 --  be used)
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -50,13 +50,13 @@ require('lazy').setup('plugins', {
 -- [[ Import custom utility functions ]]
 require('utils')
 
--- [[ Setting options ]]
+-- [[ Set options ]]
 -- See `:help vim.o`
 vim.o.background = 'light'
 vim.o.copyindent = true
 vim.o.listchars = 'tab:--|,trail:·'
 vim.o.mouse = 'a'          -- Enable mouse mode
-vim.o.showmode = false     -- Redundant with nvim-lualine/lualine.nvim
+vim.o.showmode = false     -- Redundant with mini.statusline
 vim.o.termguicolors = true -- Check if your terminal supports this
 vim.o.textwidth = 79
 vim.o.undofile = true      -- Save undo history
