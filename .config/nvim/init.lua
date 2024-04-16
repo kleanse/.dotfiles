@@ -11,6 +11,10 @@ vim.g.have_nerd_font = true
 -- Directory containing template files
 vim.g.template_path = '~/.templates'
 
+-- Remove trailing whitespace and blank lines at the start and end when writing
+-- the current buffer
+vim.g.trim_blanks_on_write = true
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
 --    See `:help lazy.nvim.txt` for more info
@@ -134,6 +138,12 @@ vim.keymap.set('n', '<leader>ts', function()
   vim.wo.spell = not vim.wo.spell
 end, { desc = "[T]oggle '[s]pell' check" })
 
+vim.keymap.set('n', '<leader>tt', function()
+  vim.g.trim_blanks_on_write = not vim.g.trim_blanks_on_write
+  local prefix = vim.g.trim_blanks_on_write and string.rep(' ', 2) or 'no'
+  vim.api.nvim_echo({ {prefix .. 'trim'} }, false, {})
+end, { desc = "[T]oggle [T]rim Blanks on Write" })
+
 vim.keymap.set('n', '<leader>tv', function()
   vim.wo.virtualedit = #vim.wo.virtualedit == 0 and 'all' or ''
   vim.cmd('set virtualedit?')
@@ -178,6 +188,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Trim trailing whitespace and peripheral blank lines
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('trim-blanks', { clear = true }),
+  pattern = '*',
+  callback = function()
+    if vim.g.trim_blanks_on_write then
+      utils.trim_peripheral_blank_lines()
+      utils.trim_trailing_whitespace()
+    end
   end,
 })
 
