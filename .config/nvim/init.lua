@@ -114,6 +114,18 @@ vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv", { desc = 'Move selected text dow
 vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv", { desc = 'Move selected text up one line' })
 
 -- Toggle settings
+vim.keymap.set('n', '<leader>tc', function()
+  vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and '+1' or ''
+end, { desc = "[T]oggle '[c]olorcolumn'" })
+
+vim.keymap.set('n', '<leader>td', function()
+  if vim.diagnostic.is_disabled() then
+    vim.diagnostic.enable()
+  else
+    vim.diagnostic.disable()
+  end
+end, { desc = "[T]oggle [D]iagnostics" })
+
 vim.keymap.set('n', '<leader>tl', function()
   vim.wo.list = not vim.wo.list
 end, { desc = "[T]oggle '[l]ist'" })
@@ -121,10 +133,6 @@ end, { desc = "[T]oggle '[l]ist'" })
 vim.keymap.set('n', '<leader>ts', function()
   vim.wo.spell = not vim.wo.spell
 end, { desc = "[T]oggle '[s]pell' check" })
-
-vim.keymap.set('n', '<leader>tc', function()
-  vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and '+1' or ''
-end, { desc = "[T]oggle '[c]olorcolumn'" })
 
 vim.keymap.set('n', '<leader>tv', function()
   vim.wo.virtualedit = #vim.wo.virtualedit == 0 and 'all' or ''
@@ -138,14 +146,6 @@ vim.keymap.set('n', '<leader>tx', function()
     vim.cmd('syntax on | TSEnable highlight')
   end
 end, { desc = "[T]oggle synta[x] highlighting" })
-
-vim.keymap.set('n', '<leader>td', function()
-  if vim.diagnostic.is_disabled() then
-    vim.diagnostic.enable()
-  else
-    vim.diagnostic.disable()
-  end
-end, { desc = "[T]oggle [D]iagnostics" })
 
 -- Use some common GNU-Readline keyboard shortcuts for the Command line.
 -- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
