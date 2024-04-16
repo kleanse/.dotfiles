@@ -51,7 +51,7 @@ require('lazy').setup('plugins', {
 })
 
 -- [[ Import custom utility functions ]]
-require('utils')
+local utils = require 'utils'
 
 -- [[ Set options ]]
 -- See `:help vim.o`
@@ -178,6 +178,46 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Use a template file when editing new files of a specific type
+local template_group = vim.api.nvim_create_augroup('edit-with-template', { clear = true })
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = template_group,
+  pattern = '*.c',
+  callback = function()
+    utils.read_template_file('.c', {5, 0})
+    vim.cmd.startinsert { bang = true }
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = template_group,
+  pattern = '*.cpp',
+  callback = function()
+    utils.read_template_file('.cpp', {5, 0})
+    vim.cmd.startinsert { bang = true }
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = template_group,
+  pattern = '*.h',
+  callback = function()
+    utils.read_template_file('.h', {4, 0})
+    utils.set_header_macros()
+    vim.cmd.startinsert { bang = true }
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = template_group,
+  pattern = 'Makefile',
+  callback = function()
+    utils.read_template_file('.mk', {2, 0})
+    vim.api.nvim_set_current_line(vim.api.nvim_get_current_line() .. ' ')
+    vim.cmd.startinsert { bang = true }
   end,
 })
 
