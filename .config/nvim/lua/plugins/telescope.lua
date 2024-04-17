@@ -24,7 +24,7 @@ return {
     },
     config = function()
       -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
+      --  See `:help telescope` and `:help telescope.setup()`
       -- Function to scroll the previewer of the open picker one page at a time
       local full_page_scroll = function(prompt_bufnr, direction)
         local previewer = require("telescope.actions.state").get_current_picker(prompt_bufnr).previewer

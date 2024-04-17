@@ -7,7 +7,7 @@ return {
     'echasnovski/mini.nvim',
     config = function()
       -- Better Around/Inside textobjects
-      -- See `:help text-objects` and `:help mini.ai`
+      --  See `:help text-objects` and `:help mini.ai`
       -- - va)     - visually select (`v`) around (`a`) parenthesis (`)`)
       -- - yinq    - yank (`y`) inside (`i`) next (`n`) quote (`q` = ["'`])
       -- - 2calf   - change (`c`) around (`a`) second (`2`) last (`l`) function
@@ -20,7 +20,7 @@ return {
 
       -- Add/delete/replace/find/highlight surroundings (brackets, quotes,
       -- etc.)
-      -- See `:help mini.surround`
+      --  See `:help mini.surround`
       -- - saiw)       - add (`sa` [think "[S]urround [A]dd"]) for inner word
       --                 (`iw`) parenthesis (`)`) (compare `saiw(`)
       -- - sd'         - delete (`sd`) surrounding single quotes (`'`)

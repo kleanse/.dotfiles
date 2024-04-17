@@ -11,7 +11,7 @@ return {
     },
     config = function()
       -- [[ Configure nvim-cmp ]]
-      -- See `:help cmp`
+      --  See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}

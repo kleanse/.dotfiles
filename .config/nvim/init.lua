@@ -1,7 +1,7 @@
 -- Set "," as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise, wrong leader will
---  be used)
+--  See `:help mapleader`
+-- NOTE: Must happen before plugins are required (otherwise, wrong leader will
+-- be used)
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
@@ -16,8 +16,8 @@ vim.g.template_path = '~/.templates'
 vim.g.trim_blanks_on_write = true
 
 -- [[ Install `lazy.nvim` plugin manager ]]
---    https://github.com/folke/lazy.nvim
---    See `:help lazy.nvim.txt` for more info
+-- https://github.com/folke/lazy.nvim
+--  See `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -58,7 +58,7 @@ require('lazy').setup('plugins', {
 local utils = require 'utils'
 
 -- [[ Set options ]]
--- See `:help vim.o`
+--  See `:help vim.o`
 vim.o.background = 'light'
 vim.o.cedit = vim.api.nvim_replace_termcodes('<C-X>', true, true, true)
 vim.o.copyindent = true
@@ -81,7 +81,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
+-- Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
@@ -182,7 +182,7 @@ end
 
 -- [[ Autocommands ]]
 -- Highlight yanked text briefly
--- See `:help vim.highlight.on_yank()`
+--  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   pattern = '*',

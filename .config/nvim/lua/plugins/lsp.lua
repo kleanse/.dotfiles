@@ -18,9 +18,9 @@ return {
     },
     config = function()
       -- [[ Configure LSP ]]
-      --  This function gets run when an LSP connects to a particular buffer;
-      --  that is, when a file is opened and is associated with an LSP, this
-      --  function will be executed to configure the current buffer
+      -- This function gets run when an LSP connects to a particular buffer;
+      -- that is, when a file is opened and is associated with an LSP, this
+      -- function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -67,12 +67,12 @@ return {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will
-      --  automatically be installed.
+      -- Feel free to add/remove any LSPs that you want here. They will
+      -- automatically be installed.
       --
-      --  Add any additional override configuration in the following tables.
-      --  They will be passed to the `settings` field of the server config.
-      --  You must look up that documentation yourself.
+      -- Add any additional override configuration in the following tables.
+      -- They will be passed to the `settings` field of the server config.
+      -- You must look up that documentation yourself.
       local servers = {
         -- clangd = {},
         -- gopls = {},
