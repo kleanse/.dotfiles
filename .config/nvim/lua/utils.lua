@@ -55,40 +55,46 @@ end
 -- `utils.trim_peripheral_blank_lines()` will delete four lines: one at the
 -- start (line 1) and three at the end (lines 5, 6, and 7).
 utils.trim_peripheral_blank_lines = function()
-	local curbuf = vim.fn.bufnr()
 	local total_lines = vim.fn.line('$')
-
 	local n_starting_blank_lines = 0
+
 	for i = 1, total_lines do
-		if string.match(vim.fn.getline(i), '%S') then
+		if string.match(vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1], '%S') then
 			break
 		end
 		n_starting_blank_lines = n_starting_blank_lines + 1
 	end
 
 	local n_ending_blank_lines = 0
+
 	if n_starting_blank_lines ~= total_lines then
 		for i = total_lines, 1, -1 do
-			if string.match(vim.fn.getline(i), '%S') then
+			if string.match(vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1], '%S') then
 				break
 			end
 			n_ending_blank_lines = n_ending_blank_lines + 1
 		end
 	end
 
+	local total_blank_lines = n_starting_blank_lines + n_ending_blank_lines
+
+	-- Do not add an empty change to the undo tree
+	if total_blank_lines == 0 then
+		return
+	end
+
 	-- Delete ending lines first; doing the reverse messes the line count
 	-- for the ending lines.
-	vim.fn.deletebufline(curbuf, total_lines - n_ending_blank_lines + 1, total_lines)
-	vim.fn.deletebufline(curbuf, 1, n_starting_blank_lines)
+	vim.api.nvim_buf_set_lines(0, -1 - n_ending_blank_lines, -1, false, {})
+	vim.api.nvim_buf_set_lines(0, 0, n_starting_blank_lines, false, {})
 
-	local n_lines_deleted = n_starting_blank_lines + n_ending_blank_lines
-
-	if n_lines_deleted == total_lines then
-		vim.cmd.echomsg '"--No lines in buffer--"'
-	elseif n_lines_deleted > vim.o.report then
-		vim.cmd.echomsg((n_lines_deleted == 1)
-			and n_lines_deleted .. ' "line less"'
-			or n_lines_deleted .. ' "fewer lines"')
+	if total_blank_lines == total_lines then
+		vim.api.nvim_echo({ {'--No lines in buffer--'} }, false, {})
+	elseif total_blank_lines > vim.o.report then
+		local msg = total_blank_lines == 1
+			and total_blank_lines .. ' line less'
+			or total_blank_lines .. ' fewer lines'
+		print(msg)
 	end
 end
 
