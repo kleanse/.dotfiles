@@ -235,6 +235,15 @@ vim.api.nvim_create_autocmd('BufNewFile', {
 
 vim.api.nvim_create_autocmd('BufNewFile', {
   group = template_group,
+  pattern = '*.html',
+  callback = function()
+    utils.read_template_file('.html', {6, 9})
+    vim.cmd.startinsert()
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufNewFile', {
+  group = template_group,
   pattern = 'Makefile',
   callback = function()
     utils.read_template_file('.mk', {2, 0})
