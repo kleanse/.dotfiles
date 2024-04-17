@@ -88,8 +88,8 @@ vim.o.clipboard = 'unnamedplus'
 -- [[ Basic Keymaps ]]
 -- Keymaps for better default experience
 --  See `:help vim.keymap.set()`
--- Remap Normal-mode commands ";" and "," to different keys for delay-free ","
--- behavior while using such a key for mapleader.
+-- Remap ";" and "," to different keys for delay-free "," behavior while using
+-- such a key for mapleader.
 vim.keymap.set('', '+', ';')
 vim.keymap.set('', '_', ',')
 
