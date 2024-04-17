@@ -31,11 +31,14 @@ end
 -- Sets the values for the "ifndef" guard in the current file based on the
 -- file's name and current date (yyyymmdd).
 utils.set_header_macros = function()
-	local macro_name = string.gsub(string.upper(vim.fn.expand('%:t')),
+	local macro_name = ' ' .. string.gsub(string.upper(vim.fn.expand('%:t')),
 					'%.', '_' .. os.date('%Y%m%d') .. '_')
-	vim.fn.setline(1, vim.fn.getline(1) .. macro_name)
-	vim.fn.setline(2, vim.fn.getline(2) .. macro_name)
-	vim.fn.setline(vim.fn.line('$'), vim.fn.getline('$') .. ' //' .. macro_name)
+	vim.api.nvim_buf_set_lines(0, 0, 1, false,
+		{ vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] .. macro_name })
+	vim.api.nvim_buf_set_lines(0, 1, 2, false,
+		{ vim.api.nvim_buf_get_lines(0, 1, 2, false)[1] .. macro_name })
+	vim.api.nvim_buf_set_lines(0, -2, -1, false,
+		{ vim.api.nvim_buf_get_lines(0, -2, -1, false)[1] .. ' //' .. macro_name })
 end
 
 -- Deletes starting and ending blank lines in the current buffer. For example,
