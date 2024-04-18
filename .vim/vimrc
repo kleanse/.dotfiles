@@ -16,6 +16,7 @@ set
 	\ nojoinspaces
 	\ nostartofline
 	\ nowrapscan
+	\ termguicolors
 	\ textwidth=79
 	\ visualbell t_vb=
 	\ wildmode=longest,list
@@ -257,18 +258,6 @@ enddef
 # }}}
 
 # Expects: none
-# Ensures: change the highlighting of spelling highlight groups.
-def Set_spell_highlights()
-	# Set_spell_highlights() implementation {{{
-	highlight SpellBad   cterm=nocombine ctermfg=15 ctermbg=1
-	highlight SpellCap   cterm=nocombine ctermfg=15 ctermbg=4
-	highlight SpellRare  cterm=nocombine ctermfg=15 ctermbg=5
-	highlight SpellLocal cterm=nocombine ctermfg=15 ctermbg=6
-	highlight MatchParen cterm=underline		ctermbg=7
-enddef
-# }}}
-
-# Expects: none
 # Ensures: updates the date found after the first occurrence of the string
 #	   "Last change:" in the first 20 lines of the current file. The format
 #	   of the new date may be specified (see strftime() for valid formats).
@@ -320,21 +309,12 @@ augroup vimrc
 					| silent g:Trim_whitespace()
 					| silent Update_last_change()
 					| retab
-	autocmd ColorScheme solarized
-			| try
-				| silent Set_spell_highlights()
-	#\ Reloading a Vim9 script deletes all existing script-local
-	#\ functions and variables. Thus, the above function will not exist
-	#\ when this autocmd triggers from a reload. (See "vim9-reload" for
-	#\ more information.)
-			| catch /^Vim(eval):E117:.*Set_spell_highlights/
-			| endtry
 augroup END
 # }}}
 
 
 set background=light
-colorscheme solarized
+colorscheme gruvbox
 
 
 # Abbreviations {{{
