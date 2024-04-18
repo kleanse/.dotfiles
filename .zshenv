@@ -1,6 +1,6 @@
 # Environment variables that set the default text editor for command-line
 # programs.
-export VISUAL="vim"
+export VISUAL="nvim"
 export EDITOR="$VISUAL"
 
 # Include
