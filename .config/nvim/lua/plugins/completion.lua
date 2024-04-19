@@ -58,12 +58,14 @@ return {
             end
           end, { 'i', 's' }),
         },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-          { name = 'buffer', keyword_length = 5 },
-        },
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+          }, {
+            { name = 'path' },
+            { name = 'buffer', keyword_length = 5 },
+          }
+        ),
         formatting = {
           expandable_indicator = true,
           fields = { "abbr", "kind", "menu" },
