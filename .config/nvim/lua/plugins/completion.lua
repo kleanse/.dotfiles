@@ -68,12 +68,13 @@ return {
         ),
         formatting = {
           expandable_indicator = true,
-          fields = { "abbr", "kind", "menu" },
+          fields = { 'abbr', 'kind', 'menu' },
           format = function(entry, vim_item)
             vim_item.menu = ({
-              buffer = "[buf]",
-              nvim_lsp = "[LSP]",
-              luasnip = "[snip]",
+              buffer = '[buf]',
+              luasnip = '[snip]',
+              nvim_lsp = '[LSP]',
+              path = '[path]',
             })[entry.source.name]
             return vim_item
           end,
