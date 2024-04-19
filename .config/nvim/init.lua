@@ -85,8 +85,7 @@ vim.o.smartcase = true
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
--- [[ Basic Keymaps ]]
--- Keymaps for better default experience
+-- [[ Key mappings ]]
 --  See `:help vim.keymap.set()`
 -- Remap ";" and "," to different keys for delay-free "," behavior while using
 -- such a key for mapleader.
@@ -122,6 +121,16 @@ vim.keymap.set('x', '<C-C>', '<Esc>')
 -- Visual-mode "K" is rare.
 vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv", { desc = 'Move selected text down one line' })
 vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv", { desc = 'Move selected text up one line' })
+
+-- Use some common GNU-Readline keyboard shortcuts for the Command line.
+-- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
+-- not useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites
+-- editing complex commands.
+vim.keymap.set('c', '<C-A>', '<Home>')
+vim.keymap.set('c', '<C-B>', '<Left>')
+vim.keymap.set('c', '<C-F>', '<Right>')
+vim.keymap.set('c', '<M-b>', '<S-Left>')
+vim.keymap.set('c', '<M-f>', '<S-Right>')
 
 -- Toggle settings
 vim.keymap.set('n', '<leader>tc', function()
@@ -162,16 +171,6 @@ vim.keymap.set('n', '<leader>tx', function()
     vim.cmd('syntax on | TSEnable highlight')
   end
 end, { desc = "[T]oggle synta[x] highlighting" })
-
--- Use some common GNU-Readline keyboard shortcuts for the Command line.
--- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
--- not useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites
--- editing complex commands.
-vim.keymap.set('c', '<C-A>', '<Home>')
-vim.keymap.set('c', '<C-B>', '<Left>')
-vim.keymap.set('c', '<C-F>', '<Right>')
-vim.keymap.set('c', '<M-b>', '<S-Left>')
-vim.keymap.set('c', '<M-f>', '<S-Right>')
 
 -- [[ Functions ]]
 -- Pretty prints a Lua object
