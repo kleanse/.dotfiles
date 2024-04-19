@@ -102,6 +102,12 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', 'n', 'nzvzz')
 vim.keymap.set('n', 'N', 'Nzvzz')
 
+-- Diagnostic keymaps
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
 vim.keymap.set('n', ';', vim.cmd.update, { desc = '":update" file' })
 vim.keymap.set('n', '<M-b>', '<C-^>')
 vim.keymap.set('n', '<M-e>', vim.cmd.Explore, { desc = 'Netrw explore directory of current file' })
@@ -166,12 +172,6 @@ vim.keymap.set('c', '<C-B>', '<Left>')
 vim.keymap.set('c', '<C-F>', '<Right>')
 vim.keymap.set('c', '<M-b>', '<S-Left>')
 vim.keymap.set('c', '<M-f>', '<S-Right>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>f', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Functions ]]
 -- Pretty prints a Lua object
