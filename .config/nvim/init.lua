@@ -116,6 +116,8 @@ vim.keymap.set('n', '<M-o>', vim.cmd.Rexplore, { desc = 'Netrw return to or from
 vim.keymap.set('i', '<C-C>', '<Esc>')
 vim.keymap.set('x', '<C-C>', '<Esc>')
 
+vim.keymap.set('i', '<C-L>', '<C-X><C-L>')
+
 -- Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 -- former command, use ":join" instead. The latter might not need addressed:
 -- Visual-mode "K" is rare.
