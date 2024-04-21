@@ -12,7 +12,7 @@ return {
         vim.keymap.set('n', keys, func, { desc = desc })
       end
 
-      nmap('<leader>glg', function() vim.cmd('Git log') end, '[L]o[g]')
+      nmap('<leader>glg', function() vim.cmd('Git log --stat') end, '[L]o[g]')
       nmap('<leader>glo', function() vim.cmd('Git log --oneline --decorate') end, '[L]og --[o]neline')
 
       -- Pretty print the relative author dates and author names alongside
