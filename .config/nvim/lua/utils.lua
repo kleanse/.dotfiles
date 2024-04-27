@@ -33,12 +33,10 @@ end
 utils.set_header_macros = function()
 	local macro_name = ' ' .. string.gsub(string.upper(vim.fn.expand('%:t')),
 					'%.', '_' .. os.date('%Y%m%d') .. '_')
-	vim.api.nvim_buf_set_lines(0, 0, 1, false,
-		{ vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] .. macro_name })
-	vim.api.nvim_buf_set_lines(0, 1, 2, false,
-		{ vim.api.nvim_buf_get_lines(0, 1, 2, false)[1] .. macro_name })
-	vim.api.nvim_buf_set_lines(0, -2, -1, false,
-		{ vim.api.nvim_buf_get_lines(0, -2, -1, false)[1] .. ' //' .. macro_name })
+	local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+	vim.api.nvim_buf_set_lines(0, 0, 1, false, { lines[1] .. macro_name })
+	vim.api.nvim_buf_set_lines(0, 1, 2, false, { lines[2] .. macro_name })
+	vim.api.nvim_buf_set_lines(0, -2, -1, false, { lines[#lines] .. ' //' .. macro_name })
 end
 
 -- Deletes starting and ending blank lines in the current buffer. For example,
