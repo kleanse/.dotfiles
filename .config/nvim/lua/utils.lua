@@ -111,21 +111,18 @@ end
 -- is given, the date returned by `utils.date()` is used.
 ---@param format? string Format of the new date
 utils.update_last_change = function(format)
-	local pat = 'Last [Cc]hange:'
-	local limit = 20
-	if vim.fn.line('$') < limit then
-		limit = vim.fn.line('$')
-	end
-	for i = 1, limit do
-		local line = vim.fn.getline(i)
-		if string.match(line, pat) then
-			local c = ''
-			if not string.match(line, pat .. '%s') then
-				c = '\t'
+	local pat = '[Ll]ast [Cc]hange:'
+	local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
+
+	for i, line in ipairs(lines) do
+		if line:match(pat) then
+			local space = ''
+			if not line:match(pat .. '%s') then
+				space = '\t'
 			end
-			local updated_line = string.gsub(line, '(' .. pat .. ')%s*.*$',
-				'%1' .. c .. (format and os.date(format) or utils.date()))
-			vim.fn.setline(i, updated_line)
+			local updated_line = line:gsub('(' .. pat .. '%s?).*$',
+				'%1' .. space .. (format and os.date(format) or utils.date()))
+			vim.api.nvim_buf_set_lines(0, i - 1, i, false, { updated_line })
 			break
 		end
 	end
