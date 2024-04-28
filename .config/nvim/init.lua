@@ -192,6 +192,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Update the date following a "Last change:" string in the first 20 lines of
+-- the current buffer
+vim.api.nvim_create_autocmd('BufWritePre', {
+  group = vim.api.nvim_create_augroup('update-last-change', { clear = true }),
+  pattern = '*',
+  callback = function()
+    utils.update_last_change()
+  end,
+})
+
 -- Trim trailing whitespace and peripheral blank lines
 vim.api.nvim_create_autocmd('BufWritePre', {
   group = vim.api.nvim_create_augroup('trim-blanks', { clear = true }),
