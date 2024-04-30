@@ -4,10 +4,10 @@ fi
 
 # Start one instance of ssh-agent and have it cache decrypted private keys for
 # one hour.
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+if ! pgrep -u "$USER" ssh-agent > /dev/null && [[ "$XDG_RUNTIME_DIR" ]]; then
     ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
 fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+if [[ ! -f "$SSH_AUTH_SOCK" && -f "$XDG_RUNTIME_DIR/ssh-agent.env" ]]; then
     source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
 fi
 
