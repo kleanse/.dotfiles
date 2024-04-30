@@ -102,44 +102,6 @@ source $HOME/repos/powerlevel10k/powerlevel10k.zsh-theme
 # Zsh options
 setopt EXTENDED_GLOB
 
-# Set custom colors for "less" via ANSI escape sequences. The following text
-# describes these sequences' format:
-# ESC [ Ps ;...; Ps m     Select Graphic Rendition
-#       Ps = None or 0    Default Rendition
-#            1            Bold
-#            2            Faint
-#            3            Standout Mode (ANSI: Italicized)
-#            4            Underlined
-#            5            Blinking
-#            7            Negative Image
-#            22           Normal Intensity
-#            23           Standout Mode off (ANSI: Italicized off)
-#            24           Not Underlined
-#            25           Not Blinking
-#            27           Positive Image
-#            30           Foreground Black
-#            31           Foreground Red
-#            32           Foreground Green
-#            33           Foreground Yellow
-#            34           Foreground Blue
-#            35           Foreground Magenta
-#            36           Foreground Cyan
-#            37           Foreground White
-#            39           Foreground Default
-#            40           Background Black
-#            ...          ...
-#            49           Background Default
-# (A '$' in front of a string tells the shell to interpret escape sequences.)
-export LESS_TERMCAP_md=$'\x1b[1;31m'	# begin bold
-export LESS_TERMCAP_us=$'\x1b[3;32m'	# begin underline
-export LESS_TERMCAP_so=$'\x1b[1;37;43m'	# begin standout
-export LESS_TERMCAP_me=$'\x1b[0m'	# end mode
-export LESS_TERMCAP_ue=$'\x1b[0m'	# end underline
-export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
-# Disable SGR escape sequences; needed for some terminals (visit
-# https://unix.stackexchange.com/a/6357 for more information).
-export GROFF_NO_SGR=1
-
 # Use a more useful run-help function; see `man zshcontrib` under Accessing
 # On-Line Help in the "UTILITIES" section
 unalias run-help
