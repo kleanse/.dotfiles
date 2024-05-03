@@ -77,7 +77,7 @@ return {
       local builtin = require 'telescope.builtin'
       local themes = require 'telescope.themes'
 
-      nmap('<leader><space>', builtin.resume, '[ ] Search Resume')
+      nmap('<leader><space>', builtin.resume, '[ ] Search resume')
       nmap('<leader>sb', builtin.buffers, '[S]earch [B]uffers')
       nmap('<leader>sc', builtin.command_history, '[S]earch [C]ommand history')
       nmap('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')

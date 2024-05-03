@@ -159,7 +159,7 @@ vim.keymap.set('n', '<leader>tt', function()
   vim.g.trim_blanks_on_write = not vim.g.trim_blanks_on_write
   local prefix = vim.g.trim_blanks_on_write and string.rep(' ', 2) or 'no'
   vim.api.nvim_echo({ {prefix .. 'trim'} }, false, {})
-end, { desc = "[T]oggle [T]rim Blanks on Write" })
+end, { desc = "[T]oggle [T]rim blanks on write" })
 
 vim.keymap.set('n', '<leader>tv', function()
   vim.wo.virtualedit = #vim.wo.virtualedit == 0 and 'all' or ''
