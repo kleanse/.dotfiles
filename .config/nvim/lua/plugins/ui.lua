@@ -1,8 +1,8 @@
 return {
   { -- Highlight todo, notes, etc in comments
-    'folke/todo-comments.nvim',
+    "folke/todo-comments.nvim",
     dependencies = {
-      'nvim-lua/plenary.nvim',
+      "nvim-lua/plenary.nvim",
     },
     opts = {
       signs = false,
@@ -10,7 +10,7 @@ return {
   },
 
   { -- Add pretty icons to plugins supporting them
-    'nvim-tree/nvim-web-devicons',
+    "nvim-tree/nvim-web-devicons",
     enabled = vim.g.have_nerd_font, -- requires a Nerd Font
   },
 }

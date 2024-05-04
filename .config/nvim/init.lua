@@ -2,14 +2,14 @@
 --  See `:help mapleader`
 -- NOTE: Must happen before plugins are required (otherwise, wrong leader will
 -- be used)
-vim.g.mapleader = ','
-vim.g.maplocalleader = ','
+vim.g.mapleader = ","
+vim.g.maplocalleader = ","
 
 -- Set to true if you have installed and are using a Nerd Font
 vim.g.have_nerd_font = true
 
 -- Directory containing template files
-vim.g.template_path = '~/.templates'
+vim.g.template_path = "~/.templates"
 
 -- Remove trailing whitespace and blank lines at the start and end when writing
 -- the current buffer
@@ -18,63 +18,63 @@ vim.g.trim_blanks_on_write = true
 -- [[ Install `lazy.nvim` plugin manager ]]
 -- https://github.com/folke/lazy.nvim
 --  See `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup('plugins', {
+require("lazy").setup("plugins", {
   ui = {
     -- If using a Nerd Font, set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons; otherwise, define a Unicode
     -- icons table
     icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
+      cmd = "⌘",
+      config = "🛠",
+      event = "📅",
+      ft = "📂",
+      init = "⚙",
+      keys = "🗝",
+      plugin = "🔌",
+      runtime = "💻",
+      require = "🌙",
+      source = "📄",
+      start = "🚀",
+      task = "📌",
+      lazy = "💤 ",
     },
   },
 })
 
 -- [[ Import custom utility functions ]]
-local utils = require 'utils'
+local utils = require("utils")
 
 -- [[ Set options ]]
 --  See `:help vim.o`
-vim.o.background = 'light'
-vim.o.cedit = vim.api.nvim_replace_termcodes('<C-X>', true, true, true)
+vim.o.background = "light"
+vim.o.cedit = vim.api.nvim_replace_termcodes("<C-X>", true, true, true)
 vim.o.copyindent = true
-vim.o.listchars = 'tab:--|,trail:·'
-vim.o.mouse = 'a'          -- Enable mouse mode
-vim.o.showmode = false     -- Redundant with mini.statusline
+vim.o.listchars = "tab:--|,trail:·"
+vim.o.mouse = "a" -- Enable mouse mode
+vim.o.showmode = false -- Redundant with mini.statusline
 vim.o.termguicolors = true -- Check if your terminal supports this
 vim.o.textwidth = 79
-vim.o.undofile = true      -- Save undo history
+vim.o.undofile = true -- Save undo history
 vim.o.wrapscan = false
-vim.wo.breakindent = true  -- Enable break indent
-vim.wo.colorcolumn = '+1'
-vim.wo.signcolumn = 'yes'  -- Keep signcolumn on by default
+vim.wo.breakindent = true -- Enable break indent
+vim.wo.colorcolumn = "+1"
+vim.wo.signcolumn = "yes" -- Keep signcolumn on by default
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone'
+vim.o.completeopt = "menuone"
 
 -- Case insensitive searching unless '\C' or a capital appears in pattern
 vim.o.ignorecase = true
@@ -83,63 +83,63 @@ vim.o.smartcase = true
 -- Sync clipboard between OS and Neovim.
 -- Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+vim.o.clipboard = "unnamedplus"
 
 -- [[ Key mappings ]]
 --  See `:help vim.keymap.set()`
 -- Remap ";" and "," to different keys for delay-free "," behavior while using
 -- such a key for mapleader.
-vim.keymap.set('', '+', ';')
-vim.keymap.set('', '_', ',')
+vim.keymap.set("", "+", ";")
+vim.keymap.set("", "_", ",")
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Keep cursor centered when repeating searches, opening any closed folds if
 -- necessary.
-vim.keymap.set('n', 'n', 'nzvzz')
-vim.keymap.set('n', 'N', 'Nzvzz')
+vim.keymap.set("n", "n", "nzvzz")
+vim.keymap.set("n", "N", "Nzvzz")
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
-vim.keymap.set('n', ';', vim.cmd.update, { desc = '":update" file' })
-vim.keymap.set('n', '<M-b>', '<C-^>')
-vim.keymap.set('n', '<M-e>', vim.cmd.Explore, { desc = 'Netrw explore directory of current file' })
-vim.keymap.set('n', '<M-o>', vim.cmd.Rexplore, { desc = 'Netrw return to or from Explorer' })
+vim.keymap.set("n", ";", vim.cmd.update, { desc = '":update" file' })
+vim.keymap.set("n", "<M-b>", "<C-^>")
+vim.keymap.set("n", "<M-e>", vim.cmd.Explore, { desc = "Netrw explore directory of current file" })
+vim.keymap.set("n", "<M-o>", vim.cmd.Rexplore, { desc = "Netrw return to or from Explorer" })
 
 -- Use CTRL-C for <Esc>: it is easier to reach.
-vim.keymap.set('i', '<C-C>', '<Esc>')
-vim.keymap.set('x', '<C-C>', '<Esc>')
+vim.keymap.set("i", "<C-C>", "<Esc>")
+vim.keymap.set("x", "<C-C>", "<Esc>")
 
-vim.keymap.set('i', '<C-L>', '<C-X><C-L>')
+vim.keymap.set("i", "<C-L>", "<C-X><C-L>")
 
 -- Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 -- former command, use ":join" instead. The latter might not need addressed:
 -- Visual-mode "K" is rare.
-vim.keymap.set('x', 'J', ":move '>+1<CR>gv=gv", { desc = 'Move selected text down one line' })
-vim.keymap.set('x', 'K', ":move '<-2<CR>gv=gv", { desc = 'Move selected text up one line' })
+vim.keymap.set("x", "J", ":move '>+1<CR>gv=gv", { desc = "Move selected text down one line" })
+vim.keymap.set("x", "K", ":move '<-2<CR>gv=gv", { desc = "Move selected text up one line" })
 
 -- Use some common GNU-Readline keyboard shortcuts for the Command line.
 -- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
 -- not useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites
 -- editing complex commands.
-vim.keymap.set('c', '<C-A>', '<Home>')
-vim.keymap.set('c', '<C-B>', '<Left>')
-vim.keymap.set('c', '<C-F>', '<Right>')
-vim.keymap.set('c', '<M-b>', '<S-Left>')
-vim.keymap.set('c', '<M-f>', '<S-Right>')
+vim.keymap.set("c", "<C-A>", "<Home>")
+vim.keymap.set("c", "<C-B>", "<Left>")
+vim.keymap.set("c", "<C-F>", "<Right>")
+vim.keymap.set("c", "<M-b>", "<S-Left>")
+vim.keymap.set("c", "<M-f>", "<S-Right>")
 
 -- Toggle settings
-vim.keymap.set('n', '<leader>tc', function()
-  vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and '+1' or ''
+vim.keymap.set("n", "<leader>tc", function()
+  vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and "+1" or ""
 end, { desc = "[T]oggle '[c]olorcolumn'" })
 
-vim.keymap.set('n', '<leader>td', function()
+vim.keymap.set("n", "<leader>td", function()
   if vim.diagnostic.is_disabled() then
     vim.diagnostic.enable()
   else
@@ -147,46 +147,46 @@ vim.keymap.set('n', '<leader>td', function()
   end
 end, { desc = "[T]oggle [D]iagnostics" })
 
-vim.keymap.set('n', '<leader>tl', function()
+vim.keymap.set("n", "<leader>tl", function()
   vim.wo.list = not vim.wo.list
 end, { desc = "[T]oggle '[l]ist'" })
 
-vim.keymap.set('n', '<leader>ts', function()
+vim.keymap.set("n", "<leader>ts", function()
   vim.wo.spell = not vim.wo.spell
 end, { desc = "[T]oggle '[s]pell' check" })
 
-vim.keymap.set('n', '<leader>tt', function()
+vim.keymap.set("n", "<leader>tt", function()
   vim.g.trim_blanks_on_write = not vim.g.trim_blanks_on_write
-  local prefix = vim.g.trim_blanks_on_write and string.rep(' ', 2) or 'no'
-  vim.api.nvim_echo({ {prefix .. 'trim'} }, false, {})
+  local prefix = vim.g.trim_blanks_on_write and string.rep(" ", 2) or "no"
+  vim.api.nvim_echo({ { prefix .. "trim" } }, false, {})
 end, { desc = "[T]oggle [T]rim blanks on write" })
 
-vim.keymap.set('n', '<leader>tv', function()
-  vim.wo.virtualedit = #vim.wo.virtualedit == 0 and 'all' or ''
-  vim.cmd('set virtualedit?')
+vim.keymap.set("n", "<leader>tv", function()
+  vim.wo.virtualedit = #vim.wo.virtualedit == 0 and "all" or ""
+  vim.cmd("set virtualedit?")
 end, { desc = "[T]oggle '[v]irtualedit'" })
 
-vim.keymap.set('n', '<leader>tx', function()
+vim.keymap.set("n", "<leader>tx", function()
   if vim.g.syntax_on then
-    vim.cmd('syntax off | TSDisable highlight')
+    vim.cmd("syntax off | TSDisable highlight")
   else
-    vim.cmd('syntax on | TSEnable highlight')
+    vim.cmd("syntax on | TSEnable highlight")
   end
 end, { desc = "[T]oggle synta[x] highlighting" })
 
 -- [[ Functions ]]
 -- Pretty prints a Lua object
 function P(object)
-	print(vim.inspect(object))
-	return object
+  print(vim.inspect(object))
+  return object
 end
 
 -- [[ Autocommands ]]
 -- Highlight yanked text briefly
 --  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-  pattern = '*',
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+  pattern = "*",
   callback = function()
     vim.highlight.on_yank()
   end,
@@ -194,18 +194,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Update the date following a "Last change:" string in the first 20 lines of
 -- the current buffer
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('update-last-change', { clear = true }),
-  pattern = '*',
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("update-last-change", { clear = true }),
+  pattern = "*",
   callback = function()
     utils.update_last_change()
   end,
 })
 
 -- Trim trailing whitespace and peripheral blank lines
-vim.api.nvim_create_autocmd('BufWritePre', {
-  group = vim.api.nvim_create_augroup('trim-blanks', { clear = true }),
-  pattern = '*',
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = vim.api.nvim_create_augroup("trim-blanks", { clear = true }),
+  pattern = "*",
   callback = function()
     if vim.g.trim_blanks_on_write then
       utils.trim_peripheral_blank_lines()
@@ -215,51 +215,51 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- Use a template file when editing new files of a specific type
-local template_group = vim.api.nvim_create_augroup('edit-with-template', { clear = true })
-vim.api.nvim_create_autocmd('BufNewFile', {
+local template_group = vim.api.nvim_create_augroup("edit-with-template", { clear = true })
+vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
-  pattern = '*.c',
+  pattern = "*.c",
   callback = function()
-    utils.read_template_file('.c', {5, 0})
-    vim.cmd.startinsert { bang = true }
+    utils.read_template_file(".c", { 5, 0 })
+    vim.cmd.startinsert({ bang = true })
   end,
 })
 
-vim.api.nvim_create_autocmd('BufNewFile', {
+vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
-  pattern = '*.cpp',
+  pattern = "*.cpp",
   callback = function()
-    utils.read_template_file('.cpp', {5, 0})
-    vim.cmd.startinsert { bang = true }
+    utils.read_template_file(".cpp", { 5, 0 })
+    vim.cmd.startinsert({ bang = true })
   end,
 })
 
-vim.api.nvim_create_autocmd('BufNewFile', {
+vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
-  pattern = '*.h',
+  pattern = "*.h",
   callback = function()
-    utils.read_template_file('.h', {4, 0})
+    utils.read_template_file(".h", { 4, 0 })
     utils.set_header_macros()
-    vim.cmd.startinsert { bang = true }
+    vim.cmd.startinsert({ bang = true })
   end,
 })
 
-vim.api.nvim_create_autocmd('BufNewFile', {
+vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
-  pattern = '*.html',
+  pattern = "*.html",
   callback = function()
-    utils.read_template_file('.html', {6, 9})
+    utils.read_template_file(".html", { 6, 9 })
     vim.cmd.startinsert()
   end,
 })
 
-vim.api.nvim_create_autocmd('BufNewFile', {
+vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
-  pattern = 'Makefile',
+  pattern = "Makefile",
   callback = function()
-    utils.read_template_file('.mk', {2, 0})
-    vim.api.nvim_set_current_line(vim.api.nvim_get_current_line() .. ' ')
-    vim.cmd.startinsert { bang = true }
+    utils.read_template_file(".mk", { 2, 0 })
+    vim.api.nvim_set_current_line(vim.api.nvim_get_current_line() .. " ")
+    vim.cmd.startinsert({ bang = true })
   end,
 })
 
