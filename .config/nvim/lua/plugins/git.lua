@@ -55,14 +55,6 @@ return {
         map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
         map("n", "<Leader>hv", gs.preview_hunk, "[H]unk [V]iew")
 
-        map("x", "<Leader>hn", function()
-          gs.nav_hunk("next")
-        end, "[H]unk [N]ext")
-
-        map("x", "<Leader>hp", function()
-          gs.nav_hunk("prev")
-        end, "[H]unk [P]rev")
-
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
         map("n", "<Leader>hn", function()
@@ -73,6 +65,14 @@ return {
         map("n", "<Leader>hp", function()
           gs.nav_hunk("prev")
           vim.cmd.normal("zz")
+        end, "[H]unk [P]rev")
+
+        map("x", "<Leader>hn", function()
+          gs.nav_hunk("next")
+        end, "[H]unk [N]ext")
+
+        map("x", "<Leader>hp", function()
+          gs.nav_hunk("prev")
         end, "[H]unk [P]rev")
 
         -- Mappings to stage and reset hunks in Visual mode
