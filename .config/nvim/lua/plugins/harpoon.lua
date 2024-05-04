@@ -21,15 +21,19 @@ return {
       nmap("<M-m>", function()
         harpoon:list():add()
       end, "mark current file")
+
       nmap("<M-h>", function()
         harpoon:list():select(1)
       end, "edit file 1")
+
       nmap("<M-t>", function()
         harpoon:list():select(2)
       end, "edit file 2")
+
       nmap("<M-n>", function()
         harpoon:list():select(3)
       end, "edit file 3")
+
       nmap("<M-s>", function()
         harpoon:list():select(4)
       end, "edit file 4")

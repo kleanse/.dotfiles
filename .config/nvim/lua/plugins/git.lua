@@ -15,6 +15,7 @@ return {
       nmap("<leader>glg", function()
         vim.cmd("Git log --stat")
       end, "[L]o[g]")
+
       nmap("<leader>glo", function()
         vim.cmd("Git log --oneline --decorate")
       end, "[L]og --[o]neline")
@@ -53,9 +54,11 @@ return {
         map("n", "<Leader>hs", gs.stage_hunk, "[H]unk [S]tage")
         map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
         map("n", "<Leader>hv", gs.preview_hunk, "[H]unk [V]iew")
+
         map("x", "<Leader>hn", function()
           gs.nav_hunk("next")
         end, "[H]unk [N]ext")
+
         map("x", "<Leader>hp", function()
           gs.nav_hunk("prev")
         end, "[H]unk [P]rev")
