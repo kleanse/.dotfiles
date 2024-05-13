@@ -108,15 +108,20 @@ end
 utils.update_last_change = function(format)
   local pat = "[Ll]ast [Cc]hange:"
   local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
+  local date = format and os.date(format) or utils.date()
+  ---@cast date string
 
   for i, line in ipairs(lines) do
     if line:match(pat) then
+      -- Do not add an empty change to the undo tree
+      if line:match(date) then
+        break
+      end
       local space = ""
       if not line:match(pat .. "%s") then
         space = "\t"
       end
-      local updated_line =
-        line:gsub("(" .. pat .. "%s?).*$", "%1" .. space .. (format and os.date(format) or utils.date()))
+      local updated_line = line:gsub("(" .. pat .. "%s*).*$", "%1" .. space .. date)
       vim.api.nvim_buf_set_lines(0, i - 1, i, false, { updated_line })
       break
     end
