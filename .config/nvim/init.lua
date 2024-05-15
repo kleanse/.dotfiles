@@ -134,6 +134,13 @@ vim.keymap.set("c", "<C-F>", "<Right>")
 vim.keymap.set("c", "<M-b>", "<S-Left>")
 vim.keymap.set("c", "<M-f>", "<S-Right>")
 
+-- Overload Command-line CTRL-D: it still performs its normal behavior, but if
+-- a character is under the cursor, it executes the GNU-Readline behavior
+-- (i.e., delete the character).
+vim.keymap.set("c", "<C-D>", function()
+  return vim.fn.getcmdpos() > #vim.fn.getcmdline() and "<C-D>" or "<Del>"
+end, { desc = "Delete character or list", expr = true })
+
 -- Toggle settings
 vim.keymap.set("n", "<leader>tc", function()
   vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and "+1" or ""
