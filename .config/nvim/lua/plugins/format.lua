@@ -11,6 +11,7 @@ return {
           python = { "isort", "black" },
           -- Use a sub-list to run only the first available formatter
           javascript = { { "prettierd", "prettier" } },
+          tex = { "latexindent" },
         },
         format_on_save = function(bufnr)
           -- Disable autoformat on certain filetypes
@@ -19,6 +20,12 @@ return {
             return { timeout_ms = 500, lsp_fallback = true }
           end
         end,
+        -- Custom formatters and changes to built-in formatters
+        formatters = {
+          latexindent = {
+            args = { "-m" },
+          },
+        },
       })
 
       local nmap = function(keys, func, desc)

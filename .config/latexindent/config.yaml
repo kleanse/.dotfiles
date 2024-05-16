@@ -1,0 +1,10 @@
+indentPreamble: 1
+
+preambleCommandsBeforeEnvironments: 1
+
+defaultIndent: "  "
+
+modifyLineBreaks:
+  textWrapOptions:
+    columns: 80
+    when: after
