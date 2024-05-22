@@ -47,8 +47,6 @@ return {
           nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
           nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-          -- See `:help K` for why this keymap
-          nmap("K", vim.lsp.buf.hover, "Hover documentation")
           nmap("<C-k>", vim.lsp.buf.signature_help, "Signature documentation")
 
           -- Lesser used LSP functionality
