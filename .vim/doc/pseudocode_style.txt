@@ -23,10 +23,10 @@ situation; adapting it to be more or less verbose when needed is encouraged.
 The following table lists keywords for this pseudocode style lexically from
 left to right:
 
-	and		do	downto	echo	else
-	end		false	for	if	or
-	procedure	return	then	to	true
-	while
+	and	break	do	downto		echo
+	else	end	false	for		if
+	in	not	or	procedure	return
+	then	to	true	while
 
 Keywords should be bold in a rich text document.
 
