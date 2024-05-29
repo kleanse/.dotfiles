@@ -23,10 +23,10 @@ situation; adapting it to be more or less verbose when needed is encouraged.
 The following table lists keywords for this pseudocode style lexically from
 left to right:
 
-	and	do		downto	else	end
-	false	for		goto	if	or
-	print	procedure	return	then	to
-	true	while
+	and		do	downto	else	end
+	false		for	if	or	print
+	procedure	return	then	to	true
+	while
 
 Keywords should be bold in a rich text document.
 
@@ -145,11 +145,6 @@ while {condition}
 procedure name(parameters)
 	statement
 end procedure
-
-goto {label}
-
-	Where {label} is a line comprising only a name ending with a colon (:)
-	and surrounded by empty lines.
 
 2.5 Comments ~
 							 *pseudocode-comments*
