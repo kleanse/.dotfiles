@@ -23,8 +23,8 @@ situation; adapting it to be more or less verbose when needed is encouraged.
 The following table lists keywords for this pseudocode style lexically from
 left to right:
 
-	and		do	downto	else	end
-	false		for	if	or	print
+	and		do	downto	echo	else
+	end		false	for	if	or
 	procedure	return	then	to	true
 	while
 
@@ -67,37 +67,37 @@ not occur.
 
 Printing ~
 
-The "print" keyword is flexible in handling arguments. It can be used to print
-expressions one by one, each with its own "print" keyword and line:
+The "echo" keyword is flexible in handling arguments. It can be used to print
+expressions one by one, each with its own "echo" keyword and line:
 
-	print 1
-	print "Hello, world!"
+	echo 1
+	echo "Hello, world!"
 	variable <- 3.1415
-	print variable
+	echo variable
 	1 Hello, world! 3.1415 ~
 
 Alternatively, expressions can be typed sequentially on the same line:
 
-	print 1 "Hello, world!" variable
+	echo 1 "Hello, world!" variable
 	1 Hello, world! 3.1415 ~
 
-In this latter case, expressions are printed in the order they are specified
+In this latter case, expressions are echoed in the order they are specified
 with spaces separating them.
 	Note: if space separators are not desired, consider defining a
 	concatenation function or a concatenation operator before the
 	pseudocode.
 
 Implicitly, all expressions are converted to the string data type before being
-printed. This convention allows numbers to be printed without quoting them and
+echoed. This convention allows numbers to be echoed without quoting them and
 non-string variables to be supplied (so long as their conversions to the
 string type are intuitive or mentioned explicitly at their outsets).
 
-By default, "print" does not print a newline; this special character must be
+By default, "echo" does not print a newline; this special character must be
 specified, either with the C/C++ escape character '\n' or a similar
 indication:
 
-	print '\n'
-	print a newline
+	echo '\n'
+	echo a newline
 
 2.3 Conditional statements ~
 						       *pseudocode-conditions*
@@ -187,19 +187,19 @@ procedure main()
 		end if
 		if top of char_stack is an alphabetic
 		   or punctuation character then
-			print top of char_stack
+			echo top of char_stack
 		else
-			print "Invalid character"
+			echo "Invalid character"
 		end if
-		print a newline
+		echo a newline
 		Pop top of char_stack
 	end while
 
 output:
 
 	for i <- length(char_stack) - 1 downto 0 do
-		print i
-		print top of char_stack
+		echo i
+		echo top of char_stack
 		Pop top of char_stack
 	end for
 
