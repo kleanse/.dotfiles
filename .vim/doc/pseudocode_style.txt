@@ -1,4 +1,4 @@
-*pseudocode_style.txt*	Last change: 2021 Dec 30
+*pseudocode_style.txt*	Last change: 2024 May 29
 
 		  Reference for a readable pseudocode style
 
@@ -21,13 +21,12 @@ situation; adapting it to be more or less verbose when needed is encouraged.
 1. Keywords						*pseudocode-keywords*
 
 The following table lists keywords for this pseudocode style lexically from
-top to bottom, left to right:
+left to right:
 
-	and		false		or		then
-	do		for		print		to
-	downto		goto		procedure	true
-	else		if		return		while
-	end
+	and	do		downto	else	end
+	false	for		goto	if	or
+	print	procedure	return	then	to
+	true	while
 
 Keywords should be bold in a rich text document.
 
