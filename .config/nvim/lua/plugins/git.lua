@@ -42,6 +42,7 @@ return {
         topdelete = { text = "‾" },
         changedelete = { text = "~" },
       },
+      signs_staged_enable = false,
       on_attach = function(bufnr)
         local function map(mode, lhs, rhs, desc)
           desc = desc and "Gitsigns: " .. desc
