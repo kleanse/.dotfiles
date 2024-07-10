@@ -52,18 +52,19 @@ getting a word from a source, and constructing a queue.
 The definition of an expression follows that of the C++ programming language
 (see https://en.cppreference.com/w/cpp/language/expressions ).
 
-Data types ~
+Data Types ~
 
 The default for data type declaration is this: if a variable's type can be
 inferred from its initialization value, then do not declare it. Otherwise,
 declare the variable's data type. For example,
 
-	i <- 2                     // i is an integer.
-	Enqueue word to Q          // Error: type of Q cannot be deduced.
-	Enqueue word to a queue Q  // Q is a queue.
+	i <- 2                     // i is an integer
+	f <- 3.14                  // f is a float
+	b <- false                 // b is a Boolean
+	Enqueue word to Q          // Error: type of Q cannot be deduced
+	Enqueue word to a queue Q  // Q is a queue
 
-Had the queue Q been declared earlier, the error in the previous example would
-not occur.
+The third example is considered a type error if Q had not yet been declared.
 
 Printing ~
 
