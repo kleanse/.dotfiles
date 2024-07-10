@@ -50,7 +50,7 @@ getting a word from a source, and constructing a queue.
 2.2 Expressions ~
 						      *pseudocode-expressions*
 The definition of an expression follows that of the C++ programming language
-(see https://en.cppreference.com/w/cpp/language/expressions).
+(see https://en.cppreference.com/w/cpp/language/expressions ).
 
 Data types ~
 
