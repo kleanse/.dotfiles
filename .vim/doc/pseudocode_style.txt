@@ -1,12 +1,13 @@
-*pseudocode_style.txt*	Last change: 2024 May 29
+*pseudocode_style.txt*	Last change: 2024 Jul 10
 
-		  Reference for a readable pseudocode style
+			  Pseudocode style reference
 
-This document details a formatting style for pseudocode that prioritizes
-readability. A list of keywords, statement syntax, and an example piece of
-pseudocode showcasing all of the keywords and indentation style are included.
-Although the style aims to clarify, it is not appropriate for every person or
-situation; adapting it to be more or less verbose when needed is encouraged.
+This document details one style for writing pseudocode. A list of keywords,
+statement syntax, and an example piece of pseudocode showcasing all of the
+keywords and syntax are included. Although the style presented acts as a
+guideline for writing pseudocode, it is not appropriate for every person or
+situation; adapting it to be more or less strict or verbose as needed is
+encouraged.
 
 1. Keywords		    |pseudocode-keywords|
 2. Syntax		    |pseudocode-syntax|
