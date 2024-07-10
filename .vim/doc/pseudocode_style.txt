@@ -36,17 +36,16 @@ Keywords should be bold in a rich text document.
 
 2.1 Statements ~
 						       *pseudocode-statements*
-Statements comprise those defined in traditional programming languages and
-natural language statements. Thus, there is a lot of freedom in writing
-program statements. As pseudocode aims for comprehension rather than
-preciseness, high-level, intuitive statements are recommended. For example,
-the statement
+Statements comprise those defined in traditional programming and natural
+languages. Thus, there is a lot of freedom in writing pseudocode statements.
+As pseudocode aims for comprehension rather than preciseness, intuitive
+high-level statements are recommended. For example, the statement
 
-	Add word2 to a queue Q
+	Add word to a queue Q
 
-is readily understandable and appropriate; however, for an actual
-implementation, it omits many necessary, often low-level, details: defining a
-"word", finding and getting a word from a source, and constructing a queue.
+is readily understandable; however, for an actual implementation, it omits
+many necessary, often low-level, details: defining a "word", finding and
+getting a word from a source, and constructing a queue.
 
 2.2 Expressions ~
 						      *pseudocode-expressions*
