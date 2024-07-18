@@ -105,48 +105,48 @@ output. For that, use `printf` [which is identical to the C function printf()]: 
 
 2.3 Control structures ~
 							  *pseudocode-control*
-if {condition} then
-	statement
-else if {condition} then
-	statement
-else
-	statement
-end if
+>
+	if {condition} then
+		{statement}
+	else if {condition} then
+		{statement}
+	else
+		{statement}
+	end if
 
-	The latter two conditional branches are optional.
+The latter two conditional branches are optional. >
 
-for {range} do
-	statement
-end for
+	for {range} do
+		{statement}
+	end for
 
-for {var} in {object} do
-	statement
-end for
+	for {var} in {object} do
+		{statement}
+	end for
 
-	{range} can be ascending (to) or descending (downto). The keywords
-	"to" and "downto" are inclusive:
+`{range}` can be ascending (to) or descending (downto). The keywords
+"to" and "downto" are inclusive:
 
-		i <- 0 to 9      // i increments from 0 to 9 and ends with 10
-		i <- 9 downto 0  // i decrements from 9 to 0 and ends with -1
+	`i <- 0 to 9`      // i increments from 0 to 9 and ends with 10
+	`i <- 9 downto 0`  // i decrements from 9 to 0 and ends with -1
 
-	{object} must be an expression representing a sequence (e.g., array)
-	or be a list-like object. {var} is the variable iterating over the
-	items in {object}, being assigned the value of the current item per
-	loop iteration.
+`{object}` must be an expression representing a sequence (e.g., array) or be a
+list-like object. `{var}` is the variable iterating over the items in
+`{object}`, being assigned the value of the current item per loop iteration. >
 
-while {condition} do
-	statement
-end while
+	while {condition} do
+		{statement}
+	end while
 
-do
-	statement
-while {condition}
+	do
+		{statement}
+	while {condition}
 
-	Note that do-while does not use the "end" keyword.
+Note: do-while does not use the "end" keyword. >
 
-procedure name(parameters)
-	statement
-end procedure
+	procedure {name}({parameters})
+		{statement}
+	end procedure
 
 2.4 Comments ~
 							 *pseudocode-comments*
