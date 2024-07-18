@@ -68,37 +68,41 @@ The third example is considered a type error if Q had not yet been declared.
 
 Printing ~
 
-The "echo" keyword is flexible in handling arguments. It can be used to print
-expressions one by one, each with its own "echo" keyword and line:
+The `echo` keyword is used to output the value of an expression: >
 
-	echo 1
 	echo "Hello, world!"
-	variable <- 3.1415
-	echo variable
-	1 Hello, world! 3.1415 ~
+<	Hello, world!
 
-Alternatively, expressions can be typed sequentially on the same line:
+It outputs a newline at the end automatically: >
+
+	echo "Hello, world!"
+	echo "I'm on a newline"
+<	Hello, world!
+	I'm on a newline
+
+And it can accept multiple arguments: >
 
 	echo 1 "Hello, world!" variable
-	1 Hello, world! 3.1415 ~
+<	1 Hello, world! 3.1415
 
-In this latter case, expressions are echoed in the order they are specified
-with spaces separating them.
-	Note: if space separators are not desired, consider defining a
-	concatenation function or a concatenation operator before the
-	pseudocode.
+In this case, expressions are echoed in the order they are specified with
+spaces separating them.
 
 Implicitly, all expressions are converted to the string data type before being
-echoed. This convention allows numbers to be echoed without quoting them and
+echoed. This behavior allows numbers to be echoed without quoting them and
 non-string variables to be supplied (so long as their conversions to the
 string type are intuitive or mentioned explicitly at their outsets).
 
-By default, "echo" does not print a newline; this special character must be
-specified, either with the C/C++ escape character '\n' or a similar
-indication:
+`echo` is a quick way for showing values, but it's not intended for formatted
+output. For that, use `printf` [which is identical to the C function printf()]: >
 
-	echo '\n'
-	echo a newline
+	printf("%d * %d = %d\n", 7, 14, 7 * 14)
+<	7 * 14 = 98
+
+`printf` may also be used in the same format as `echo`: >
+
+	printf "%d°C = %.1f°F\n"  37  37.0 / 5 * 9 + 32
+<	37°C = 98.6°F
 
 2.3 Conditional statements ~
 						       *pseudocode-conditions*
