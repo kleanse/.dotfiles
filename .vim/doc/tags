@@ -205,10 +205,9 @@ make-words()	make.txt	/*make-words()*
 make-writing	make.txt	/*make-writing*
 make.txt	make.txt	/*make.txt*
 pseudocode-comments	pseudocode_style.txt	/*pseudocode-comments*
-pseudocode-conditions	pseudocode_style.txt	/*pseudocode-conditions*
+pseudocode-control	pseudocode_style.txt	/*pseudocode-control*
 pseudocode-expressions	pseudocode_style.txt	/*pseudocode-expressions*
 pseudocode-keywords	pseudocode_style.txt	/*pseudocode-keywords*
-pseudocode-loops	pseudocode_style.txt	/*pseudocode-loops*
 pseudocode-sample	pseudocode_style.txt	/*pseudocode-sample*
 pseudocode-statements	pseudocode_style.txt	/*pseudocode-statements*
 pseudocode-syntax	pseudocode_style.txt	/*pseudocode-syntax*
