@@ -151,13 +151,14 @@ Note: do-while does not use the `end` keyword. >
 2.4 Comments ~
 							 *pseudocode-comments*
 Sometimes, even pseudocode cannot be perfectly transparent with its ideas.
-Comments can be useful in these cases. The use of comments is like that in
-C++: comments should be placed closest to the statements they refer
-(preferably on the same line; otherwise, before the statements), and they must
-be preceded with a comment symbol. What symbol used is preference. Any symbol
-can be used so long as it is not important in the pseudocode. For consistency,
-this pseudocode style favors the comment symbol used in C++: two sequential
-forward slashes (//).
+Comments are useful in these cases.
+
+The use of comments is like that in programming languages: comments should be
+placed closest to the statements they refer (preferably on the same line;
+otherwise, before the statements), and they must be preceded with a comment
+symbol. What symbol used is preference. Any symbol can be used so long as it
+is not reserved nor significant in the pseudocode. This pseudocode style uses
+the comment symbol used in C++: two sequential forward slashes (//).
 
 ==============================================================================
 3. Sample pseudocode					*pseudocode-sample*
