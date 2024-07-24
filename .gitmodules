@@ -1,6 +1,6 @@
 [submodule ".vim/pack/autodeli/start/autodeli"]
-	path = .vim/pack/autodeli/start/autodeli
+	path = dot-vim/pack/autodeli/start/autodeli
 	url = https://github.com/kleanse/autodeli
 [submodule ".vim/pack/klenlib/start/klenlib"]
-	path = .vim/pack/klenlib/start/klenlib
+	path = dot-vim/pack/klenlib/start/klenlib
 	url = https://github.com/kleanse/klenlib
