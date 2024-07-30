@@ -58,3 +58,6 @@ export LESS_TERMCAP_se=$'\x1b[0m'	# end standout
 # Disable SGR escape sequences; needed for some terminals (visit
 # https://unix.stackexchange.com/a/6357 for more information).
 export GROFF_NO_SGR=1
+
+# Path to local ASCII reference file.
+export ASCII_REFERENCE="$HOME/Programming/references/vim_ascii_table.txt"

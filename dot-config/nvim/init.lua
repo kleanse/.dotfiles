@@ -96,6 +96,14 @@ vim.keymap.set("", "_", ",")
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Reference local ASCII table
+vim.keymap.set(
+  "n",
+  "<leader>va",
+  "<Cmd>split $ASCII_REFERENCE | view<CR>",
+  { desc = "[V]iew [A]SCII reference file in a new split" }
+)
+
 -- Keep cursor centered when repeating searches, opening any closed folds if
 -- necessary.
 vim.keymap.set("n", "n", "nzvzz")
