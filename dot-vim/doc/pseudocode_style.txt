@@ -1,4 +1,4 @@
-*pseudocode_style.txt*	Last change: 2024 Jul 24
+*pseudocode_style.txt*	Last change: 2024 Aug 08
 
 			  Pseudocode style reference
 
@@ -163,50 +163,44 @@ the comment symbol used in C++: two sequential forward slashes (//).
 ==============================================================================
 3. Sample pseudocode					*pseudocode-sample*
 
+/* Prints the following output:
+Hello, world!
+1 1 2 3 5 -- Median: 6.5 -- 8 13 21 34 55
+abcdefghijklmnopqrstuvwxyz
+ */
 procedure main()
 	str <- "Hello, world!"
-	for each char c in str do
-		Push c onto a stack char_stack
+	for char c in str do
+		printf "%c" c
 	end for
-	if top of char_stack is '$' then
-		return 1
-	else if top of char_stack is 'H' then
-		// Perhaps char_stack is mysteriously backward. Fix it.
-		while char_stack is not empty do
-			Enqueue top of char_stack to a queue tmp
-			Pop top of char_stack
-		end while
-		do
-			Push head of tmp to char_stack
-			Dequeue tmp
-		while tmp is not empty
-	else if top of char_stack is '!' then
-		goto output
-	end if
+	echo
 
-	while true do
-		if char_stack is empty then
-			break
-		end if
-		if top of char_stack is an alphabetic
-		   or punctuation character then
-			echo top of char_stack
+	fibseq <- { 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, }
+
+	// The # in this context is a unary operator meaning "length of"
+	for i <- 0 to #fibseq - 1 do
+		if i == #fibseq / 2 then
+			printf "-- Median: "
+			if #fibseq is odd then
+				printf "%d -- " fibseq[i]
+			else
+				printf "%.1f -- "
+					(fibseq[i-1] + fibseq[i]) / 2.0
+				printf "%d " fibseq[i]
+			end if
 		else
-			echo "Invalid character"
+			printf "%d " fibseq[i]
 		end if
-		echo a newline
-		Pop top of char_stack
-	end while
-
-output:
-
-	for i <- length(char_stack) - 1 downto 0 do
-		echo i
-		echo top of char_stack
-		Pop top of char_stack
 	end for
+	echo
 
-	return 0
+	// Characters are treated identically as those in C
+	alpha <- 'a'
+	while 'a' <= alpha and alpha <= 'z' do
+		printf "%c" c
+		alpha <- alpha + 1
+	end while
+	echo
 end procedure
 
  vim:tw=78:isk=!-~,^*,^\|,^\":ts=8:noet:ft=help:norl:
