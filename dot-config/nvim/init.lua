@@ -255,7 +255,7 @@ vim.api.nvim_create_autocmd("BufNewFile", {
   group = template_group,
   pattern = "*.html",
   callback = function()
-    utils.read_template_file(".html", { 6, 9 })
+    utils.read_template_file(".html", { 6, 11 })
     vim.cmd.startinsert()
   end,
 })
