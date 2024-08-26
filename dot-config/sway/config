@@ -256,16 +256,16 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $super+Up     focus up
     bindsym $super+Right  focus right
 
-    # Move the focused window with the same, but add Shift
-    bindsym $super+Shift+$left  move left
-    bindsym $super+Shift+$down  move down
-    bindsym $super+Shift+$up    move up
-    bindsym $super+Shift+$right move right
+    # Move the focused window
+    bindsym $super+Control+$left  move left
+    bindsym $super+Control+$down  move down
+    bindsym $super+Control+$up    move up
+    bindsym $super+Control+$right move right
     # Ditto, with arrow keys
-    bindsym $super+Shift+Left   move left
-    bindsym $super+Shift+Down   move down
-    bindsym $super+Shift+Up     move up
-    bindsym $super+Shift+Right  move right
+    bindsym $super+Control+Left   move left
+    bindsym $super+Control+Down   move down
+    bindsym $super+Control+Up     move up
+    bindsym $super+Control+Right  move right
 #
 # Workspaces:
 #
@@ -289,24 +289,24 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $super+b workspace back_and_forth
     bindsym $super+$alt+b workspace back_and_forth
     # Move focused container to workspace
-    bindsym $super+Shift+1 move container to workspace number 1
-    bindsym $super+Shift+2 move container to workspace number 2
-    bindsym $super+Shift+3 move container to workspace number 3
-    bindsym $super+Shift+4 move container to workspace number 4
-    bindsym $super+Shift+5 move container to workspace number 5
-    bindsym $super+Shift+6 move container to workspace number 6
-    bindsym $super+Shift+7 move container to workspace number 7
-    bindsym $super+Shift+8 move container to workspace number 8
-    bindsym $super+Shift+9 move container to workspace number 9
-    bindsym $super+Shift+0 move container to workspace number 10
+    bindsym $super+Control+1 move container to workspace number 1
+    bindsym $super+Control+2 move container to workspace number 2
+    bindsym $super+Control+3 move container to workspace number 3
+    bindsym $super+Control+4 move container to workspace number 4
+    bindsym $super+Control+5 move container to workspace number 5
+    bindsym $super+Control+6 move container to workspace number 6
+    bindsym $super+Control+7 move container to workspace number 7
+    bindsym $super+Control+8 move container to workspace number 8
+    bindsym $super+Control+9 move container to workspace number 9
+    bindsym $super+Control+0 move container to workspace number 10
     # Move focused container left and right across workspaces, following it.
-    bindsym $super+Shift+$alt+$left  move workspace prev_on_output, \
+    bindsym $super+Control+$alt+$left  move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $super+Shift+$alt+$right move workspace next_on_output, \
+    bindsym $super+Control+$alt+$right move workspace next_on_output, \
 				      workspace next_on_output
-    bindsym $super+Shift+$alt+Left   move workspace prev_on_output, \
+    bindsym $super+Control+$alt+Left   move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $super+Shift+$alt+Right  move workspace next_on_output, \
+    bindsym $super+Control+$alt+Right  move workspace next_on_output, \
 				      workspace next_on_output
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -322,7 +322,7 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $super+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $super+Shift+w floating toggle
+    bindsym $super+Control+w floating toggle
 
     # Swap focus between the tiling area and the floating area
     bindsym $super+w focus mode_toggle
@@ -336,7 +336,7 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $super+Shift+minus move scratchpad
+    bindsym $super+Control+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through
