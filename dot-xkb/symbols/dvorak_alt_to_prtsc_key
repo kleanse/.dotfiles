@@ -1,0 +1,16 @@
+// Modified Dvorak layout that maps Alt to PrtSc key.
+//  For more information and resources about the structure of this
+//  configuration, see
+//   /usr/share/X11/xkb  < path of XKB data files
+//   `man 7 xkeyboard-config`  < man page of XKB data files
+//   https://www.charvolant.org/doug/xkb/html/node5.html  < unofficial XKB config doc
+partial alphanumeric_keys
+xkb_symbols "dvorak-prtsc-ralt" {
+
+	include "us(dvorak)"
+	name[Group1] = "English (Dvorak, Alt mapped to PrtSc key)";
+
+	key <PRSC> {[  Alt_R, Meta_R  ], type[Group1] = "TWO_LEVEL" };
+};
+
+// vim:ft=xkb:
