@@ -10,6 +10,7 @@
 ### Variables {{{
 #
 # Logo key. Use Mod1 for Alt.
+set $alt   Mod1
 set $super Mod4
 # Home row direction keys, like vim
 set $left  h
@@ -165,6 +166,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     repeat_rate 30
     xkb_layout us
     xkb_variant dvorak
+    xkb_options altwin:swap_alt_win
 }
 
 # External keyboard
@@ -198,7 +200,7 @@ input "1133:16532:Logitech_M325" {
     bindsym $super+Return exec $term $$term_options
 
     # Kill focused window
-    bindsym $super+Shift+q kill
+    bindsym $super+q kill
 
     # Start your launcher
     bindsym $super+Space exec $menu
@@ -279,13 +281,13 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $super+9 workspace number 9
     bindsym $super+0 workspace number 10
     # Switch to the next or previous workspace
-    bindsym $super+Control+$left  workspace prev_on_output
-    bindsym $super+Control+$right workspace next_on_output
-    bindsym $super+Control+Left   workspace prev_on_output
-    bindsym $super+Control+Right  workspace next_on_output
+    bindsym $super+$alt+$left  workspace prev_on_output
+    bindsym $super+$alt+$right workspace next_on_output
+    bindsym $super+$alt+Left   workspace prev_on_output
+    bindsym $super+$alt+Right  workspace next_on_output
     # Switch to the alternate (last used) workspace
     bindsym $super+b workspace back_and_forth
-    bindsym $super+Control+b workspace back_and_forth
+    bindsym $super+$alt+b workspace back_and_forth
     # Move focused container to workspace
     bindsym $super+Shift+1 move container to workspace number 1
     bindsym $super+Shift+2 move container to workspace number 2
@@ -298,13 +300,13 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     bindsym $super+Shift+9 move container to workspace number 9
     bindsym $super+Shift+0 move container to workspace number 10
     # Move focused container left and right across workspaces, following it.
-    bindsym $super+Shift+Control+$left  move workspace prev_on_output, \
+    bindsym $super+Shift+$alt+$left  move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $super+Shift+Control+$right move workspace next_on_output, \
+    bindsym $super+Shift+$alt+$right move workspace next_on_output, \
 				      workspace next_on_output
-    bindsym $super+Shift+Control+Left   move workspace prev_on_output, \
+    bindsym $super+Shift+$alt+Left   move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $super+Shift+Control+Right  move workspace next_on_output, \
+    bindsym $super+Shift+$alt+Right  move workspace next_on_output, \
 				      workspace next_on_output
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
