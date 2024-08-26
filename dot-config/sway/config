@@ -5,12 +5,12 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2023 Jun 03
+# Last change:	2024 Aug 26
 
 ### Variables {{{
 #
 # Logo key. Use Mod1 for Alt.
-set $mod Mod4
+set $super Mod4
 # Home row direction keys, like vim
 set $left  h
 set $down  j
@@ -195,31 +195,31 @@ input "1133:16532:Logitech_M325" {
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term $$term_options
+    bindsym $super+Return exec $term $$term_options
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $super+Shift+q kill
 
     # Start your launcher
-    bindsym $mod+Space exec $menu
+    bindsym $super+Space exec $menu
 
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
+    # Drag floating windows by holding down $super and left mouse button.
+    # Resize them with right mouse button + $super.
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
-    floating_modifier $mod normal
+    floating_modifier $super normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+r reload
+    bindsym $super+Shift+r reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag --type=warning --message='You pressed \
+    bindsym $super+Shift+e exec swaynag --type=warning --message='You pressed \
 the exit shortcut. Do you really want to exit sway? This will end your \
 Wayland session.' --button 'Yes, exit sway' 'swaymsg exit'
 
     # Power off the computer
-    bindsym $mod+Shift+p exec swaynag --type=warning --message='You pressed \
+    bindsym $super+Shift+p exec swaynag --type=warning --message='You pressed \
 the poweroff shortcut. Do you want to power off your computer? All unsaved \
 changes will be lost.' --button 'Yes, power off' 'poweroff'
 #
@@ -244,67 +244,67 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
 # Moving around:
 #
     # Move your focus around
-    bindsym $mod+$left	focus left
-    bindsym $mod+$down	focus down
-    bindsym $mod+$up	focus up
-    bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
-    bindsym $mod+Left	focus left
-    bindsym $mod+Down	focus down
-    bindsym $mod+Up	focus up
-    bindsym $mod+Right	focus right
+    bindsym $super+$left  focus left
+    bindsym $super+$down  focus down
+    bindsym $super+$up    focus up
+    bindsym $super+$right focus right
+    # Or use $super+[up|down|left|right]
+    bindsym $super+Left   focus left
+    bindsym $super+Down   focus down
+    bindsym $super+Up     focus up
+    bindsym $super+Right  focus right
 
     # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left  move left
-    bindsym $mod+Shift+$down  move down
-    bindsym $mod+Shift+$up    move up
-    bindsym $mod+Shift+$right move right
+    bindsym $super+Shift+$left  move left
+    bindsym $super+Shift+$down  move down
+    bindsym $super+Shift+$up    move up
+    bindsym $super+Shift+$right move right
     # Ditto, with arrow keys
-    bindsym $mod+Shift+Left   move left
-    bindsym $mod+Shift+Down   move down
-    bindsym $mod+Shift+Up     move up
-    bindsym $mod+Shift+Right  move right
+    bindsym $super+Shift+Left   move left
+    bindsym $super+Shift+Down   move down
+    bindsym $super+Shift+Up     move up
+    bindsym $super+Shift+Right  move right
 #
 # Workspaces:
 #
     # Switch to workspace
-    bindsym $mod+1 workspace number 1
-    bindsym $mod+2 workspace number 2
-    bindsym $mod+3 workspace number 3
-    bindsym $mod+4 workspace number 4
-    bindsym $mod+5 workspace number 5
-    bindsym $mod+6 workspace number 6
-    bindsym $mod+7 workspace number 7
-    bindsym $mod+8 workspace number 8
-    bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
+    bindsym $super+1 workspace number 1
+    bindsym $super+2 workspace number 2
+    bindsym $super+3 workspace number 3
+    bindsym $super+4 workspace number 4
+    bindsym $super+5 workspace number 5
+    bindsym $super+6 workspace number 6
+    bindsym $super+7 workspace number 7
+    bindsym $super+8 workspace number 8
+    bindsym $super+9 workspace number 9
+    bindsym $super+0 workspace number 10
     # Switch to the next or previous workspace
-    bindsym $mod+Control+$left	workspace prev_on_output
-    bindsym $mod+Control+$right	workspace next_on_output
-    bindsym $mod+Control+Left	workspace prev_on_output
-    bindsym $mod+Control+Right	workspace next_on_output
+    bindsym $super+Control+$left  workspace prev_on_output
+    bindsym $super+Control+$right workspace next_on_output
+    bindsym $super+Control+Left   workspace prev_on_output
+    bindsym $super+Control+Right  workspace next_on_output
     # Switch to the alternate (last used) workspace
-    bindsym $mod+b workspace back_and_forth
-    bindsym $mod+Control+b workspace back_and_forth
+    bindsym $super+b workspace back_and_forth
+    bindsym $super+Control+b workspace back_and_forth
     # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1
-    bindsym $mod+Shift+2 move container to workspace number 2
-    bindsym $mod+Shift+3 move container to workspace number 3
-    bindsym $mod+Shift+4 move container to workspace number 4
-    bindsym $mod+Shift+5 move container to workspace number 5
-    bindsym $mod+Shift+6 move container to workspace number 6
-    bindsym $mod+Shift+7 move container to workspace number 7
-    bindsym $mod+Shift+8 move container to workspace number 8
-    bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
+    bindsym $super+Shift+1 move container to workspace number 1
+    bindsym $super+Shift+2 move container to workspace number 2
+    bindsym $super+Shift+3 move container to workspace number 3
+    bindsym $super+Shift+4 move container to workspace number 4
+    bindsym $super+Shift+5 move container to workspace number 5
+    bindsym $super+Shift+6 move container to workspace number 6
+    bindsym $super+Shift+7 move container to workspace number 7
+    bindsym $super+Shift+8 move container to workspace number 8
+    bindsym $super+Shift+9 move container to workspace number 9
+    bindsym $super+Shift+0 move container to workspace number 10
     # Move focused container left and right across workspaces, following it.
-    bindsym $mod+Shift+Control+$left  move workspace prev_on_output, \
+    bindsym $super+Shift+Control+$left  move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $mod+Shift+Control+$right move workspace next_on_output, \
+    bindsym $super+Shift+Control+$right move workspace next_on_output, \
 				      workspace next_on_output
-    bindsym $mod+Shift+Control+Left   move workspace prev_on_output, \
+    bindsym $super+Shift+Control+Left   move workspace prev_on_output, \
 				      workspace prev_on_output
-    bindsym $mod+Shift+Control+Right  move workspace next_on_output, \
+    bindsym $super+Shift+Control+Right  move workspace next_on_output, \
 				      workspace next_on_output
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -312,21 +312,21 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
 # Layout stuff:
 #
     # Switch the current container between different layout styles
-    bindsym $mod+s layout stacking
-    bindsym $mod+t layout tabbed
-    bindsym $mod+p layout toggle split
+    bindsym $super+s layout stacking
+    bindsym $super+t layout tabbed
+    bindsym $super+p layout toggle split
 
     # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
+    bindsym $super+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+w floating toggle
+    bindsym $super+Shift+w floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+w focus mode_toggle
+    bindsym $super+w focus mode_toggle
 
     # Move focus to the parent container
-    bindsym $mod+a focus parent
+    bindsym $super+a focus parent
 #
 # Scratchpad:
 #
@@ -334,12 +334,12 @@ changes will be lost.' --button 'Yes, power off' 'poweroff'
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    bindsym $super+Shift+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through
     # them.
-    bindsym $mod+minus scratchpad show
+    bindsym $super+minus scratchpad show
 #
 # Resizing containers:
 #
@@ -365,15 +365,15 @@ mode "resize" {
     bindsym Control+bracketleft	mode "default"
     bindsym Control+g		mode "default"
     bindsym Control+c		mode "default"
-    bindsym $mod+r		mode "default"
+    bindsym $super+r		mode "default"
 }
-bindsym $mod+r mode "resize"
+bindsym $super+r mode "resize"
 #
 # Reading images
 #
     # Color picker: select a pixel on the screen and copy its RGB hexadecimal
     # code into the clipboard.
-    bindsym $mod+Shift+c exec grim -g "$(slurp -p)" -t ppm - \
+    bindsym $super+Shift+c exec grim -g "$(slurp -p)" -t ppm - \
 				| convert - -format '%[pixel:p{0,0}]' txt:- \
 				| tail --lines=1 \
 				| cut --delimiter=' ' --fields=4 \
