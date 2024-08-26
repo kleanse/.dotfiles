@@ -202,4 +202,4 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set up fzf key bindings and fuzzy completion; disable its CTRL-T key binding
-FZF_CTRL_T_COMMAND= eval "$(fzf --zsh)"
+FZF_CTRL_T_COMMAND= source <(fzf --zsh)
