@@ -205,6 +205,9 @@ input "1133:16532:Logitech_M325" {
     # Start your launcher
     bindsym $super+Space exec $menu
 
+    # Emoji picker
+    bindsym $super+e exec bemoji
+
     # Drag floating windows by holding down $super and left mouse button.
     # Resize them with right mouse button + $super.
     # Despite the name, also works for non-floating windows.
