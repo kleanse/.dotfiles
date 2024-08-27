@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2024 Aug 26
+# Last change:	2024 Aug 27
 
 ### Variables {{{
 #
@@ -25,7 +25,7 @@ set $launcher rofi -show combi -modes combi -combi-modes window\,drun
 # opened on the original workspace that the command was run on.
 set $menu $launcher | xargs swaymsg exec --
 # Your preferred web browser
-set $browser librewolf
+set $browser firefox
 # Your preferred gamma controller
 set $gamma gammastep
 # Your preferred image viewer
