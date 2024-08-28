@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2024 Aug 27
+# Last change:	2024 Aug 28
 
 ### Variables {{{
 #
@@ -64,8 +64,8 @@ exec_always 'pkill kanshi; kanshi'
 exec $gamma
 exec ~/.config/sway/startup.sh
 
-# Enable system's master speakers and set their volume to 30%.
-exec $mixer set Master 30% unmute
+# Enable system's master speakers and set their volume to 50%.
+exec $mixer set Master 50% unmute
 # }}}
 
 
