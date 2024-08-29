@@ -21,4 +21,4 @@ swaymsg 'exec "$term $term_options -e tmux new-session -sref"'
 # Wait until the new `tmux` session completes initialization before sending
 # keys to it.
 sleep 1
-tmux send-keys -tref source Space ~/.scratchpad/.zshrc Enter
+tmux send-keys -tref source Space ~/.scratchpad/dot-zshrc Enter

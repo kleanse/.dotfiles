@@ -1,12 +1,10 @@
 profile wired {
 	output LVDS-1 disable
 	output VGA-1 mode 1920x1080@60Hz
-	exec swaymsg 'set $term_options --override="font=monospace:size=16"'
-	exec swaymsg 'set $floating_x 1421; set $floating_y 925'
+	exec ~/.config/kanshi/setvars.sh wired
 }
 
 profile nomad {
 	output LVDS-1 enable
-	exec swaymsg 'set $term_options ""'
-	exec swaymsg 'set $floating_x 1094; set $floating_y 709'
+	exec ~/.config/kanshi/setvars.sh nomad
 }
