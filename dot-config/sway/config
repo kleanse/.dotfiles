@@ -5,7 +5,7 @@
 # Read `man 5 sway` for a complete reference.
 #
 # Written by Kenny Lam.
-# Last change:	2024 Aug 28
+# Last change:	2024 Aug 30
 
 ### Variables {{{
 #
@@ -63,6 +63,9 @@ exec ~/.config/sway/startup.sh
 
 # Enable system's master speakers and set their volume to 50%.
 exec $mixer set Master 50% unmute
+
+# Set display brightness to 15%.
+exec light -S 15
 # }}}
 
 
