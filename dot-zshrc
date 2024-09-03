@@ -172,6 +172,11 @@ function d () {
 }
 compdef _dirs d
 
+function c () {
+  cd "$@" && ll
+}
+compdef _cd c
+
 # List directory contents
 alias lsa='ls -lah'
 alias l='ls -lah'
