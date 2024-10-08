@@ -343,10 +343,21 @@ g:maplocalleader = g:mapleader
 # Remap Normal-mode commands ";" and "," to different keys for delay-free ","
 # behavior while using such a key for mapleader.
 noremap  + ;
-noremap  _ ,
+noremap  - ,
+
+# Remap Normal-mode "k" and "j" for dealing with word wrap.
+nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+
+# Reference local ASCII table.
+nnoremap <Leader>va <Cmd>split $ASCII_REFERENCE <Bar> view<CR>
 
 # Overwrite Normal-mode ";" to save the current buffer quickly.
 nnoremap ; <Cmd>update<CR>
+
+nnoremap <M-b> <C-^>
+nnoremap <M-e> <Cmd>Explore<CR>
+nnoremap <M-o> <Cmd>Rexplore<CR>
 
 # Quickly edit and source the vimrc file.
 nnoremap <Leader>ev :split $MYVIMRC<CR>
@@ -360,26 +371,26 @@ nnoremap Y y$
 nnoremap n nzvzz
 nnoremap N Nzvzz
 
-# Disable highlighting for 'hlsearch'.
-nnoremap <Leader>h <Cmd>nohlsearch<CR>
+# Overload Normal-mode CTRL-L to clear search highlighting and update diffs.
+nnoremap <C-L> <Cmd>nohlsearch <Bar> diffupdate <Bar> normal! <C-L><CR>
 
 # Toggle 'colorcolumn'.
-nnoremap <Leader>cc
+nnoremap <Leader>tc
 	\ <Cmd>let &colorcolumn = (empty(&colorcolumn)) ? "+1" : ""<CR>
 
 # Toggle 'list'
-nnoremap <Leader>l <Cmd>let &list = !&list<CR>
+nnoremap <Leader>tl <Cmd>let &list = !&list<CR>
 
 # Toggle 'spell'
-nnoremap <Leader>sp <Cmd>let &spell = !&spell<CR>
+nnoremap <Leader>ts <Cmd>let &spell = !&spell<CR>
 
 # Toggle 'virtualedit'.
-nnoremap <Leader>ve
+nnoremap <Leader>tv
 	\ <Cmd>let &virtualedit = (empty(&virtualedit)) ? "all" : ""
 	\ <Bar> set virtualedit?<CR>
 
 # Toggle syntax highlighting: useful for editing help files.
-nnoremap <Leader>x
+nnoremap <Leader>tx
 	\ <Cmd>if exists("g:syntax_on")
 		\ <Bar> syntax off
 	\ <Bar> else
@@ -439,6 +450,8 @@ xnoremap K :move '<-2<CR>gv=gv
 # Use CTRL-C for <Esc>: it is easier to reach.
 inoremap <C-C> <Esc>
 xnoremap <C-C> <Esc>
+
+inoremap <C-L> <C-X><C-L>
 
 # Use some common GNU-Readline keyboard shortcuts for the Command line.
 #     Set meta-key keycodes to what the terminal receives (can be identified by
