@@ -337,6 +337,24 @@ command -bang -range=% -nargs=? Iretab {
 
 
 # Key mappings {{{
+#     Set meta-key keycodes to what the terminal receives (can be identified by
+# running "cat" without any arguments and entering the corresponding keys) so
+# that they can be used in mappings.
+execute "set <M-0>=\e0"
+execute "set <M-H>=\eH"
+execute "set <M-N>=\eN"
+execute "set <M-S>=\eS"
+execute "set <M-T>=\eT"
+execute "set <M-b>=\eb"
+execute "set <M-d>=\ed"
+execute "set <M-e>=\ee"
+execute "set <M-f>=\ef"
+execute "set <M-h>=\eh"
+execute "set <M-n>=\en"
+execute "set <M-o>=\eo"
+execute "set <M-s>=\es"
+execute "set <M-t>=\et"
+
 g:mapleader = ","
 g:maplocalleader = g:mapleader
 
@@ -422,15 +440,6 @@ nnoremap <Leader>b <Cmd>buffers<CR>:buffer<Space>
 # file in the argument list, respectively. <M-0> edits the current entry.
 # Replace the corresponding entry in the argument list with the current
 # buffer's name by holding Shift when entering <M-htns>.
-execute "set <M-0>=\e0"
-execute "set <M-H>=\eH"
-execute "set <M-T>=\eT"
-execute "set <M-N>=\eN"
-execute "set <M-S>=\eS"
-execute "set <M-h>=\eh"
-execute "set <M-t>=\et"
-execute "set <M-n>=\en"
-execute "set <M-s>=\es"
 nnoremap <M-H> <Cmd>call <SID>Replace_arg_entry(1)<CR>
 nnoremap <M-T> <Cmd>call <SID>Replace_arg_entry(2)<CR>
 nnoremap <M-N> <Cmd>call <SID>Replace_arg_entry(3)<CR>
@@ -454,20 +463,15 @@ xnoremap <C-C> <Esc>
 inoremap <C-L> <C-X><C-L>
 
 # Use some common GNU-Readline keyboard shortcuts for the Command line.
-#     Set meta-key keycodes to what the terminal receives (can be identified by
-# running "cat" without any arguments and entering the corresponding keys).
-execute "set <M-B>=\eb"
-execute "set <M-D>=\ed"
-execute "set <M-F>=\ef"
 # Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is not
 # useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites editing
 # complex commands.
 cnoremap <C-A> <Home>
 cnoremap <C-B> <Left>
 cnoremap <C-F> <Right>
-cnoremap <M-B> <S-Left>
-cnoremap <M-F> <S-Right>
-cnoremap <expr> <M-D> <SID>Kill_word_pre()
+cnoremap <M-b> <S-Left>
+cnoremap <M-f> <S-Right>
+cnoremap <expr> <M-d> <SID>Kill_word_pre()
 
 # Transfer the default behavior of Command-line CTRL-F to CTRL-X.
 cnoremap <C-X> <C-F>
