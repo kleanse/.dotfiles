@@ -14,5 +14,3 @@ return {
     enabled = vim.g.have_nerd_font, -- requires a Nerd Font
   },
 }
-
--- vim:sw=2:et:

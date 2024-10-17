@@ -69,5 +69,3 @@ return {
     end,
   },
 }
-
--- vim:sw=2:et:
