@@ -25,6 +25,7 @@ objs := $(patsubst $(srcdir)/%.$(FT), $(objdir)/%.o, $(srcs))
 debug_flags := -O0 -g
 prod_flags := -O2 -DNDEBUG
 compilation_flags := -pedantic-errors -Wall -Wextra -Werror -I$(incdir)
+linker_flags :=
 
 # Use the correct compiler and compiler flags.
 ifeq ($(FT), cpp)
@@ -35,6 +36,8 @@ else
 compiler := $(CC)
 compiler_flags := $(CFLAGS)
 endif
+
+linker_flags += $(LDFLAGS) $(LDLIBS)
 
 # Determine appropriate recipes for certain targets.
 ifeq ($(bindir), ./.)
@@ -104,7 +107,7 @@ $(objdir)/%.o: $(srcdir)/%.$(FT) | $(objdir) $(depdir)
 	$(compiler) -o $@ -MMD -MF $(depdir)/$*.d -c $(compilation_flags) $(compiler_flags) $<
 
 $(bindir)/$(debug_target): $(objs) | $(bindir)
-	$(compiler) -o $@ $(compiler_flags) $^
+	$(compiler) -o $@ $(linker_flags) $^
 
 $(bindir)/$(prod_target): $(objs) | $(bindir)
-	$(compiler) -o $@ $(compiler_flags) $^
+	$(compiler) -o $@ $(linker_flags) $^
