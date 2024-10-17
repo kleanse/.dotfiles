@@ -105,7 +105,10 @@ return {
 
       -- Shortcut for searching your Neovim configuration files
       nmap("<leader>sn", function()
-        builtin.find_files({ cwd = vim.fn.stdpath("config") })
+        builtin.find_files({
+          cwd = vim.fn.stdpath("config"),
+          prompt_title = "Find Neovim Configuration Files",
+        })
       end, "[S]earch [N]eovim files")
 
       nmap("<leader>so", function()
