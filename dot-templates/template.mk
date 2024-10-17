@@ -36,7 +36,7 @@ compiler := $(CC)
 compiler_flags += $(CFLAGS)
 endif
 
-linker_flags += $(LDFLAGS) $(LDLIBS)
+linker_flags := $(strip $(linker_flags) $(LDFLAGS) $(LDLIBS))
 
 # Determine appropriate recipes for certain targets.
 ifeq ($(bindir), ./.)
@@ -67,12 +67,12 @@ all: debug
 -include $(patsubst $(srcdir)/%.$(FT), $(depdir)/%.d, $(srcs))
 
 .PHONY: debug
-debug: compiler_flags := $(debug_flags) $(compiler_flags)
+debug: compiler_flags := $(strip $(debug_flags) $(compiler_flags))
 debug: $(bindir)/$(debug_target)
 
 .PHONY: prod
 prod: mostlyclean
-prod: compiler_flags := $(prod_flags) $(compiler_flags)
+prod: compiler_flags := $(strip $(prod_flags) $(compiler_flags))
 prod: $(bindir)/$(prod_target)
 
 .PHONY: clean
