@@ -1,6 +1,6 @@
 # Names of the binaries to produce.
-debug_target :=
-prod_target := prod_$(debug_target)
+prod_target :=
+debug_target := debug_$(prod_target)
 
 # Type of the files to compile.
 FT := cpp
