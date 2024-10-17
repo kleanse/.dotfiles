@@ -1,6 +1,6 @@
 # Names of the binaries to produce.
 debug_target :=
-release_target := release_$(debug_target)
+prod_target := prod_$(debug_target)
 
 # Type of the files to compile.
 FT := cpp
@@ -23,7 +23,7 @@ srcs := $(wildcard $(srcdir)/*.$(FT))
 objs := $(patsubst $(srcdir)/%.$(FT), $(objdir)/%.o, $(srcs))
 
 debug_flags := -O0 -g
-release_flags := -O2 -DNDEBUG
+prod_flags := -O2 -DNDEBUG
 compilation_flags := -pedantic-errors -Wall -Wextra -Werror -I$(incdir)
 
 # Use the correct compiler and compiler flags.
@@ -38,7 +38,7 @@ endif
 
 # Determine appropriate recipes for certain targets.
 ifeq ($(bindir), ./.)
-clean_recipe := rm -f $(debug_target) $(release_target)
+clean_recipe := rm -f $(debug_target) $(prod_target)
 else
 clean_recipe := rm -rf $(bindir)
 endif
@@ -68,10 +68,10 @@ all: debug
 debug: compilation_flags += $(debug_flags)
 debug: $(bindir)/$(debug_target)
 
-.PHONY: release
-release: mostlyclean
-release: compilation_flags += $(release_flags)
-release: $(bindir)/$(release_target)
+.PHONY: prod
+prod: mostlyclean
+prod: compilation_flags += $(prod_flags)
+prod: $(bindir)/$(prod_target)
 
 .PHONY: clean
 clean:
@@ -106,5 +106,5 @@ $(objdir)/%.o: $(srcdir)/%.$(FT) | $(objdir) $(depdir)
 $(bindir)/$(debug_target): $(objs) | $(bindir)
 	$(compiler) -o $@ $(compiler_flags) $^
 
-$(bindir)/$(release_target): $(objs) | $(bindir)
+$(bindir)/$(prod_target): $(objs) | $(bindir)
 	$(compiler) -o $@ $(compiler_flags) $^
