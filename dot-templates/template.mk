@@ -24,17 +24,16 @@ objs := $(patsubst $(srcdir)/%.$(FT), $(objdir)/%.o, $(srcs))
 
 debug_flags := -O0 -g
 prod_flags := -O2 -DNDEBUG
-compilation_flags := -pedantic-errors -Wall -Wextra -Werror -I$(incdir)
+compiler_flags := -pedantic-errors -Wall -Wextra -Werror -I$(incdir)
 linker_flags :=
 
 # Use the correct compiler and compiler flags.
 ifeq ($(FT), cpp)
 compiler := $(CXX)
-compiler_flags := $(CXXFLAGS)
-compilation_flags += -std=c++20
+compiler_flags += -std=c++20 $(CXXFLAGS)
 else
 compiler := $(CC)
-compiler_flags := $(CFLAGS)
+compiler_flags += $(CFLAGS)
 endif
 
 linker_flags += $(LDFLAGS) $(LDLIBS)
@@ -68,12 +67,12 @@ all: debug
 -include $(patsubst $(srcdir)/%.$(FT), $(depdir)/%.d, $(srcs))
 
 .PHONY: debug
-debug: compilation_flags += $(debug_flags)
+debug: compiler_flags := $(debug_flags) $(compiler_flags)
 debug: $(bindir)/$(debug_target)
 
 .PHONY: prod
 prod: mostlyclean
-prod: compilation_flags += $(prod_flags)
+prod: compiler_flags := $(prod_flags) $(compiler_flags)
 prod: $(bindir)/$(prod_target)
 
 .PHONY: clean
@@ -104,7 +103,7 @@ $(depdir):
 endif
 
 $(objdir)/%.o: $(srcdir)/%.$(FT) | $(objdir) $(depdir)
-	$(compiler) -o $@ -MMD -MF $(depdir)/$*.d -c $(compilation_flags) $(compiler_flags) $<
+	$(compiler) -o $@ -MMD -MF $(depdir)/$*.d -c $(compiler_flags) $<
 
 $(bindir)/$(debug_target): $(objs) | $(bindir)
 	$(compiler) -o $@ $(linker_flags) $^
