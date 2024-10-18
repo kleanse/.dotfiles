@@ -61,3 +61,6 @@ export GROFF_NO_SGR=1
 
 # Path to local ASCII reference file.
 export ASCII_REFERENCE="$HOME/Programming/references/vim_ascii_table.txt"
+
+# Path to personal knowledge management repository.
+export PKM_REPO="$HOME/notes"
