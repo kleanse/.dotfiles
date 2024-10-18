@@ -17,7 +17,14 @@ return {
     opts = {
       workspaces = { { name = "notes", path = "$PKM_REPO" } },
       mappings = {
-        -- Toggle check-boxes.
+        -- Follow link
+        ["<C-]>"] = {
+          action = function()
+            return require("obsidian").util.cursor_on_markdown_link() and "<Cmd>ObsidianFollowLink<CR>" or "<C-]>"
+          end,
+          opts = { desc = "Obsidian: follow link", buffer = true, expr = true },
+        },
+        -- Toggle check-boxes
         ["<leader>u"] = {
           action = function()
             return require("obsidian").util.toggle_checkbox()
@@ -25,7 +32,7 @@ return {
           opts = { desc = "Obsidian: toggle checkbox", buffer = true },
         },
         -- Smart action depending on context: follow link or toggle checkbox
-        ["<cr>"] = {
+        ["<CR>"] = {
           action = function()
             return require("obsidian").util.smart_action()
           end,
@@ -42,24 +49,5 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      local obsidian = require("obsidian")
-      obsidian.setup(opts)
-
-      vim.api.nvim_create_autocmd("BufEnter", {
-        group = "obsidian_setup",
-        pattern = "*.md",
-        callback = function(ev)
-          -- Check if we're in *any* workspace.
-          if not obsidian.Workspace.get_workspace_for_dir(vim.fs.dirname(ev.match), opts.workspaces) then
-            return
-          end
-
-          vim.keymap.set("n", "<C-]>", function()
-            return obsidian.util.cursor_on_markdown_link() and "<Cmd>ObsidianFollowLink<CR>" or "<C-]>"
-          end, { desc = "Obsidian: follow link", buffer = true, expr = true })
-        end,
-      })
-    end,
   },
 }
