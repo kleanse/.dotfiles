@@ -38,6 +38,20 @@ return {
           end,
           opts = { desc = "Obsidian: smart action", buffer = true, expr = true },
         },
+        -- Open picker with list of references to the current buffer
+        ["<leader>ob"] = {
+          action = function()
+            return "<Cmd>ObsidianBacklinks<CR>"
+          end,
+          opts = { desc = "[O]bsidian [B]acklinks", buffer = true, expr = true },
+        },
+        -- Open picker to select a note from the vault
+        ["<leader>sp"] = {
+          action = function()
+            return "<Cmd>ObsidianQuickSwitch<CR>"
+          end,
+          opts = { desc = "Obsidian: quick switch", expr = true },
+        },
       },
       -- Disable special syntax highlighting using 'conceallevel'
       ui = {
