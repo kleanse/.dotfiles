@@ -163,20 +163,6 @@ alias 9='cd +9'
 alias md='mkdir -p'
 alias rd=rmdir
 
-function d () {
-  if [[ -n $1 ]]; then
-    dirs "$@"
-  else
-    dirs -v | head -n 10
-  fi
-}
-compdef _dirs d
-
-function c () {
-  cd "$@" && ll
-}
-compdef _cd c
-
 # List directory contents
 alias lsa='ls -lah'
 alias l='ls -lah'
@@ -202,6 +188,21 @@ if [[ -x "$(command -v vimx)" ]]; then
 	alias vim='vimx'
 	alias view='vimx -R'
 fi
+
+# Functions
+function d () {
+  if [[ -n $1 ]]; then
+    dirs "$@"
+  else
+    dirs -v | head -n 10
+  fi
+}
+compdef _dirs d
+
+function c () {
+  cd "$@" && ll
+}
+compdef _cd c
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
