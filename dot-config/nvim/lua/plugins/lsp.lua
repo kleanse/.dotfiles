@@ -45,7 +45,7 @@ return {
           nmap("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
           nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-          nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+          vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
 
           nmap("<C-k>", vim.lsp.buf.signature_help, "Signature documentation")
 
