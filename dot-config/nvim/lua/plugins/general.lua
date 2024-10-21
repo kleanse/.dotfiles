@@ -66,6 +66,9 @@ return {
           end,
         },
       })
+
+      -- Split and join arguments between bracket delimiters under the cursor
+      require("mini.splitjoin").setup()
     end,
   },
 }
