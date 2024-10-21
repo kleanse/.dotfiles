@@ -88,12 +88,11 @@ return {
       -- They will be passed to the `settings` field of the server config.
       -- You must look up that documentation yourself.
       local servers = {
-        -- clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
-        -- tsserver = {},
 
+        clangd = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -106,6 +105,7 @@ return {
             },
           },
         },
+        ts_ls = {},
       }
 
       require("mason").setup()
