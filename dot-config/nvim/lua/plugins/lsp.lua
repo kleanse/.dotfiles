@@ -16,7 +16,6 @@ return {
     "Bilal2453/luvit-meta",
     lazy = true,
   },
-
   { -- LSP Configuration
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -116,9 +115,7 @@ return {
       vim.list_extend(ensure_installed, {
         "stylua", -- Used to format lua code
       })
-      require("mason-tool-installer").setup({
-        ensure_installed = ensure_installed,
-      })
+      require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
       require("mason-lspconfig").setup({
         handlers = {
@@ -127,7 +124,7 @@ return {
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting
-            -- for tsserver)
+            -- for ts_ls)
             server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
             require("lspconfig")[server_name].setup(server)
           end,
