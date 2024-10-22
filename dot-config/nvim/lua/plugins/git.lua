@@ -63,7 +63,7 @@ return {
         end
         local gs = require("gitsigns")
 
-        map("n", "<Leader>b", gs.blame_line, "[B]lame line")
+        map("n", "<Leader>hb", gs.blame_line, "[H]unk [B]lame line")
         map("n", "<Leader>hr", gs.reset_hunk, "[H]unk [R]eset")
         map("n", "<Leader>hs", gs.stage_hunk, "[H]unk [S]tage")
         map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
