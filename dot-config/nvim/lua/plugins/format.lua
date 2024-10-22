@@ -26,11 +26,9 @@ return {
     end,
     opts = {
       formatters_by_ft = {
-        lua = { "stylua" },
-        -- Conform will run multiple formatters sequentially
-        python = { "isort", "black" },
-        -- Conform will run the first available formatter
         javascript = { "prettierd", "prettier", stop_after_first = true },
+        lua = { "stylua" },
+        python = { "isort", "black" }, -- Run multiple formatters sequentially
         tex = { "latexindent" },
       },
       format_on_save = function(bufnr)
