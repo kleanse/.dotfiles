@@ -91,18 +91,11 @@ return {
 
         -- Mappings to stage and reset hunks in Visual mode
         map("x", "<Leader>hr", function()
-          -- Exit Visual mode to update the marks '< and '>
-          vim.cmd.execute([["normal \<esc>"]])
-          local vstart = vim.api.nvim_buf_get_mark(0, "<")
-          local vend = vim.api.nvim_buf_get_mark(0, ">")
-          gs.reset_hunk({ vstart[1], vend[1] })
+          gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [R]eset selected range")
 
         map("x", "<Leader>hs", function()
-          vim.cmd.execute([["normal \<esc>"]])
-          local vstart = vim.api.nvim_buf_get_mark(0, "<")
-          local vend = vim.api.nvim_buf_get_mark(0, ">")
-          gs.stage_hunk({ vstart[1], vend[1] })
+          gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [S]tage selected range")
       end,
     },
