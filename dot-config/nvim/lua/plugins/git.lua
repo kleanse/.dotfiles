@@ -4,6 +4,9 @@ return {
     dependencies = {
       "tpope/vim-rhubarb",
     },
+    init = function()
+      vim.g.git_status_bufnr = -1
+    end,
     config = function()
       -- [[ Configure Fugitive ]]
       --  See `:help fugitive`
@@ -19,6 +22,16 @@ return {
       nmap("<leader>glo", function()
         vim.cmd("Git log --oneline --decorate")
       end, "[L]og --[o]neline")
+
+      nmap("<leader>G", function()
+        local window_ids = vim.fn.win_findbuf(vim.g.git_status_bufnr)
+        if #window_ids ~= 0 then
+          vim.fn.win_gotoid(window_ids[1])
+        else
+          vim.cmd("0tab Git")
+          vim.g.git_status_bufnr = vim.fn.bufnr()
+        end
+      end, "status")
 
       -- Pretty print the relative author dates and author names alongside
       -- commits
