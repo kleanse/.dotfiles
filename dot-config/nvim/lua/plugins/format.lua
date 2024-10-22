@@ -17,7 +17,7 @@ return {
           -- Disable autoformat on certain filetypes
           local ignore_filetypes = { "c", "cpp" }
           if vim.g.format_on_save and not vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
-            return { timeout_ms = 500, lsp_fallback = true }
+            return { timeout_ms = 500, lsp_format = "fallback" }
           end
         end,
         -- Custom formatters and changes to built-in formatters
@@ -33,7 +33,7 @@ return {
       end
 
       nmap("<leader>f", function()
-        require("conform").format({ async = true, lsp_fallback = true })
+        require("conform").format({ async = true, lsp_format = "fallback" })
       end, "[F]ormat buffer")
 
       nmap("<leader>tf", function()
