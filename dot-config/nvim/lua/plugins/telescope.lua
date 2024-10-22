@@ -118,18 +118,6 @@ return {
         })
       end, "[S]earch in [O]pen files")
 
-      do
-        local lhs = "<leader>sp"
-        if #vim.fn.mapcheck(lhs, "n") == 0 then
-          nmap(lhs, function()
-            builtin.find_files({
-              cwd = "$PKM_REPO",
-              prompt_title = "Find Notes",
-            })
-          end, "[S]earch [P]ersonal knowledge management files (notes)")
-        end
-      end
-
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
       nmap("<leader>gf", builtin.git_files, "Search [G]it [F]iles")
