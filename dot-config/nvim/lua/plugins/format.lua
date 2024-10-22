@@ -34,10 +34,12 @@ return {
         tex = { "latexindent" },
       },
       format_on_save = function(bufnr)
-        -- Disable autoformat on certain filetypes
-        local ignore_filetypes = { "c", "cpp" }
-        if vim.g.format_on_save and not vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
-          return { timeout_ms = 500, lsp_format = "fallback" }
+        -- Disable autoformatting with LSP for languages that do not have a
+        -- well standardized coding style
+        local disable_filetypes = { "c", "cpp" }
+        local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
+        if vim.g.format_on_save then
+          return { timeout_ms = 500, lsp_format = lsp_format_opt }
         end
       end,
       -- Custom formatters and changes to built-in formatters
