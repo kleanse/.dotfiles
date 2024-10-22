@@ -1,0 +1,11 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+AccessModifierOffset: -8
+AllowShortIfStatementsOnASingleLine: Never
+BreakBeforeBraces: Stroustrup
+IndentCaseLabels: false
+IndentWidth: 8
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false
+UseTab: Always

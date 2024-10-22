@@ -26,6 +26,8 @@ return {
     end,
     opts = {
       formatters_by_ft = {
+        c = { "clang-format" },
+        cpp = { "clang-format" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         lua = { "stylua" },
         python = { "isort", "black" }, -- Run multiple formatters sequentially
@@ -42,6 +44,9 @@ return {
       end,
       -- Custom formatters and changes to built-in formatters
       formatters = {
+        ["clang-format"] = {
+          args = { "--style=file" },
+        },
         latexindent = {
           args = { "-m" },
         },
