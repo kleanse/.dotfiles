@@ -84,9 +84,12 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Sync clipboard between OS and Neovim.
+-- Schedule the setting after "UIEnter" because it can increase startup-time.
 -- Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+vim.schedule(function()
+  vim.opt.clipboard = "unnamedplus"
+end)
 
 -- [[ Key mappings ]]
 --  See `:help vim.keymap.set()`
