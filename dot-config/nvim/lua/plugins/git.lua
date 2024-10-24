@@ -63,11 +63,11 @@ return {
         end
         local gs = require("gitsigns")
 
-        map("n", "<Leader>hb", gs.blame_line, "[H]unk [B]lame line")
-        map("n", "<Leader>hr", gs.reset_hunk, "[H]unk [R]eset")
-        map("n", "<Leader>hs", gs.stage_hunk, "[H]unk [S]tage")
-        map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
-        map("n", "<Leader>hv", gs.preview_hunk, "[H]unk [V]iew")
+        map("n", "<leader>hb", gs.blame_line, "[H]unk [B]lame line")
+        map("n", "<leader>hr", gs.reset_hunk, "[H]unk [R]eset")
+        map("n", "<leader>hs", gs.stage_hunk, "[H]unk [S]tage")
+        map("n", "<leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
+        map("n", "<leader>hv", gs.preview_hunk, "[H]unk [V]iew")
 
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
@@ -106,11 +106,11 @@ return {
         end, "[H]unk [P]rev")
 
         -- Mappings to stage and reset hunks in Visual mode
-        map("x", "<Leader>hr", function()
+        map("x", "<leader>hr", function()
           gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [R]eset selected range")
 
-        map("x", "<Leader>hs", function()
+        map("x", "<leader>hs", function()
           gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [S]tage selected range")
       end,
