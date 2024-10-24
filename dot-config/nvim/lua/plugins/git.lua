@@ -71,22 +71,38 @@ return {
 
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
-        map("n", "<Leader>hn", function()
-          gs.nav_hunk("next")
-          vim.cmd.normal("zz")
+        map("n", "]c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gs.nav_hunk("next")
+            vim.cmd.normal("zz")
+          end
         end, "[H]unk [N]ext")
 
-        map("n", "<Leader>hp", function()
-          gs.nav_hunk("prev")
-          vim.cmd.normal("zz")
+        map("n", "[c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gs.nav_hunk("prev")
+            vim.cmd.normal("zz")
+          end
         end, "[H]unk [P]rev")
 
-        map("x", "<Leader>hn", function()
-          gs.nav_hunk("next")
+        map("x", "]c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gs.nav_hunk("next")
+          end
         end, "[H]unk [N]ext")
 
-        map("x", "<Leader>hp", function()
-          gs.nav_hunk("prev")
+        map("x", "[c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gs.nav_hunk("prev")
+          end
         end, "[H]unk [P]rev")
 
         -- Mappings to stage and reset hunks in Visual mode
