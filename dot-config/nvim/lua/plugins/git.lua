@@ -56,6 +56,7 @@ return {
         changedelete = { text = "~" },
       },
       signs_staged_enable = false,
+      current_line_blame_opts = { delay = 0 },
       on_attach = function(bufnr)
         local function map(mode, lhs, rhs, desc)
           desc = desc and "Gitsigns: " .. desc
@@ -63,11 +64,20 @@ return {
         end
         local gs = require("gitsigns")
 
+        map("n", "<leader>hD", function()
+          gs.diffthis("@")
+        end, "[H]unk [D]iff against HEAD")
+        map("n", "<leader>hR", gs.reset_buffer, "[H]unk [R]eset buffer")
+        map("n", "<leader>hS", gs.stage_buffer, "[H]unk [S]tage buffer")
         map("n", "<leader>hb", gs.blame_line, "[H]unk [B]lame line")
+        map("n", "<leader>hd", gs.diffthis, "[H]unk [D]iff against index")
         map("n", "<leader>hr", gs.reset_hunk, "[H]unk [R]eset")
         map("n", "<leader>hs", gs.stage_hunk, "[H]unk [S]tage")
         map("n", "<leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
         map("n", "<leader>hv", gs.preview_hunk, "[H]unk [V]iew")
+
+        map("n", "<leader>t_", gs.toggle_deleted, "[T]oggle show [D]eleted")
+        map("n", "<leader>tb", gs.toggle_current_line_blame, "[T]oggle current line [B]lame")
 
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
