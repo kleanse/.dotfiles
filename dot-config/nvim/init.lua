@@ -61,32 +61,32 @@ require("lazy").setup("plugins", {
 local utils = require("utils")
 
 -- [[ Set options ]]
---  See `:help vim.o`
-vim.o.background = "light"
-vim.o.cedit = vim.api.nvim_replace_termcodes("<C-X>", true, true, true)
-vim.o.copyindent = true
-vim.o.listchars = "tab:--|,trail:·"
-vim.o.mouse = "a" -- Enable mouse mode
-vim.o.showmode = false -- Redundant with mini.statusline
-vim.o.termguicolors = true -- Check if your terminal supports this
-vim.o.textwidth = 79
-vim.o.undofile = true -- Save undo history
-vim.o.wrapscan = false
+--  See `:help vim.opt`
+vim.opt.background = "light"
+vim.opt.cedit = vim.api.nvim_replace_termcodes("<C-X>", true, true, true)
+vim.opt.copyindent = true
+vim.opt.listchars = { tab = "--|", trail = "·" }
+vim.opt.mouse = "a" -- Enable mouse mode
+vim.opt.showmode = false -- Redundant with mini.statusline
+vim.opt.termguicolors = true -- Check if your terminal supports this
+vim.opt.textwidth = 79
+vim.opt.undofile = true -- Save undo history
+vim.opt.wrapscan = false
 vim.wo.breakindent = true -- Enable break indent
 vim.wo.colorcolumn = "+1"
 vim.wo.signcolumn = "yes" -- Keep signcolumn on by default
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone"
+vim.opt.completeopt = "menuone"
 
 -- Case insensitive searching unless '\C' or a capital appears in pattern
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- Sync clipboard between OS and Neovim.
 -- Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 
 -- [[ Key mappings ]]
 --  See `:help vim.keymap.set()`
