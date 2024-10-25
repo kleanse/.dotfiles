@@ -30,6 +30,7 @@ return {
         cpp = { "clang-format" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         lua = { "stylua" },
+        markdown = { "prettierd", "prettier", stop_after_first = true },
         python = { "isort", "black" }, -- Run multiple formatters sequentially
         tex = { "latexindent" },
       },
