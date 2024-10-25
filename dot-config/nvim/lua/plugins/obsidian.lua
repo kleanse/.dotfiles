@@ -20,6 +20,14 @@ return {
         desc = "Obsidian: quick switch",
         expr = true,
       },
+      { -- Search notes with `ripgrep`
+        "<leader>os",
+        function()
+          return "<Cmd>ObsidianSearch<CR>"
+        end,
+        desc = "[O]bsidian [S]earch",
+        expr = true,
+      },
     },
     dependencies = {
       "nvim-lua/plenary.nvim",
