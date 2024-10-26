@@ -2,7 +2,17 @@ return {
   { -- Read or write files with `sudo`
     "lambdalisue/suda.vim",
   },
-
+  { -- Navigate to tagged files quickly
+    "cbochs/grapple.nvim",
+    keys = {
+      { "<M-m>", "<Cmd>Grapple toggle<CR>", desc = "Grapple: tag current file" },
+      { "<M-l>", "<Cmd>Grapple toggle_tags<CR>", desc = "Grapple: toggle tag menu" },
+      { "<M-h>", "<Cmd>Grapple select index=1<CR>", desc = "Grapple: select first tag" },
+      { "<M-t>", "<Cmd>Grapple select index=2<CR>", desc = "Grapple: select second tag" },
+      { "<M-n>", "<Cmd>Grapple select index=3<CR>", desc = "Grapple: select third tag" },
+      { "<M-s>", "<Cmd>Grapple select index=4<CR>", desc = "Grapple: select fourth tag" },
+    },
+  },
   { -- Library of various small independent plugins and modules
     "echasnovski/mini.nvim",
     config = function()
