@@ -10,8 +10,17 @@ return {
   },
 
   { -- Add pretty icons to plugins supporting them
-    "nvim-tree/nvim-web-devicons",
-    enabled = vim.g.have_nerd_font, -- requires a Nerd Font
+    "echasnovski/mini.icons",
+    lazy = true,
+    init = function()
+      package.preload["nvim-web-devicons"] = function()
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    end,
+    opts = {
+      style = vim.g.have_nerd_font and "glyph" or "ascii",
+    },
   },
 
   { -- Status-line plugin
