@@ -12,7 +12,7 @@ set
 	\ copyindent
 	\ hidden
 	\ hlsearch
-	\ listchars=tab:--\|
+	\ listchars=tab:--\|,trail:·
 	\ nojoinspaces
 	\ nostartofline
 	\ nowrapscan
