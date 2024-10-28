@@ -1,6 +1,7 @@
 return {
-  { -- Read or write files with `sudo`
-    "lambdalisue/suda.vim",
+  { -- "gc" to comment visual regions/lines
+    "numToStr/Comment.nvim",
+    opts = {},
   },
   { -- Navigate to tagged files quickly
     "cbochs/grapple.nvim",
@@ -80,5 +81,8 @@ return {
       -- Split and join arguments between bracket delimiters under the cursor
       require("mini.splitjoin").setup()
     end,
+  },
+  { -- Read or write files with `sudo`
+    "lambdalisue/suda.vim",
   },
 }
