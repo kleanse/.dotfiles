@@ -39,4 +39,20 @@ require("lazy").setup({
       lazy = "💤 ",
     },
   },
+  change_detection = { notify = false },
+  performance = {
+    rtp = {
+      -- Disable unneeded plugins in runtimepath for faster startup
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 })
