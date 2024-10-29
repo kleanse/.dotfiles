@@ -37,8 +37,10 @@ return {
             luasnip.lsp_expand(args.body)
           end,
         },
+        preselect = cmp.PreselectMode.Item,
         mapping = cmp.mapping.preset.insert({
           ["<C-B>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-E>"] = cmp.mapping.abort(),
           ["<C-F>"] = cmp.mapping.scroll_docs(4),
           ["<C-N>"] = cmp.mapping.select_next_item(),
           ["<C-P>"] = cmp.mapping.select_prev_item(),
