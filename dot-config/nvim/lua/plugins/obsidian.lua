@@ -42,13 +42,6 @@ return {
           end,
           opts = { desc = "Obsidian: follow link", buffer = true, expr = true },
         },
-        -- Toggle check-boxes
-        ["<Leader>u"] = {
-          action = function()
-            return require("obsidian").util.toggle_checkbox()
-          end,
-          opts = { desc = "Obsidian: toggle checkbox", buffer = true },
-        },
         -- Smart action depending on context: follow link or toggle checkbox
         ["<CR>"] = {
           action = function()
