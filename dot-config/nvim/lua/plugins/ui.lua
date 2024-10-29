@@ -1,12 +1,27 @@
 return {
   { -- Highlight todo, notes, etc in comments
     "folke/todo-comments.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
+    keys = {
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous todo comment",
+      },
+      { "<leader>st", "<Cmd>TodoTelescope<CR>", desc = "[S]earch [T]odos" },
+      { "<leader>sT", "<Cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", desc = "[S]earch [T]odos that need doing" },
     },
-    opts = {
-      signs = false,
-    },
+    opts = { signs = false },
   },
 
   { -- Add pretty icons to plugins supporting them
