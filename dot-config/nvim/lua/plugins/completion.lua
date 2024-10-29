@@ -26,24 +26,22 @@ return {
       -- L3MON4D3/LuaSnip completion source for nvim-cmp
       "saadparwaiz1/cmp_luasnip",
     },
-    config = function()
-      -- [[ Configure nvim-cmp ]]
-      --  See `:help cmp`
+    opts = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
       luasnip.config.setup({})
 
-      cmp.setup({
+      return {
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-N>"] = cmp.mapping.select_next_item(),
-          ["<C-P>"] = cmp.mapping.select_prev_item(),
           ["<C-B>"] = cmp.mapping.scroll_docs(-4),
           ["<C-F>"] = cmp.mapping.scroll_docs(4),
+          ["<C-N>"] = cmp.mapping.select_next_item(),
+          ["<C-P>"] = cmp.mapping.select_prev_item(),
           ["<C-Y>"] = cmp.mapping.confirm({ select = true }),
 
           -- Mnemonic: ":rightbelow" (j), ":leftabove" (k)
@@ -81,7 +79,7 @@ return {
             return vim_item
           end,
         },
-      })
+      }
     end,
   },
 }
