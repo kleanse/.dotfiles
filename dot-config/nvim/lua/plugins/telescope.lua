@@ -53,12 +53,12 @@ return {
           end,
           mappings = {
             i = {
-              ["<C-u>"] = false,
-              ["<C-d>"] = false,
-              ["<C-b>"] = function(bufnr)
+              ["<C-U>"] = false,
+              ["<C-D>"] = false,
+              ["<C-B>"] = function(bufnr)
                 full_page_scroll(bufnr, -1)
               end,
-              ["<C-f>"] = function(bufnr)
+              ["<C-F>"] = function(bufnr)
                 full_page_scroll(bufnr, 1)
               end,
             },
@@ -81,20 +81,20 @@ return {
       local builtin = require("telescope.builtin")
       local themes = require("telescope.themes")
 
-      nmap("<leader><space>", builtin.resume, "[ ] Search resume")
-      nmap("<leader>sb", builtin.buffers, "[S]earch [B]uffers")
-      nmap("<leader>sc", builtin.command_history, "[S]earch [C]ommand history")
-      nmap("<leader>sd", builtin.diagnostics, "[S]earch [D]iagnostics")
-      nmap("<leader>sf", builtin.find_files, "[S]earch [F]iles")
-      nmap("<leader>sg", builtin.live_grep, "[S]earch by [G]rep")
-      nmap("<leader>sh", builtin.help_tags, "[S]earch [H]elp")
-      nmap("<leader>sk", builtin.keymaps, "[S]earch [K]eymaps")
-      nmap("<leader>sm", builtin.man_pages, "[S]earch [M]anpages")
-      nmap("<leader>sr", builtin.oldfiles, "[S]earch [R]ecently opened files")
-      nmap("<leader>ss", builtin.builtin, "[S]earch [S]elect Telescope")
-      nmap("<leader>sw", builtin.grep_string, "[S]earch current [W]ord")
+      nmap("<Leader><Space>", builtin.resume, "[ ] Search resume")
+      nmap("<Leader>sb", builtin.buffers, "[S]earch [B]uffers")
+      nmap("<Leader>sc", builtin.command_history, "[S]earch [C]ommand history")
+      nmap("<Leader>sd", builtin.diagnostics, "[S]earch [D]iagnostics")
+      nmap("<Leader>sf", builtin.find_files, "[S]earch [F]iles")
+      nmap("<Leader>sg", builtin.live_grep, "[S]earch by [G]rep")
+      nmap("<Leader>sh", builtin.help_tags, "[S]earch [H]elp")
+      nmap("<Leader>sk", builtin.keymaps, "[S]earch [K]eymaps")
+      nmap("<Leader>sm", builtin.man_pages, "[S]earch [M]anpages")
+      nmap("<Leader>sr", builtin.oldfiles, "[S]earch [R]ecently opened files")
+      nmap("<Leader>ss", builtin.builtin, "[S]earch [S]elect Telescope")
+      nmap("<Leader>sw", builtin.grep_string, "[S]earch current [W]ord")
 
-      nmap("<leader>/", function()
+      nmap("<Leader>/", function()
         -- You can pass additional configuration to telescope to change theme,
         -- layout, etc.
         builtin.current_buffer_fuzzy_find(themes.get_dropdown({
@@ -104,14 +104,14 @@ return {
       end, "[/] Fuzzily search in current buffer")
 
       -- Shortcut for searching your Neovim configuration files
-      nmap("<leader>sn", function()
+      nmap("<Leader>sn", function()
         builtin.find_files({
           cwd = "~/.dotfiles/dot-config/nvim",
           prompt_title = "Find Neovim Configuration Files",
         })
       end, "[S]earch [N]eovim files")
 
-      nmap("<leader>so", function()
+      nmap("<Leader>so", function()
         builtin.live_grep({
           grep_open_files = true,
           prompt_title = "Live Grep in Open Files",
@@ -120,15 +120,15 @@ return {
 
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
-      nmap("<leader>gf", builtin.git_files, "Search [G]it [F]iles")
+      nmap("<Leader>gf", builtin.git_files, "Search [G]it [F]iles")
 
-      nmap("<leader>gc", function()
+      nmap("<Leader>gc", function()
         builtin.git_commits(themes.get_ivy({
           layout_config = { height = 0.8 },
         }))
       end, "[G]it [C]ommits")
 
-      nmap("<leader>gb", function()
+      nmap("<Leader>gb", function()
         builtin.git_branches({
           layout_strategy = "vertical",
           layout_config = {

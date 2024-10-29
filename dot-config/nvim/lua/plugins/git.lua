@@ -15,15 +15,15 @@ return {
         vim.keymap.set("n", keys, func, { desc = desc })
       end
 
-      nmap("<leader>glg", function()
+      nmap("<Leader>glg", function()
         vim.cmd("Git log --stat")
       end, "[L]o[g]")
 
-      nmap("<leader>glo", function()
+      nmap("<Leader>glo", function()
         vim.cmd("Git log --oneline --decorate")
       end, "[L]og --[o]neline")
 
-      nmap("<leader>G", function()
+      nmap("<Leader>G", function()
         local window_ids = vim.fn.win_findbuf(vim.g.git_status_bufnr)
         if #window_ids ~= 0 then
           vim.fn.win_gotoid(window_ids[1])
@@ -37,7 +37,7 @@ return {
       -- commits
       --  See `:Man git-log` under format:<format-string> in the "PRETTY
       --  FORMATS" section for details about these placeholders
-      nmap("<leader>glp", function()
+      nmap("<Leader>glp", function()
         vim.cmd('Git log --graph --pretty="%Cred%h%Creset%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"')
       end, "[L]og --[p]retty")
     end,
@@ -64,20 +64,20 @@ return {
         end
         local gs = require("gitsigns")
 
-        map("n", "<leader>hD", function()
+        map("n", "<Leader>hD", function()
           gs.diffthis("@")
         end, "[H]unk [D]iff against HEAD")
-        map("n", "<leader>hR", gs.reset_buffer, "[H]unk [R]eset buffer")
-        map("n", "<leader>hS", gs.stage_buffer, "[H]unk [S]tage buffer")
-        map("n", "<leader>hb", gs.blame_line, "[H]unk [B]lame line")
-        map("n", "<leader>hd", gs.diffthis, "[H]unk [D]iff against index")
-        map("n", "<leader>hr", gs.reset_hunk, "[H]unk [R]eset")
-        map("n", "<leader>hs", gs.stage_hunk, "[H]unk [S]tage")
-        map("n", "<leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
-        map("n", "<leader>hv", gs.preview_hunk, "[H]unk [V]iew")
+        map("n", "<Leader>hR", gs.reset_buffer, "[H]unk [R]eset buffer")
+        map("n", "<Leader>hS", gs.stage_buffer, "[H]unk [S]tage buffer")
+        map("n", "<Leader>hb", gs.blame_line, "[H]unk [B]lame line")
+        map("n", "<Leader>hd", gs.diffthis, "[H]unk [D]iff against index")
+        map("n", "<Leader>hr", gs.reset_hunk, "[H]unk [R]eset")
+        map("n", "<Leader>hs", gs.stage_hunk, "[H]unk [S]tage")
+        map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
+        map("n", "<Leader>hv", gs.preview_hunk, "[H]unk [V]iew")
 
-        map("n", "<leader>t_", gs.toggle_deleted, "[T]oggle show [D]eleted")
-        map("n", "<leader>tb", gs.toggle_current_line_blame, "[T]oggle current line [B]lame")
+        map("n", "<Leader>t_", gs.toggle_deleted, "[T]oggle show [D]eleted")
+        map("n", "<Leader>tb", gs.toggle_current_line_blame, "[T]oggle current line [B]lame")
 
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
@@ -116,11 +116,11 @@ return {
         end, "[H]unk [P]rev")
 
         -- Mappings to stage and reset hunks in Visual mode
-        map("x", "<leader>hr", function()
+        map("x", "<Leader>hr", function()
           gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [R]eset selected range")
 
-        map("x", "<leader>hs", function()
+        map("x", "<Leader>hs", function()
           gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end, "[H]unk [S]tage selected range")
       end,

@@ -8,7 +8,7 @@ return {
     end,
     keys = {
       {
-        "<leader>tp",
+        "<Leader>tp",
         "<Plug>MarkdownPreviewToggle",
         ft = "markdown",
         desc = "MarkdownPreview: [T]oggle [P]review",

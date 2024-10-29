@@ -42,7 +42,7 @@ return {
     keys = {
       -- Register i_CTRL-H as a MiniPairs backspacing key so it can delete
       -- adjacent pairs
-      vim.keymap.set("i", "<C-h>", "v:lua.MiniPairs.bs()", { expr = true, replace_keycodes = false }),
+      vim.keymap.set("i", "<C-H>", "v:lua.MiniPairs.bs()", { expr = true, replace_keycodes = false }),
     },
     opts = {},
   },

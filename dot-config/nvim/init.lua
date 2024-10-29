@@ -105,7 +105,7 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Reference local ASCII table
 vim.keymap.set(
   "n",
-  "<leader>va",
+  "<Leader>va",
   "<Cmd>split $ASCII_REFERENCE | view<CR>",
   { desc = "[V]iew [A]SCII reference file in a new split" }
 )
@@ -115,7 +115,7 @@ vim.keymap.set(
 vim.keymap.set("n", "n", "nzvzz")
 vim.keymap.set("n", "N", "Nzvzz")
 
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 vim.keymap.set("n", ";", vim.cmd.update, { desc = '":update" file' })
 vim.keymap.set("n", "<M-b>", "<C-^>")
@@ -152,34 +152,34 @@ vim.keymap.set("c", "<C-D>", function()
 end, { desc = "Delete character or list", expr = true })
 
 -- Toggle settings
-vim.keymap.set("n", "<leader>tc", function()
+vim.keymap.set("n", "<Leader>tc", function()
   vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and "+1" or ""
 end, { desc = "[T]oggle '[c]olorcolumn'" })
 
-vim.keymap.set("n", "<leader>td", function()
+vim.keymap.set("n", "<Leader>td", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "[T]oggle [D]iagnostics" })
 
-vim.keymap.set("n", "<leader>tl", function()
+vim.keymap.set("n", "<Leader>tl", function()
   vim.wo.list = not vim.wo.list
 end, { desc = "[T]oggle '[l]ist'" })
 
-vim.keymap.set("n", "<leader>ts", function()
+vim.keymap.set("n", "<Leader>ts", function()
   vim.wo.spell = not vim.wo.spell
 end, { desc = "[T]oggle '[s]pell' check" })
 
-vim.keymap.set("n", "<leader>tt", function()
+vim.keymap.set("n", "<Leader>tt", function()
   vim.g.trim_blanks_on_write = not vim.g.trim_blanks_on_write
   local prefix = vim.g.trim_blanks_on_write and string.rep(" ", 2) or "no"
   vim.api.nvim_echo({ { prefix .. "trim" } }, false, {})
 end, { desc = "[T]oggle [T]rim blanks on write" })
 
-vim.keymap.set("n", "<leader>tv", function()
+vim.keymap.set("n", "<Leader>tv", function()
   vim.wo.virtualedit = #vim.wo.virtualedit == 0 and "all" or ""
   vim.cmd("set virtualedit?")
 end, { desc = "[T]oggle '[v]irtualedit'" })
 
-vim.keymap.set("n", "<leader>tx", function()
+vim.keymap.set("n", "<Leader>tx", function()
   if vim.g.syntax_on then
     vim.cmd("syntax off | TSDisable highlight")
   else

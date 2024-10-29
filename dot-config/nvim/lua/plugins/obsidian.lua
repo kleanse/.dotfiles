@@ -13,7 +13,7 @@ return {
     },
     keys = {
       { -- Open picker to select a note from defined workspaces
-        "<leader>sp",
+        "<Leader>sp",
         function()
           return "<Cmd>ObsidianQuickSwitch<CR>"
         end,
@@ -21,7 +21,7 @@ return {
         expr = true,
       },
       { -- Search notes with `ripgrep`
-        "<leader>os",
+        "<Leader>os",
         function()
           return "<Cmd>ObsidianSearch<CR>"
         end,
@@ -43,7 +43,7 @@ return {
           opts = { desc = "Obsidian: follow link", buffer = true, expr = true },
         },
         -- Toggle check-boxes
-        ["<leader>u"] = {
+        ["<Leader>u"] = {
           action = function()
             return require("obsidian").util.toggle_checkbox()
           end,
@@ -57,7 +57,7 @@ return {
           opts = { desc = "Obsidian: smart action", buffer = true, expr = true },
         },
         -- Open picker with list of references to the current buffer
-        ["<leader>ob"] = {
+        ["<Leader>ob"] = {
           action = function()
             return "<Cmd>ObsidianBacklinks<CR>"
           end,

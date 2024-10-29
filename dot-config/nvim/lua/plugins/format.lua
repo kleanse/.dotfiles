@@ -5,14 +5,14 @@ return {
     cmd = "ConformInfo",
     keys = {
       {
-        "<leader>f",
+        "<Leader>f",
         function()
           require("conform").format({ async = true, lsp_format = "fallback" })
         end,
         desc = "[F]ormat buffer",
       },
       {
-        "<leader>tf",
+        "<Leader>tf",
         function()
           vim.g.format_on_save = not vim.g.format_on_save
           local prefix = vim.g.format_on_save and string.rep(" ", 2) or "no"

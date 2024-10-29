@@ -55,20 +55,20 @@ return {
           nmap("gd", builtin.lsp_definitions, "[G]oto [D]efinition")
           nmap("gR", builtin.lsp_references, "[G]oto [R]eferences")
           nmap("gI", builtin.lsp_implementations, "[G]oto [I]mplementation")
-          nmap("<leader>D", builtin.lsp_type_definitions, "Type [D]efinition")
-          nmap("<leader>ds", builtin.lsp_document_symbols, "[D]ocument [S]ymbols")
-          nmap("<leader>ws", builtin.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+          nmap("<Leader>D", builtin.lsp_type_definitions, "Type [D]efinition")
+          nmap("<Leader>ds", builtin.lsp_document_symbols, "[D]ocument [S]ymbols")
+          nmap("<Leader>ws", builtin.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
-          nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-          vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
+          nmap("<Leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+          vim.keymap.set({ "n", "x" }, "<Leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
 
-          nmap("<C-k>", vim.lsp.buf.signature_help, "Signature documentation")
+          nmap("<C-K>", vim.lsp.buf.signature_help, "Signature documentation")
 
           -- Lesser used LSP functionality
           nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-          nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
-          nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
-          nmap("<leader>wl", function()
+          nmap("<Leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
+          nmap("<Leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
+          nmap("<Leader>wl", function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
           end, "[W]orkspace [L]ist folders")
         end,

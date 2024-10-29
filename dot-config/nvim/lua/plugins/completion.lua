@@ -40,11 +40,11 @@ return {
           end,
         },
         mapping = cmp.mapping.preset.insert({
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-N>"] = cmp.mapping.select_next_item(),
+          ["<C-P>"] = cmp.mapping.select_prev_item(),
+          ["<C-B>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-F>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Y>"] = cmp.mapping.confirm({ select = true }),
 
           -- Mnemonic: ":rightbelow" (j), ":leftabove" (k)
           ["<M-j>"] = cmp.mapping(function()
