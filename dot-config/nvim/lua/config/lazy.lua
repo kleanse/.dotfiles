@@ -15,7 +15,10 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins", {
+require("lazy").setup({
+  spec = {
+    { import = "plugins" },
+  },
   ui = {
     -- If using a Nerd Font, set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons; otherwise, define a Unicode
