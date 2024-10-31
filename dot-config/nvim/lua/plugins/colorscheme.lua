@@ -33,6 +33,8 @@ return {
         group = vim.api.nvim_create_augroup("highlight-colorscheme", { clear = true }),
         pattern = "gruvbox",
         callback = function()
+          vim.api.nvim_set_hl(0, "GruvboxTabLineTitle", { fg = "#79740e", bg = "#ebdbb2", bold = true })
+
           -- mini.statusline highlight groups
           vim.api.nvim_set_hl(0, "MiniStatuslineModeNormal", { fg = "bg", bg = "#928374", bold = true })
           vim.api.nvim_set_hl(0, "MiniStatuslineModeInsert", { fg = "bg", bg = "#076678", bold = true })

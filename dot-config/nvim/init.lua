@@ -54,6 +54,9 @@ vim.schedule(function()
   vim.opt.clipboard = "unnamedplus"
 end)
 
+-- Use a custom format for tab pages
+vim.opt.tabline = "%!v:lua.Tabline()"
+
 -- [[ Key mappings ]]
 --  See `:help vim.keymap.set()`
 -- Remap ";" and "," to different keys for delay-free "," behavior while using
@@ -155,6 +158,123 @@ end, { desc = "[T]oggle synta[x] highlighting" })
 function P(object)
   print(vim.inspect(object))
   return object
+end
+
+local get_icon
+if _G.MiniIcons then
+  -- Prefer 'mini.icons'
+  get_icon = function(name)
+    return (_G.MiniIcons.get("file", name))
+  end
+else
+  -- Try falling back to 'nvim-web-devicons'
+  local has_devicons, devicons = pcall(require, "nvim-web-devicons")
+  if has_devicons then
+    -- Use basename because it makes exact file name matching work
+    get_icon = function(name)
+      return (devicons.get_icon(vim.fn.fnamemodify(name, ":t"), nil, { default = true }))
+    end
+  end
+end
+
+-- Builds a custom format for 'tabline' that is based on the default format
+-- produced by `draw_tabline()` in the Nvim source code.
+function Tabline()
+  local s = ""
+  local col = 0
+  local columns = vim.api.nvim_get_option_value("columns", {})
+  local tabcount = vim.fn.tabpagenr("$")
+
+  for i = 1, tabcount do
+    if col >= columns - 4 then
+      break
+    end
+
+    local startcol = col
+
+    local bufnrlist = vim.fn.tabpagebuflist(i)
+    local winnr = vim.fn.tabpagewinnr(i)
+    local bufname = vim.fn.bufname(bufnrlist[winnr])
+
+    -- Highlight current tab page
+    local hlgroup = "%#TabLine#"
+    if i == vim.fn.tabpagenr() then
+      hlgroup = "%#TabLineSel#"
+    end
+    s = s .. hlgroup
+
+    -- Set tab page number (for mouse clicks)
+    s = s .. "%" .. i .. "T"
+
+    s = s .. " "
+    col = col + 1
+
+    local modified = false
+    for _, bufnr in ipairs(bufnrlist) do
+      if vim.fn.getbufvar(bufnr, "&modified") == 1 then
+        modified = true
+        break
+      end
+    end
+
+    local wincount = vim.fn.tabpagewinnr(i, "$")
+    if modified or wincount > 1 then
+      if wincount > 1 then
+        local len = #string.format("%d", wincount)
+        if col + len >= columns - 3 then
+          break
+        end
+        s = s .. "%#GruvboxTabLineTitle#" .. wincount .. hlgroup
+        col = col + len
+      end
+      if modified then
+        s = s .. "+"
+        col = col + 1
+      end
+      s = s .. " "
+      col = col + 1
+    end
+
+    if get_icon then
+      s = s .. get_icon(bufname)
+      s = s .. " "
+      col = col + 2
+    end
+
+    -- Set tab page label
+    local tabwidth = math.max(tabcount > 0 and math.floor((columns - 1 + tabcount / 2) / tabcount) or 0, 6)
+    local room = startcol - col + tabwidth - 1
+    if room > 0 then
+      local trbufname = bufname ~= "" and vim.fn.fnamemodify(bufname, ":t") or "[No Name]"
+      if trbufname == "" then
+        trbufname = "[Temp]"
+      end
+      trbufname = string.sub(trbufname, -room)
+      s = s .. trbufname
+      col = col + #trbufname
+    end
+    s = s .. " "
+    col = col + 1
+  end
+
+  s = s .. "%#TabLineFill#%T"
+
+  local showcmd = vim.api.nvim_get_option_value("showcmd", {})
+  local showcmdloc = vim.api.nvim_get_option_value("showcmdloc", {})
+  if showcmd and showcmdloc == "tabline" then
+    local sc_width = math.min(10, columns - col - (tabcount > 1 and 3 or 0))
+    if sc_width > 0 then
+      s = s .. string.rep(" ", columns - sc_width - (tabcount > 1 and 2 or 0) - col)
+      s = s .. "%#TabLine#%S%#TabLineFill#"
+    end
+  end
+
+  -- Right-align the label to close the current tab page
+  if tabcount > 1 then
+    s = s .. "%=%#TabLine#%999XX"
+  end
+
+  return s
 end
 
 -- [[ Autocommands ]]
