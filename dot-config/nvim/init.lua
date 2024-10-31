@@ -145,6 +145,10 @@ vim.keymap.set("n", "<Leader>tv", function()
   vim.cmd("set virtualedit?")
 end, { desc = "[T]oggle '[v]irtualedit'" })
 
+vim.keymap.set("n", "<Leader>tw", function()
+  vim.wo.wrap = not vim.wo.wrap
+end, { desc = "[T]oggle '[w]rap'" })
+
 vim.keymap.set("n", "<Leader>tx", function()
   if vim.g.syntax_on then
     vim.cmd("syntax off | TSDisable highlight")
