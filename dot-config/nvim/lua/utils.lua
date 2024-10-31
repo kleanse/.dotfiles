@@ -9,8 +9,8 @@ utils.date = function()
   return os.date("%Y %b %d")
 end
 
--- Read the template file with the extension `ext` into the current buffer and
--- set the cursor's position to `curpos`, which uses (1,0) indexing
+-- Reads the template file with the extension `ext` into the current buffer and
+-- sets the cursor's position to `curpos`, which uses (1,0) indexing
 -- |api-indexing|. By default, template files are searched for in
 -- `stdpath("config")/templates`; set `vim.g.template_path` to change this
 -- search path.
