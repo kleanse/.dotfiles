@@ -68,6 +68,27 @@ vim.keymap.set("", "-", ",")
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Move tabs
+vim.keymap.set("n", "gy", function()
+  if vim.v.count ~= 0 then
+    vim.cmd.tabmove(vim.v.count)
+  elseif vim.api.nvim_tabpage_get_number(0) == 1 then
+    vim.cmd.tabmove("$")
+  else
+    vim.cmd.tabmove("-")
+  end
+end, { desc = "Move the current tab page to the left" })
+
+vim.keymap.set("n", "gl", function()
+  if vim.v.count ~= 0 then
+    vim.cmd.tabmove(vim.v.count)
+  elseif vim.api.nvim_tabpage_get_number(0) == #vim.api.nvim_list_tabpages() then
+    vim.cmd.tabmove("0")
+  else
+    vim.cmd.tabmove("+")
+  end
+end, { desc = "Move the current tab page to the right" })
+
 -- Reference local ASCII table
 vim.keymap.set(
   "n",
