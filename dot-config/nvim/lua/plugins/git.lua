@@ -76,7 +76,7 @@ return {
         map("n", "<Leader>hu", gs.undo_stage_hunk, "[H]unk [U]ndo stage")
         map("n", "<Leader>hv", gs.preview_hunk, "[H]unk [V]iew")
 
-        map("n", "<Leader>t_", gs.toggle_deleted, "[T]oggle show [D]eleted")
+        map("n", "<Leader>tD", gs.toggle_deleted, "[T]oggle show [D]eleted")
         map("n", "<Leader>tb", gs.toggle_current_line_blame, "[T]oggle current line [B]lame")
 
         -- Center the cursor in the window after jumping to a hunk in Normal
