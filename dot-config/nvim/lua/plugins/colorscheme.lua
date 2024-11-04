@@ -42,6 +42,9 @@ return {
           vim.api.nvim_set_hl(0, "MiniStatuslineModeReplace", { fg = "bg", bg = "#9d0006", bold = true })
           vim.api.nvim_set_hl(0, "MiniStatuslineModeCommand", { fg = "bg", bg = "#b57614", bold = true })
           vim.api.nvim_set_hl(0, "MiniStatuslineModeOther", { fg = "bg", bg = "#79740e", bold = true })
+
+          -- folke/zen-mode.nvim backdrop
+          vim.api.nvim_set_hl(0, "ZenBg", { link = "ColorColumn" })
         end,
       })
 
