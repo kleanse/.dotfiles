@@ -15,14 +15,6 @@ vim.g.template_path = "~/.templates"
 -- the current buffer
 vim.g.trim_blanks_on_write = true
 
--- [[ Install `lazy.nvim` plugin manager ]]
--- https://github.com/folke/lazy.nvim
---  See `:help lazy.nvim.txt` for more info
-require("config.lazy")
-
--- [[ Import custom utility functions ]]
-local utils = require("utils")
-
 -- [[ Set options ]]
 --  See `:help vim.opt`
 vim.opt.background = "light"
@@ -177,6 +169,14 @@ vim.keymap.set("n", "<Leader>tx", function()
     vim.cmd("syntax on | TSEnable highlight")
   end
 end, { desc = "[T]oggle synta[x] highlighting" })
+
+-- [[ Install `lazy.nvim` plugin manager ]]
+-- https://github.com/folke/lazy.nvim
+--  See `:help lazy.nvim.txt` for more info
+require("config.lazy")
+
+-- [[ Import custom utility functions ]]
+local utils = require("utils")
 
 -- [[ Functions ]]
 
