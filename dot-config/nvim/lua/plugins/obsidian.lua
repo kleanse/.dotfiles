@@ -21,11 +21,11 @@ return {
         expr = true,
       },
       { -- Search notes with `ripgrep`
-        "<Leader>os",
+        "<Leader>so",
         function()
           return "<Cmd>ObsidianSearch<CR>"
         end,
-        desc = "[O]bsidian [S]earch",
+        desc = "Obsidian: search",
         expr = true,
       },
     },

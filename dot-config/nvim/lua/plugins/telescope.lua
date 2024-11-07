@@ -111,12 +111,12 @@ return {
         })
       end, "[S]earch [N]eovim files")
 
-      nmap("<Leader>so", function()
+      nmap("<Leader>s/", function()
         builtin.live_grep({
           grep_open_files = true,
           prompt_title = "Live Grep in Open Files",
         })
-      end, "[S]earch in [O]pen files")
+      end, "[S]earch [/] in open files")
 
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
