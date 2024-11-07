@@ -4793,10 +4793,10 @@ is simple or complex; after an "else" or not.  There are four different
 directives that test different conditions.  Here is a table of them:
 
 ifeq (ARG1, ARG2)
+ifeq 'ARG1' 'ARG2'
 ifeq "ARG1" "ARG2"
-ifeq "ARG1" "ARG2"
-ifeq "ARG1" "ARG2"
-ifeq "ARG1" "ARG2"
+ifeq "ARG1" 'ARG2'
+ifeq 'ARG1' "ARG2"
      Expand all variable references in ARG1 and ARG2 and compare them.  If
      they are identical, the TEXT-IF-TRUE is effective; otherwise, the
      TEXT-IF-FALSE, if any, is effective.
@@ -4816,10 +4816,10 @@ ifeq "ARG1" "ARG2"
      whitespace characters.
 
 ifneq (ARG1, ARG2)
+ifneq 'ARG1' 'ARG2'
 ifneq "ARG1" "ARG2"
-ifneq "ARG1" "ARG2"
-ifneq "ARG1" "ARG2"
-ifneq "ARG1" "ARG2"
+ifneq "ARG1" 'ARG2'
+ifneq 'ARG1' "ARG2"
      Expand all variable references in ARG1 and ARG2 and compare them.  If
      they are different, the TEXT-IF-TRUE is effective; otherwise, the
      TEXT-IF-FALSE, if any, is effective.
