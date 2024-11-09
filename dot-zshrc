@@ -120,6 +120,13 @@ show-jobs() {
 	zle accept-line
 }
 
+list-cwd() {
+	zle push-input
+	BUFFER="ll"
+	zle accept-line
+}
+
+zle -N list-cwd
 zle -N resume-job
 zle -N show-jobs
 
@@ -127,6 +134,7 @@ zle -N show-jobs
 bindkey "^U" backward-kill-line
 bindkey "^Z" resume-job
 bindkey "^[j" show-jobs
+bindkey "^[l" list-cwd
 bindkey "^[r" redo
 bindkey "^[u" undo
 
