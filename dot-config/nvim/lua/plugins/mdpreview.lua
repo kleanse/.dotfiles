@@ -14,5 +14,8 @@ return {
         desc = "MarkdownPreview: [T]oggle [P]review",
       },
     },
+    init = function()
+      vim.g.mkdp_auto_close = 0
+    end,
   },
 }
