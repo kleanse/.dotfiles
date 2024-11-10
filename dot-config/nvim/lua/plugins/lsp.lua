@@ -7,16 +7,20 @@ return {
     ft = "lua",
     opts = {
       library = {
+        { path = "busted-types/library", words = { "describe" } },
+        { path = "luassert-types/library", words = { "assert" } },
         -- Load luvit types when the `vim.uv` word is found
         { path = "luvit-meta/library", words = { "vim%.uv" } },
+        -- Load the wezterm types when the `wezterm` module is required
+        { path = "wezterm-types", mods = { "wezterm" } },
       },
     },
   },
 
-  { -- Optional `vim.uv` typings
-    "Bilal2453/luvit-meta",
-    lazy = true,
-  },
+  { "LuaCATS/busted", name = "busted-types", lazy = true },
+  { "LuaCATS/luassert", name = "luassert-types", lazy = true },
+  { "Bilal2453/luvit-meta", lazy = true }, -- Optional `vim.uv` typings
+  { "justinsgithub/wezterm-types", lazy = true },
 
   { -- LSP Configuration
     "neovim/nvim-lspconfig",
