@@ -40,7 +40,7 @@ return {
         local disable_filetypes = { c = true, cpp = true }
         local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
         if vim.g.format_on_save then
-          return { timeout_ms = 500, lsp_format = lsp_format_opt }
+          return { timeout_ms = 3000, lsp_format = lsp_format_opt }
         end
       end,
       -- Custom formatters and changes to built-in formatters
