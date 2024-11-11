@@ -5,6 +5,9 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
+-- Use a dark color scheme
+vim.g.dark_mode = false
+
 -- Set to true if you have installed and are using a Nerd Font
 vim.g.have_nerd_font = true
 
@@ -15,9 +18,17 @@ vim.g.template_path = "~/.templates"
 -- the current buffer
 vim.g.trim_blanks_on_write = true
 
+-- Enable dark mode if operating system's appearance is dark mode
+if
+  vim.uv.os_uname().sysname == "Darwin"
+  and vim.system({ "defaults", "read", "-g", "AppleInterfaceStyle" }):wait().stdout == "Dark\n"
+then
+  vim.g.dark_mode = true
+end
+
 -- [[ Set options ]]
 --  See `:help vim.opt`
-vim.opt.background = "light"
+vim.opt.background = vim.g.dark_mode and "dark" or "light"
 vim.opt.cedit = vim.api.nvim_replace_termcodes("<C-X>", true, true, true)
 vim.opt.copyindent = true
 vim.opt.listchars = { tab = "--|", trail = "·" }

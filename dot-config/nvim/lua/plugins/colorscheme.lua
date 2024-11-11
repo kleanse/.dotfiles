@@ -1,7 +1,8 @@
 return {
   { -- gruvbox color scheme
     "ellisonleao/gruvbox.nvim",
-    priority = 1000,
+    priority = vim.g.dark_mode and nil or 1000,
+    lazy = vim.g.dark_mode,
     opts = {
       overrides = {
         GruvboxAquaUnderline = { fg = "#427b58" },
@@ -49,6 +50,15 @@ return {
       })
 
       vim.cmd.colorscheme("gruvbox")
+    end,
+  },
+
+  { -- Soothing pastel theme for Nvim
+    "catppuccin/nvim",
+    priority = vim.g.dark_mode and 1000 or nil,
+    lazy = not vim.g.dark_mode,
+    config = function()
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
 }
