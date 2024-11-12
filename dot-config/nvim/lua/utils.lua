@@ -1,7 +1,5 @@
 -- Module containing general-purpose functions
 
-local Path = require("plenary.path")
-
 local utils = {}
 
 ---@return string|osdate date Today's date in "yyyy Jan dd" format
@@ -18,10 +16,10 @@ end
 ---@param curpos number[] (row, col) tuple indicating the new position
 utils.read_template_file = function(ext, curpos)
   local filename = "template" .. ext
-  local path = vim.g.template_path and Path:new(vim.g.template_path) or Path:new(vim.fn.stdpath("config"), "templates")
-  path = path:joinpath(filename)
+  local path = vim.g.template_path or vim.fs.joinpath(vim.fn.stdpath("config") --[[@as string]], "templates")
+  path = vim.fs.normalize(vim.fs.joinpath(path, filename))
 
-  vim.cmd.read(path.filename)
+  vim.cmd.read(path)
   vim.api.nvim_buf_set_lines(0, 0, 1, false, {})
   vim.api.nvim_win_set_cursor(0, curpos)
 end
