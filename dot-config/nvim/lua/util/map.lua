@@ -34,6 +34,8 @@ local function parse_jump(char, rhs, opts, keymap_opts)
   return next, prev
 end
 
+--- Like `util.map.jump.set()` but returns two tables in the format of
+--- `LazyKeysSpec` to be used in `LazySpec.keys` of `lazy.nvim`.
 ---@param char string
 ---@param rhs { next: string|function, prev: string|function }
 ---@param opts? util.map.jump.set.Opts
@@ -47,10 +49,18 @@ function M.jump.lazy_keys(char, rhs, opts, keymap_opts)
   return next_lazy_keys_spec, prev_lazy_keys_spec
 end
 
----@param char string
----@param rhs { next: string|function, prev: string|function }
----@param opts? util.map.jump.set.Opts
----@param keymap_opts? vim.keymap.set.Opts
+--- Defines two mappings `next` and `prev` that jump to the next or
+--- previous occurrence of an object. Both `next` and `prev` use `{char}` in
+--- their left-hand sides, which are differentiated by a prefix: ']' for `next`
+--- and '[' for `prev`. `{keymap_opts}` is the same as `opts` of
+--- `vim.keymap.set()`.
+---@param char string Suffix for left-hand sides `lhs` of jump mappings
+---@param rhs { next: string|function, prev: string|function } See |vim.keymap.set()|
+---@param opts? util.map.jump.set.Opts Options:
+---             • "name" name of the jump object.
+---             • "next_desc" mapping description for next.
+---             • "prev_desc" mapping description for prev.
+---@param keymap_opts? vim.keymap.set.Opts See |vim.keymap.set()|
 function M.jump.set(char, rhs, opts, keymap_opts)
   local next, prev = parse_jump(char, rhs, opts, keymap_opts)
   vim.keymap.set("n", unpack(next))
@@ -197,6 +207,8 @@ local function parse_toggle(lhs, rhs, opts, keymap_opts)
   return lhs, f, keymap_opts
 end
 
+--- Like `util.map.toggle.set()` but returns a table in the format of
+--- `LazyKeysSpec` to be used in `LazySpec.keys` of `lazy.nvim`.
 ---@param lhs string
 ---@param rhs string|{ (get: fun(): boolean), (set: fun(state: boolean)) }
 ---@param opts? util.map.toggle.set.Opts
@@ -208,10 +220,27 @@ function M.toggle.lazy_keys(lhs, rhs, opts, keymap_opts)
   return lazy_keys_spec
 end
 
----@param lhs string
----@param rhs string|{ (get: fun(): boolean), (set: fun(state: boolean)) }
----@param opts? util.map.toggle.set.Opts
----@param keymap_opts? vim.keymap.set.Opts
+--- Defines a mapping that toggles `{rhs}`.
+---@param lhs string Left-hand side {lhs} of the mapping.
+---@param rhs string|{ (get: fun(): boolean), (set: fun(state: boolean)) } State to toggle or custom toggle behavior, i.e., an option name, Vim variable, or table that defines the `get` and `set` keys.
+---     Example:
+--- ```lua
+---     {
+---       get = function()
+---         return vim.diagnostic.is_enabled()
+---       end,
+---       set = function(state)
+---         vim.diagnostic.enable(state)
+---       end,
+---     }
+--- ```
+---@param opts? util.map.toggle.set.Opts Options:
+---             • "name" name to show if {echo} is true.
+---             • "desc_name" name to show in mapping description.
+---             • "echo" (boolean) if true, echo current state after toggling.
+---             • "states" table for defining "on" and "off" states of toggle;
+---               only used when toggling |options|.
+---@param keymap_opts? vim.keymap.set.Opts See |vim.keymap.set()|
 function M.toggle.set(lhs, rhs, opts, keymap_opts)
   vim.keymap.set("n", parse_toggle(lhs, rhs, opts, keymap_opts))
 end
