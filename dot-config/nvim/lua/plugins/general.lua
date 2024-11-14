@@ -13,6 +13,11 @@ return {
       { "<M-t>", "<Cmd>Grapple select index=2<CR>", desc = "Grapple: select second tag" },
       { "<M-n>", "<Cmd>Grapple select index=3<CR>", desc = "Grapple: select third tag" },
       { "<M-s>", "<Cmd>Grapple select index=4<CR>", desc = "Grapple: select fourth tag" },
+      Config.map.jump.lazy_keys(
+        "g",
+        { next = "<Cmd>Grapple cycle_scopes next<CR>", prev = "<Cmd>Grapple cycle_scopes prev<CR>" },
+        { next_desc = "Grapple: cycle to the next scope", prev_desc = "Grapple: cycle to the previous scope" }
+      ),
     },
   },
 
