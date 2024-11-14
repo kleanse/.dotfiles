@@ -4,22 +4,16 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     keys = {
-      {
-        "]t",
-        function()
-          require("todo-comments").jump_next()
-        end,
-        desc = "Next todo comment",
-      },
-      {
-        "[t",
-        function()
-          require("todo-comments").jump_prev()
-        end,
-        desc = "Previous todo comment",
-      },
       { "<Leader>st", "<Cmd>TodoTelescope<CR>", desc = "[S]earch [T]odos" },
       { "<Leader>sT", "<Cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", desc = "[S]earch [T]odos that need doing" },
+      Config.map.jump.lazy_keys("t", {
+        next = function()
+          require("todo-comments").jump_next()
+        end,
+        prev = function()
+          require("todo-comments").jump_prev()
+        end,
+      }, { name = "todo comment" }),
     },
     opts = { signs = false },
   },

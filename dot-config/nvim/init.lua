@@ -26,6 +26,8 @@ then
   vim.g.dark_mode = true
 end
 
+_G.Config = require("util")
+
 -- [[ Set options, key mappings, and autocommands ]]
 require("config.autocmds")
 require("config.keymaps")

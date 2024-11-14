@@ -11,15 +11,11 @@ return {
         end,
         desc = "[F]ormat buffer",
       },
-      {
+      Config.map.toggle.lazy_keys(
         "<Leader>tf",
-        function()
-          vim.g.format_on_save = not vim.g.format_on_save
-          local prefix = vim.g.format_on_save and string.rep(" ", 2) or "no"
-          vim.api.nvim_echo({ { prefix .. "format" } }, false, {})
-        end,
-        desc = "[T]oggle [F]ormat on save",
-      },
+        "vim.g.format_on_save",
+        { name = "format", desc_name = "format on save", echo = true }
+      ),
     },
     init = function()
       vim.g.format_on_save = true

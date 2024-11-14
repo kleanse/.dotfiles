@@ -81,39 +81,41 @@ return {
 
         -- Center the cursor in the window after jumping to a hunk in Normal
         -- mode
-        map("n", "]c", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "]c", bang = true })
-          else
-            gs.nav_hunk("next")
-            vim.cmd.normal("zz")
-          end
-        end, "[H]unk [N]ext")
+        Config.map.jump.set("c", {
+          next = function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "]c", bang = true })
+            else
+              gs.nav_hunk("next")
+              vim.cmd.normal("zz")
+            end
+          end,
+          prev = function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "[c", bang = true })
+            else
+              gs.nav_hunk("prev")
+              vim.cmd.normal("zz")
+            end
+          end,
+        }, { name = "hunk" })
 
-        map("n", "[c", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "[c", bang = true })
-          else
-            gs.nav_hunk("prev")
-            vim.cmd.normal("zz")
-          end
-        end, "[H]unk [P]rev")
-
-        map("x", "]c", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "]c", bang = true })
-          else
-            gs.nav_hunk("next")
-          end
-        end, "[H]unk [N]ext")
-
-        map("x", "[c", function()
-          if vim.wo.diff then
-            vim.cmd.normal({ "[c", bang = true })
-          else
-            gs.nav_hunk("prev")
-          end
-        end, "[H]unk [P]rev")
+        Config.map.jump.set("c", {
+          next = function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "]c", bang = true })
+            else
+              gs.nav_hunk("next")
+            end
+          end,
+          prev = function()
+            if vim.wo.diff then
+              vim.cmd.normal({ "[c", bang = true })
+            else
+              gs.nav_hunk("prev")
+            end
+          end,
+        }, { name = "hunk", mode = "x" })
 
         -- Mappings to stage and reset hunks in Visual mode
         map("x", "<Leader>hr", function()

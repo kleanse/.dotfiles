@@ -42,6 +42,7 @@ vim.keymap.set("n", "n", "nzvzz")
 vim.keymap.set("n", "N", "Nzvzz")
 
 vim.keymap.set("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+Config.map.jump.set("q", { next = "<Cmd>cnext<CR>", prev = "<Cmd>cprevious<CR>" }, { name = "error" })
 
 vim.keymap.set("n", ";", vim.cmd.update, { desc = '":update" file' })
 vim.keymap.set("n", "<M-b>", "<C-^>")
@@ -78,41 +79,33 @@ vim.keymap.set("c", "<C-D>", function()
 end, { desc = "Delete character or list", expr = true })
 
 -- Toggle settings
-vim.keymap.set("n", "<Leader>tc", function()
-  vim.wo.colorcolumn = #vim.wo.colorcolumn == 0 and "+1" or ""
-end, { desc = "[T]oggle '[c]olorcolumn'" })
-
-vim.keymap.set("n", "<Leader>td", function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "[T]oggle [D]iagnostics" })
-
-vim.keymap.set("n", "<Leader>tl", function()
-  vim.wo.list = not vim.wo.list
-end, { desc = "[T]oggle '[l]ist'" })
-
-vim.keymap.set("n", "<Leader>ts", function()
-  vim.wo.spell = not vim.wo.spell
-end, { desc = "[T]oggle '[s]pell' check" })
-
-vim.keymap.set("n", "<Leader>tt", function()
-  vim.g.trim_blanks_on_write = not vim.g.trim_blanks_on_write
-  local prefix = vim.g.trim_blanks_on_write and string.rep(" ", 2) or "no"
-  vim.api.nvim_echo({ { prefix .. "trim" } }, false, {})
-end, { desc = "[T]oggle [T]rim blanks on write" })
-
-vim.keymap.set("n", "<Leader>tv", function()
-  vim.wo.virtualedit = #vim.wo.virtualedit == 0 and "all" or ""
-  vim.cmd("set virtualedit?")
-end, { desc = "[T]oggle '[v]irtualedit'" })
-
-vim.keymap.set("n", "<Leader>tw", function()
-  vim.wo.wrap = not vim.wo.wrap
-end, { desc = "[T]oggle '[w]rap'" })
-
-vim.keymap.set("n", "<Leader>tx", function()
-  if vim.g.syntax_on then
-    vim.cmd("syntax off | TSDisable highlight")
-  else
-    vim.cmd("syntax on | TSEnable highlight")
-  end
-end, { desc = "[T]oggle synta[x] highlighting" })
+Config.map.toggle.set("<Leader>tc", "colorcolumn", { states = { on = "+1", off = "" } })
+Config.map.toggle.set("<Leader>td", {
+  get = function()
+    return vim.diagnostic.is_enabled()
+  end,
+  set = function(state)
+    vim.diagnostic.enable(state)
+  end,
+}, { name = "diagnostics", echo = true })
+Config.map.toggle.set("<Leader>tl", "list")
+Config.map.toggle.set("<Leader>ts", "spell")
+Config.map.toggle.set(
+  "<Leader>tt",
+  "vim.g.trim_blanks_on_write",
+  { name = "trim", desc_name = "trim blanks on write", echo = true }
+)
+Config.map.toggle.set("<Leader>tv", "virtualedit", { states = { on = "all", off = "" }, echo = true })
+Config.map.toggle.set("<Leader>tw", "wrap", { echo = true })
+Config.map.toggle.set("<Leader>tx", {
+  get = function()
+    return vim.g.syntax_on
+  end,
+  set = function(state)
+    if state then
+      vim.cmd("syntax on | TSEnable highlight")
+    else
+      vim.cmd("syntax off | TSDisable highlight")
+    end
+  end,
+}, { desc_name = "syntax highlighting" })
