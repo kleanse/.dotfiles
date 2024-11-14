@@ -49,6 +49,9 @@ vim.keymap.set("n", "<M-b>", "<C-^>")
 vim.keymap.set("n", "<M-e>", vim.cmd.Explore, { desc = "Netrw explore directory of current file" })
 vim.keymap.set("n", "<M-o>", vim.cmd.Rexplore, { desc = "Netrw return to or from Explorer" })
 
+vim.keymap.set("n", "<Leader>l", "<Cmd>Lazy<CR>")
+vim.keymap.set("n", "<Leader>m", "<Cmd>Mason<CR>")
+
 -- Use CTRL-C for <Esc>: it is easier to reach
 vim.keymap.set("i", "<C-C>", "<Esc>")
 vim.keymap.set("x", "<C-C>", "<Esc>")
