@@ -1,11 +1,11 @@
 return {
-  { -- Highlight todo, notes, etc in comments
+  { -- Highlight todo, notes, etc., in comments
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     keys = {
-      { "<Leader>st", "<Cmd>TodoTelescope<CR>", desc = "[S]earch [T]odos" },
-      { "<Leader>sT", "<Cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", desc = "[S]earch [T]odos that need doing" },
+      { "<Leader>st", "<Cmd>TodoTelescope<CR>", desc = "Search todos" },
+      { "<Leader>sT", "<Cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", desc = "Search todos that need doing" },
       Config.map.jump.lazy_keys("t", {
         next = function()
           require("todo-comments").jump_next()
@@ -18,7 +18,7 @@ return {
     opts = { signs = false },
   },
 
-  { -- Add pretty icons to plugins supporting them
+  { -- Add pretty icons to plugins that support them
     "echasnovski/mini.icons",
     lazy = true,
     init = function()

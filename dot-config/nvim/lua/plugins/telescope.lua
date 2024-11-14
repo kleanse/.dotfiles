@@ -76,23 +76,24 @@ return {
       pcall(require("telescope").load_extension, "ui-select")
 
       local nmap = function(keys, func, desc)
+        desc = desc and "Telescope: " .. desc
         vim.keymap.set("n", keys, func, { desc = desc })
       end
       local builtin = require("telescope.builtin")
       local themes = require("telescope.themes")
 
-      nmap("<Leader><Space>", builtin.resume, "[ ] Search resume")
-      nmap("<Leader>sb", builtin.buffers, "[S]earch [B]uffers")
-      nmap("<Leader>sc", builtin.command_history, "[S]earch [C]ommand history")
-      nmap("<Leader>sd", builtin.diagnostics, "[S]earch [D]iagnostics")
-      nmap("<Leader>sf", builtin.find_files, "[S]earch [F]iles")
-      nmap("<Leader>sg", builtin.live_grep, "[S]earch by [G]rep")
-      nmap("<Leader>sh", builtin.help_tags, "[S]earch [H]elp")
-      nmap("<Leader>sk", builtin.keymaps, "[S]earch [K]eymaps")
-      nmap("<Leader>sm", builtin.man_pages, "[S]earch [M]anpages")
-      nmap("<Leader>sr", builtin.oldfiles, "[S]earch [R]ecently opened files")
-      nmap("<Leader>ss", builtin.builtin, "[S]earch [S]elect Telescope")
-      nmap("<Leader>sw", builtin.grep_string, "[S]earch current [W]ord")
+      nmap("<Leader><Space>", builtin.resume, "resume search")
+      nmap("<Leader>sb", builtin.buffers, "search buffers")
+      nmap("<Leader>sc", builtin.command_history, "search command history")
+      nmap("<Leader>sd", builtin.diagnostics, "search diagnostics")
+      nmap("<Leader>sf", builtin.find_files, "search files")
+      nmap("<Leader>sg", builtin.live_grep, "search by grep")
+      nmap("<Leader>sh", builtin.help_tags, "search help tags")
+      nmap("<Leader>sk", builtin.keymaps, "search keymaps")
+      nmap("<Leader>sm", builtin.man_pages, "search manpages")
+      nmap("<Leader>sr", builtin.oldfiles, "search recently opened files")
+      nmap("<Leader>ss", builtin.builtin, "search builtin pickers")
+      nmap("<Leader>sw", builtin.grep_string, "search current word")
 
       nmap("<Leader>/", function()
         -- You can pass additional configuration to telescope to change theme,
@@ -101,7 +102,7 @@ return {
           winblend = 10,
           previewer = false,
         }))
-      end, "[/] Fuzzily search in current buffer")
+      end, "fuzzily search in current buffer")
 
       -- Shortcut for searching your Neovim configuration files
       nmap("<Leader>sn", function()
@@ -109,24 +110,24 @@ return {
           cwd = "~/.dotfiles/dot-config/nvim",
           prompt_title = "Find Neovim Configuration Files",
         })
-      end, "[S]earch [N]eovim files")
+      end, "search Nvim-config files")
 
       nmap("<Leader>s/", function()
         builtin.live_grep({
           grep_open_files = true,
           prompt_title = "Live Grep in Open Files",
         })
-      end, "[S]earch [/] in open files")
+      end, "search in open files")
 
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
-      nmap("<Leader>gf", builtin.git_files, "Search [G]it [F]iles")
+      nmap("<Leader>gf", builtin.git_files, "search Git files")
 
       nmap("<Leader>gc", function()
         builtin.git_commits(themes.get_ivy({
           layout_config = { height = 0.8 },
         }))
-      end, "[G]it [C]ommits")
+      end, "Git commits")
 
       nmap("<Leader>gb", function()
         builtin.git_branches({
@@ -137,7 +138,7 @@ return {
             preview_cutoff = 30,
           },
         })
-      end, "[G]it [B]ranches")
+      end, "Git branches")
     end,
   },
 }

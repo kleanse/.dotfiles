@@ -11,7 +11,7 @@ return {
         "<Leader>tp",
         "<Plug>MarkdownPreviewToggle",
         ft = "markdown",
-        desc = "MarkdownPreview: [T]oggle [P]review",
+        desc = "Toggle MarkdownPreview",
       },
     },
     init = function()

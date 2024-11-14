@@ -33,7 +33,7 @@ vim.keymap.set(
   "n",
   "<Leader>va",
   "<Cmd>split $ASCII_REFERENCE | view<CR>",
-  { desc = "[V]iew [A]SCII reference file in a new split" }
+  { desc = "View ASCII reference file in a new split" }
 )
 
 -- Keep cursor centered when repeating searches, opening any closed folds if
@@ -41,7 +41,7 @@ vim.keymap.set(
 vim.keymap.set("n", "n", "nzvzz")
 vim.keymap.set("n", "N", "Nzvzz")
 
-vim.keymap.set("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic quickfix list" })
 Config.map.jump.set("q", { next = "<Cmd>cnext<CR>", prev = "<Cmd>cprevious<CR>" }, { name = "error" })
 
 vim.keymap.set("n", ";", vim.cmd.update, { desc = '":update" file' })

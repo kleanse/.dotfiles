@@ -52,31 +52,31 @@ return {
           -- In this case, we create a function that lets us more easily define
           -- mappings specific for LSP related items. It sets the mode, buffer,
           -- and description for us each time.
-          local nmap = function(keys, func, desc)
+          local nmap = function(keys, func, desc, mode)
             desc = desc and "LSP: " .. desc
-            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc })
+            mode = mode or "n"
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
           end
           local builtin = require("telescope.builtin")
 
-          nmap("gd", builtin.lsp_definitions, "[G]oto [D]efinition")
-          nmap("gR", builtin.lsp_references, "[G]oto [R]eferences")
-          nmap("gI", builtin.lsp_implementations, "[G]oto [I]mplementation")
-          nmap("<Leader>D", builtin.lsp_type_definitions, "Type [D]efinition")
-          nmap("<Leader>ds", builtin.lsp_document_symbols, "[D]ocument [S]ymbols")
-          nmap("<Leader>ws", builtin.lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+          nmap("gd", builtin.lsp_definitions, "go to definition")
+          nmap("gR", builtin.lsp_references, "go to references")
+          nmap("gI", builtin.lsp_implementations, "go to implementation")
+          nmap("<Leader>D", builtin.lsp_type_definitions, "type definition")
+          nmap("<Leader>ds", builtin.lsp_document_symbols, "document symbols")
+          nmap("<Leader>ws", builtin.lsp_dynamic_workspace_symbols, "workspace symbols")
 
-          nmap("<Leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-          vim.keymap.set({ "n", "x" }, "<Leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
+          nmap("<Leader>rn", vim.lsp.buf.rename, "rename")
+          nmap("<Leader>ca", vim.lsp.buf.code_action, "code action", { "n", "x" })
 
-          nmap("<C-K>", vim.lsp.buf.signature_help, "Signature documentation")
+          nmap("<C-K>", vim.lsp.buf.signature_help, "signature help")
 
-          -- Lesser used LSP functionality
-          nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-          nmap("<Leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd folder")
-          nmap("<Leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove folder")
+          nmap("gD", vim.lsp.buf.declaration, "go to declaration")
+          nmap("<Leader>wa", vim.lsp.buf.add_workspace_folder, "add workspace folder")
+          nmap("<Leader>wr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder")
           nmap("<Leader>wl", function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, "[W]orkspace [L]ist folders")
+          end, "list workspace folders")
         end,
       })
 

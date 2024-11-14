@@ -54,7 +54,7 @@ return {
           action = function()
             return "<Cmd>ObsidianBacklinks<CR>"
           end,
-          opts = { desc = "[O]bsidian [B]acklinks", buffer = true, expr = true },
+          opts = { desc = "Obsidian: backlinks", buffer = true, expr = true },
         },
       },
       -- Disable special syntax highlighting using 'conceallevel'

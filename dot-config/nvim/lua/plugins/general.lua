@@ -80,7 +80,7 @@ return {
 
   { -- Edit buffers in a minimal window to maintain focus
     "folke/zen-mode.nvim",
-    keys = { { "<Leader>z", "<Cmd>ZenMode<CR>", desc = "Toggle [Z]en Mode" } },
+    keys = { { "<Leader>z", "<Cmd>ZenMode<CR>", desc = "Toggle Zen Mode" } },
     opts = {
       window = {
         width = 80,
