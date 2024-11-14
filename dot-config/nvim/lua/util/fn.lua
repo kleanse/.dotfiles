@@ -3,11 +3,6 @@
 ---@class util.fn
 local M = {}
 
----@return string|osdate date Today's date in "yyyy Jan dd" format
-function M.date()
-  return os.date("%Y %b %d")
-end
-
 --- Reads the template file with the extension `ext` into the current buffer
 --- and sets the cursor's position to `curpos`, which uses (1,0) indexing
 --- |api-indexing|. By default, template files are searched for in
@@ -101,13 +96,14 @@ end
 
 --- Updates the date found after the first occurrence of the string
 --- "Last change:" in the first 20 lines of the current file. The format of the
---- new date may be specified (see `strftime()` for valid formats). If no
---- format is given, the date returned by `util.fn.date()` is used.
----@param format? string Format of the new date
+--- new date may be specified (see `strftime()` for valid formats).
+---@param format? string (default: `"%Y %b %d"`) Format of the new date
 function M.update_last_change(format)
+  format = format or "%Y %b %d"
+
   local pat = "[Ll]ast [Cc]hange:"
   local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
-  local date = format and os.date(format) or M.date()
+  local date = os.date(format)
   ---@cast date string
 
   for i, line in ipairs(lines) do
