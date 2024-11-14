@@ -8,11 +8,11 @@ function M.date()
   return os.date("%Y %b %d")
 end
 
--- Reads the template file with the extension `ext` into the current buffer and
--- sets the cursor's position to `curpos`, which uses (1,0) indexing
--- |api-indexing|. By default, template files are searched for in
--- `stdpath("config")/templates`; set `vim.g.template_path` to change this
--- search path.
+--- Reads the template file with the extension `ext` into the current buffer
+--- and sets the cursor's position to `curpos`, which uses (1,0) indexing
+--- |api-indexing|. By default, template files are searched for in
+--- `stdpath("config")/templates`; set `vim.g.template_path` to change this
+--- search path.
 ---@param ext string Extension of template file, e.g., ".c" or ".mk"
 ---@param curpos number[] (row, col) tuple indicating the new position
 function M.read_template_file(ext, curpos)
@@ -25,8 +25,8 @@ function M.read_template_file(ext, curpos)
   vim.api.nvim_win_set_cursor(0, curpos)
 end
 
--- Sets the values for the "ifndef" guard in the current file based on the
--- file's name and current date (yyyymmdd).
+--- Sets the values for the "ifndef" guard in the current file based on the
+--- file's name and current date (yyyymmdd).
 function M.set_header_macros()
   local macro_name = " " .. string.gsub(string.upper(vim.fn.expand("%:t")), "%.", "_" .. os.date("%Y%m%d") .. "_")
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
@@ -35,19 +35,19 @@ function M.set_header_macros()
   vim.api.nvim_buf_set_lines(0, -2, -1, false, { lines[#lines] .. " //" .. macro_name })
 end
 
--- Deletes starting and ending blank lines in the current buffer. For example,
--- for the following buffer,
--- ```
---1
---2 A line containing non-space characters.
---3
---4 Another line.
---5
---6
---7
--- ```
--- `M.trim_peripheral_blank_lines()` will delete four lines: one at the
--- start (line 1) and three at the end (lines 5, 6, and 7).
+--- Deletes starting and ending blank lines in the current buffer. For example,
+--- for the following buffer,
+--- ```
+---1
+---2 A line containing non-space characters.
+---3
+---4 Another line.
+---5
+---6
+---7
+--- ```
+--- `util.fn.trim_peripheral_blank_lines()` will delete four lines: one at the
+--- start (line 1) and three at the end (lines 5, 6, and 7).
 function M.trim_peripheral_blank_lines()
   local total_lines = vim.fn.line("$")
   local n_starting_blank_lines = 0
@@ -90,7 +90,7 @@ function M.trim_peripheral_blank_lines()
   end
 end
 
--- Deletes trailing whitespace in the current buffer.
+--- Deletes trailing whitespace in the current buffer.
 function M.trim_trailing_whitespace()
   local save_view = vim.fn.winsaveview()
   local save_search = vim.fn.getreg("/")
@@ -99,10 +99,10 @@ function M.trim_trailing_whitespace()
   vim.fn.setreg("/", save_search)
 end
 
--- Updates the date found after the first occurrence of the string
--- "Last change:" in the first 20 lines of the current file. The format of the
--- new date may be specified (see `strftime()` for valid formats). If no format
--- is given, the date returned by `util.fn.date()` is used.
+--- Updates the date found after the first occurrence of the string
+--- "Last change:" in the first 20 lines of the current file. The format of the
+--- new date may be specified (see `strftime()` for valid formats). If no
+--- format is given, the date returned by `util.fn.date()` is used.
 ---@param format? string Format of the new date
 function M.update_last_change(format)
   local pat = "[Ll]ast [Cc]hange:"
