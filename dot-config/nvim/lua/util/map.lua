@@ -8,17 +8,19 @@ M.toggle = {}
 ---@field name? string
 ---@field next_desc? string
 ---@field prev_desc? string
+---@field mode? string|string[]
 
 ---@param char string
 ---@param rhs { next: string|function, prev: string|function }
 ---@param opts? util.map.jump.set.Opts
 ---@param keymap_opts? vim.keymap.set.Opts
----@return { lhs: string, rhs: string|function, opts: vim.keymap.set.Opts } next_mapargs
----@return { lhs: string, rhs: string|function, opts: vim.keymap.set.Opts } prev_mapargs
+---@return { mode: string|string[], lhs: string, rhs: string|function, opts: vim.keymap.set.Opts } next_keymap_args
+---@return { mode: string|string[], lhs: string, rhs: string|function, opts: vim.keymap.set.Opts } prev_keymap_args
 local function parse_jump(char, rhs, opts, keymap_opts)
   opts = opts or {}
   keymap_opts = keymap_opts or {}
 
+  local mode = opts.mode or "n"
   local name = opts.name or "??"
   local next_desc = opts.next_desc or ("Jump to the next " .. name)
   local prev_desc = opts.prev_desc or ("Jump to the previous " .. name)
@@ -29,8 +31,8 @@ local function parse_jump(char, rhs, opts, keymap_opts)
   next_opts.desc = next_desc
   prev_opts.desc = prev_desc
 
-  local next = { next_lhs, rhs.next, next_opts }
-  local prev = { prev_lhs, rhs.prev, prev_opts }
+  local next = { mode, next_lhs, rhs.next, next_opts }
+  local prev = { mode, prev_lhs, rhs.prev, prev_opts }
   return next, prev
 end
 
@@ -44,8 +46,8 @@ end
 ---@return table prev_lazy_keys_spec
 function M.jump.lazy_keys(char, rhs, opts, keymap_opts)
   local next, prev = parse_jump(char, rhs, opts, keymap_opts)
-  local next_lazy_keys_spec = vim.tbl_extend("force", { next[1], next[2] }, next[3])
-  local prev_lazy_keys_spec = vim.tbl_extend("force", { prev[1], prev[2] }, prev[3])
+  local next_lazy_keys_spec = vim.tbl_extend("force", { mode = next[1], next[2], next[3] }, next[4])
+  local prev_lazy_keys_spec = vim.tbl_extend("force", { mode = prev[1], prev[2], prev[3] }, prev[4])
   return next_lazy_keys_spec, prev_lazy_keys_spec
 end
 
@@ -60,11 +62,12 @@ end
 ---             • "name" name of the jump object.
 ---             • "next_desc" mapping description for next.
 ---             • "prev_desc" mapping description for prev.
+---             • "mode" (default: "n") mode.
 ---@param keymap_opts? vim.keymap.set.Opts See |vim.keymap.set()|
 function M.jump.set(char, rhs, opts, keymap_opts)
   local next, prev = parse_jump(char, rhs, opts, keymap_opts)
-  vim.keymap.set("n", unpack(next))
-  vim.keymap.set("n", unpack(prev))
+  vim.keymap.set(unpack(next))
+  vim.keymap.set(unpack(prev))
 end
 
 ---@class util.map.toggle.set.Opts
@@ -72,6 +75,7 @@ end
 ---@field desc_name? string
 ---@field echo? boolean
 ---@field states? { on: any, off: any }
+---@field mode? string|string[]
 
 ---@class util.Toggle
 ---@field get fun(): boolean
@@ -145,6 +149,7 @@ end
 ---@param rhs string|{ (get: fun(): boolean), (set: fun(state: boolean)) }
 ---@param opts? util.map.toggle.set.Opts
 ---@param keymap_opts? vim.keymap.set.Opts
+---@return string|string[] mode
 ---@return string lhs
 ---@return string|function parsed_rhs
 ---@return vim.keymap.set.Opts parsed_opts
@@ -153,6 +158,7 @@ local function parse_toggle(lhs, rhs, opts, keymap_opts)
   keymap_opts = keymap_opts and vim.deepcopy(keymap_opts) or {}
 
   local desc_name = opts.desc_name or opts.name or "??"
+  local mode = opts.mode or "n"
   local is_option = false
   local t
   if type(rhs) == "string" then
@@ -162,7 +168,7 @@ local function parse_toggle(lhs, rhs, opts, keymap_opts)
       t = toggle_option(rhs, opts)
       if t == nil then
         keymap_opts.desc = keymap_opts.desc or ("Toggle " .. desc_name)
-        return lhs, rhs, keymap_opts
+        return mode, lhs, rhs, keymap_opts
       end
       is_option = true
     end
@@ -204,7 +210,7 @@ local function parse_toggle(lhs, rhs, opts, keymap_opts)
     end
   end
 
-  return lhs, f, keymap_opts
+  return mode, lhs, f, keymap_opts
 end
 
 --- Like `util.map.toggle.set()` but returns a table in the format of
@@ -215,8 +221,8 @@ end
 ---@param keymap_opts? vim.keymap.set.Opts
 ---@return table lazy_keys_spec
 function M.toggle.lazy_keys(lhs, rhs, opts, keymap_opts)
-  local p_lhs, p_rhs, p_keymap_opts = parse_toggle(lhs, rhs, opts, keymap_opts)
-  local lazy_keys_spec = vim.tbl_extend("force", { p_lhs, p_rhs }, p_keymap_opts)
+  local p_mode, p_lhs, p_rhs, p_keymap_opts = parse_toggle(lhs, rhs, opts, keymap_opts)
+  local lazy_keys_spec = vim.tbl_extend("force", { mode = p_mode, p_lhs, p_rhs }, p_keymap_opts)
   return lazy_keys_spec
 end
 
@@ -240,9 +246,10 @@ end
 ---             • "echo" (boolean) if true, echo current state after toggling.
 ---             • "states" table for defining "on" and "off" states of toggle;
 ---               only used when toggling |options|.
+---             • "mode" (default: "n") mode.
 ---@param keymap_opts? vim.keymap.set.Opts See |vim.keymap.set()|
 function M.toggle.set(lhs, rhs, opts, keymap_opts)
-  vim.keymap.set("n", parse_toggle(lhs, rhs, opts, keymap_opts))
+  vim.keymap.set(parse_toggle(lhs, rhs, opts, keymap_opts))
 end
 
 return M

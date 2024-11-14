@@ -8,8 +8,8 @@ describe("util.map", function()
 
     it("should return a LazyKeysSpec", function()
       local name = "error"
-      local expected_next_lazy_keys_spec = { "]" .. char, desc = next_desc .. name }
-      local expected_prev_lazy_keys_spec = { "[" .. char, desc = prev_desc .. name }
+      local expected_next_lazy_keys_spec = { "]" .. char, desc = next_desc .. name, mode = "n" }
+      local expected_prev_lazy_keys_spec = { "[" .. char, desc = prev_desc .. name, mode = "n" }
       local next_lazy_keys_spec, prev_lazy_keys_spec = map.jump.lazy_keys(
         char,
         { next = "<Cmd>cnext<CR>", prev = "<Cmd>cprevious<CR>" },
@@ -37,6 +37,15 @@ describe("util.map", function()
       assert.is.equal(expected_next_desc, vim.fn.maparg("]" .. char, "n", false, true).desc)
       assert.is.equal(expected_prev_desc, vim.fn.maparg("[" .. char, "n", false, true).desc)
     end)
+    it("should create a jump mapping in a different mode", function()
+      local mode = "x"
+      local name = "error"
+      local expected_next_desc = next_desc .. name
+      local expected_prev_desc = prev_desc .. name
+      map.jump.set(char, { next = "<Cmd>cnext<CR>", prev = "<Cmd>cprevious<CR>" }, { name = name, mode = mode })
+      assert.is.equal(expected_next_desc, vim.fn.maparg("]" .. char, mode, false, true).desc)
+      assert.is.equal(expected_prev_desc, vim.fn.maparg("[" .. char, mode, false, true).desc)
+    end)
     it("should error on an invalid rhs", function()
       local expected_error = "rhs: expected string|function, got nil"
       assert.has_error(function()
@@ -50,7 +59,7 @@ describe("util.map", function()
 
     it("should return a LazyKeysSpec", function()
       local desc_name = "some variable"
-      local expected_lazy_keys_spec = { lhs, desc = "Toggle " .. desc_name }
+      local expected_lazy_keys_spec = { lhs, desc = "Toggle " .. desc_name, mode = "n" }
       local lazy_keys_spec = map.toggle.lazy_keys(lhs, "vim.g.some_var", { desc_name = "some variable" })
       assert.is_not_nil(lazy_keys_spec)
       expected_lazy_keys_spec[2] = lazy_keys_spec[2]
@@ -76,6 +85,13 @@ describe("util.map", function()
       local desc_name = "some variable named by opts.name"
       local expected_desc = "Toggle " .. desc_name
       map.toggle.set(lhs, "vim.g.some_var", { name = desc_name })
+      assert.is.equal(expected_desc, vim.fn.maparg(lhs, "n", false, true).desc)
+    end)
+    it("should create a toggle mapping in a different mode", function()
+      local mode = "x"
+      local desc_name = "some variable named by opts.name"
+      local expected_desc = "Toggle " .. desc_name
+      map.toggle.set(lhs, "vim.g.some_var", { name = desc_name, mode = "x" })
       assert.is.equal(expected_desc, vim.fn.maparg(lhs, "n", false, true).desc)
     end)
     it("should error on an invalid rhs", function()
