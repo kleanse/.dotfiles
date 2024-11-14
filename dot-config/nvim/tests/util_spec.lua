@@ -88,7 +88,6 @@ describe("util.map", function()
       assert.is.equal(expected_desc, vim.fn.maparg(lhs, "n", false, true).desc)
     end)
     it("should create a toggle mapping in a different mode", function()
-      local mode = "x"
       local desc_name = "some variable named by opts.name"
       local expected_desc = "Toggle " .. desc_name
       map.toggle.set(lhs, "vim.g.some_var", { name = desc_name, mode = "x" })
