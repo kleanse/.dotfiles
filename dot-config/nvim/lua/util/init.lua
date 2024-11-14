@@ -1,6 +1,7 @@
 ---@class util
 ---@field fn util.fn
 ---@field map util.map
+---@field tabline util.tabline
 local M = {}
 
 setmetatable(M, {

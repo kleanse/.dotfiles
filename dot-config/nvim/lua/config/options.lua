@@ -28,4 +28,4 @@ vim.schedule(function()
 end)
 
 -- Use a custom format for tab pages
-vim.opt.tabline = "%!v:lua.Tabline()"
+vim.opt.tabline = "%!v:lua.Config.tabline.draw()"
