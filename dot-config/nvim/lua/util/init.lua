@@ -1,4 +1,5 @@
 ---@class util
+---@field fn util.fn
 ---@field map util.map
 local M = {}
 

@@ -1,9 +1,10 @@
 -- Module containing general-purpose functions
 
-local utils = {}
+---@class util.fn
+local M = {}
 
 ---@return string|osdate date Today's date in "yyyy Jan dd" format
-utils.date = function()
+function M.date()
   return os.date("%Y %b %d")
 end
 
@@ -14,7 +15,7 @@ end
 -- search path.
 ---@param ext string Extension of template file, e.g., ".c" or ".mk"
 ---@param curpos number[] (row, col) tuple indicating the new position
-utils.read_template_file = function(ext, curpos)
+function M.read_template_file(ext, curpos)
   local filename = "template" .. ext
   local path = vim.g.template_path or vim.fs.joinpath(vim.fn.stdpath("config") --[[@as string]], "templates")
   path = vim.fs.normalize(vim.fs.joinpath(path, filename))
@@ -26,7 +27,7 @@ end
 
 -- Sets the values for the "ifndef" guard in the current file based on the
 -- file's name and current date (yyyymmdd).
-utils.set_header_macros = function()
+function M.set_header_macros()
   local macro_name = " " .. string.gsub(string.upper(vim.fn.expand("%:t")), "%.", "_" .. os.date("%Y%m%d") .. "_")
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
   vim.api.nvim_buf_set_lines(0, 0, 1, false, { lines[1] .. macro_name })
@@ -45,9 +46,9 @@ end
 --6
 --7
 -- ```
--- `utils.trim_peripheral_blank_lines()` will delete four lines: one at the
+-- `M.trim_peripheral_blank_lines()` will delete four lines: one at the
 -- start (line 1) and three at the end (lines 5, 6, and 7).
-utils.trim_peripheral_blank_lines = function()
+function M.trim_peripheral_blank_lines()
   local total_lines = vim.fn.line("$")
   local n_starting_blank_lines = 0
 
@@ -90,7 +91,7 @@ utils.trim_peripheral_blank_lines = function()
 end
 
 -- Deletes trailing whitespace in the current buffer.
-utils.trim_trailing_whitespace = function()
+function M.trim_trailing_whitespace()
   local save_view = vim.fn.winsaveview()
   local save_search = vim.fn.getreg("/")
   vim.cmd([[%substitute/\v\s+$//e]])
@@ -101,12 +102,12 @@ end
 -- Updates the date found after the first occurrence of the string
 -- "Last change:" in the first 20 lines of the current file. The format of the
 -- new date may be specified (see `strftime()` for valid formats). If no format
--- is given, the date returned by `utils.date()` is used.
+-- is given, the date returned by `util.fn.date()` is used.
 ---@param format? string Format of the new date
-utils.update_last_change = function(format)
+function M.update_last_change(format)
   local pat = "[Ll]ast [Cc]hange:"
   local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
-  local date = format and os.date(format) or utils.date()
+  local date = format and os.date(format) or M.date()
   ---@cast date string
 
   for i, line in ipairs(lines) do
@@ -126,4 +127,4 @@ utils.update_last_change = function(format)
   end
 end
 
-return utils
+return M
