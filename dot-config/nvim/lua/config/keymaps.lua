@@ -52,6 +52,8 @@ vim.keymap.set("n", "<M-o>", vim.cmd.Rexplore, { desc = "Netrw return to or from
 vim.keymap.set("n", "<Leader>l", "<Cmd>Lazy<CR>")
 vim.keymap.set("n", "<Leader>m", "<Cmd>Mason<CR>")
 
+vim.keymap.set("n", "<Leader>OT", "<Cmd>only<Bar>tabonly<CR>")
+
 -- Use CTRL-C for <Esc>: it is easier to reach
 vim.keymap.set("i", "<C-C>", "<Esc>")
 vim.keymap.set("x", "<C-C>", "<Esc>")
