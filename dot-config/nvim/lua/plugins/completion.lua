@@ -69,15 +69,20 @@ return {
         }),
         formatting = {
           expandable_indicator = true,
-          fields = { "abbr", "kind", "menu" },
-          format = function(entry, vim_item)
-            vim_item.menu = ({
-              buffer = "[buf]",
-              lazydev = "[lazydev]",
-              luasnip = "[snip]",
-              nvim_lsp = "[LSP]",
-              path = "[path]",
-            })[entry.source.name]
+          format = function(_, vim_item)
+            local icons = Config.tbl.icons.kinds
+            if icons[vim_item.kind] then
+              vim_item.kind = icons[vim_item.kind] .. vim_item.kind
+            end
+            local widths = {
+              abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+              menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+            }
+            for key, width in pairs(widths) do
+              if vim_item[key] and vim.fn.strdisplaywidth(vim_item[key]) > width then
+                vim_item[key] = vim.fn.strcharpart(vim_item[key], 0, width - 1) .. "…"
+              end
+            end
             return vim_item
           end,
         },
