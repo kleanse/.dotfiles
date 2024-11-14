@@ -38,6 +38,21 @@ end
 
 --- Like `util.map.jump.set()` but returns two tables in the format of
 --- `LazyKeysSpec` to be used in `LazySpec.keys` of `lazy.nvim`.
+---
+--- Caveat! This function must be called as the last element in the
+--- `LazySpec.keys` table to extend it, which creates two restrictions: only
+--- one `util.map.jump.lazy_keys` may be called directly in the `keys` table,
+--- and it must be specified last. To use multiple calls of this function in
+--- 'keys', try this:
+--- ```lua
+---     keys = function()
+---       t = {} -- lazy keys specs
+---       t[#t+1], t[#t+2] = util.map.jump.lazy_keys(...)
+---       t[#t+1], t[#t+2] = util.map.jump.lazy_keys(...)
+---       ...
+---       return t
+---     end
+--- ```
 ---@param char string
 ---@param rhs { next: string|function, prev: string|function }
 ---@param opts? util.map.jump.set.Opts
