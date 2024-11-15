@@ -56,6 +56,8 @@ map("n", "<Leader>OT", function()
   vim.cmd.tabonly()
 end, { desc = "Only This window" })
 
+map("n", "<leader>n", vim.cmd.enew, { desc = "Edit new buffer" })
+
 -- Use CTRL-C for <Esc>: it is easier to reach
 map("i", "<C-C>", "<Esc>")
 map("x", "<C-C>", "<Esc>")
