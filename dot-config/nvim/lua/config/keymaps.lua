@@ -41,17 +41,20 @@ map("n", "n", "nzvzz")
 map("n", "N", "Nzvzz")
 
 map("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic quickfix list" })
-jump_map("q", { next = "<Cmd>cnext<CR>", prev = "<Cmd>cprevious<CR>" }, { name = "error" })
+jump_map("q", { next = vim.cmd.cnext, prev = vim.cmd.cprevious }, { name = "error" })
 
 map("n", ";", vim.cmd.update, { desc = '":update" file' })
 map("n", "<M-b>", "<C-^>")
 map("n", "<M-e>", vim.cmd.Explore, { desc = "Netrw explore directory of current file" })
 map("n", "<M-o>", vim.cmd.Rexplore, { desc = "Netrw return to or from Explorer" })
 
-map("n", "<Leader>l", "<Cmd>Lazy<CR>")
-map("n", "<Leader>m", "<Cmd>Mason<CR>")
+map("n", "<Leader>l", vim.cmd.Lazy, { desc = "Open Lazy" })
+map("n", "<Leader>m", vim.cmd.Mason, { desc = "Open Mason" })
 
-map("n", "<Leader>OT", "<Cmd>only<Bar>tabonly<CR>")
+map("n", "<Leader>OT", function()
+  vim.cmd.only()
+  vim.cmd.tabonly()
+end, { desc = "Only This window" })
 
 -- Use CTRL-C for <Esc>: it is easier to reach
 map("i", "<C-C>", "<Esc>")
