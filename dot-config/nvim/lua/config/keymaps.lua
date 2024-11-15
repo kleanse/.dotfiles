@@ -96,6 +96,32 @@ toggle_map("<Leader>td", {
   end,
 }, { name = "diagnostics", echo = true })
 toggle_map("<Leader>tl", "list")
+toggle_map("<Leader>to", {
+  get = function()
+    local is_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+    return is_open
+  end,
+  set = function(state)
+    if state then
+      vim.cmd.lopen()
+    else
+      vim.cmd.lclose()
+    end
+  end,
+}, { desc_name = "location list window" })
+toggle_map("<Leader>tq", {
+  get = function()
+    local is_open = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+    return is_open
+  end,
+  set = function(state)
+    if state then
+      vim.cmd.copen()
+    else
+      vim.cmd.cclose()
+    end
+  end,
+}, { desc_name = "quickfix window" })
 toggle_map("<Leader>ts", "spell")
 toggle_map(
   "<Leader>tt",
