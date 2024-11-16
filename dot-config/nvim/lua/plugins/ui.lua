@@ -13,6 +13,11 @@ return {
     },
   },
 
+  { -- Interactive start screen
+    "echasnovski/mini.starter",
+    opts = {},
+  },
+
   { -- Status-line plugin
     "echasnovski/mini.statusline",
     opts = {
