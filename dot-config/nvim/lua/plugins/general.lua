@@ -50,7 +50,7 @@ return {
             "^().*()$",
           },
           i = gen_ai_spec.indent(), -- indent
-          g = gen_ai_spec.buffer(), -- buffer
+          G = gen_ai_spec.buffer(), -- buffer
           u = gen_spec.function_call(), -- function call
           U = gen_spec.function_call({ name_pattern = "[%w_]" }), -- function call but no dot in function name (for `a`)
         },
