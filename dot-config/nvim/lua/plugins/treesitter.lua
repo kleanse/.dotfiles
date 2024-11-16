@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs",
+    event = "VeryLazy",
     opts = {
       -- [[ Configure Treesitter ]]
       --  See `:help nvim-treesitter`
