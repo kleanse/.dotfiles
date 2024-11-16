@@ -33,4 +33,9 @@ return {
       },
     },
   },
+
+  { -- Select textobjects using treesitter
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
+  },
 }

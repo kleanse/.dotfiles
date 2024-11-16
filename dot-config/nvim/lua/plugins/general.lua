@@ -32,8 +32,34 @@ return {
     -- - g[a     - go to (`g`) left edge (`[`) argument (`a`)
     -- - g]>     - go to (`g`) right edge (`]`) angle bracket (`>`)
     "echasnovski/mini.ai",
-    opts = { n_lines = 500 },
+    opts = function()
+      local gen_ai_spec = require("mini.extra").gen_ai_spec
+      local gen_spec = require("mini.ai").gen_spec
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          o = gen_spec.treesitter({ -- code block
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+          c = gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+          d = gen_ai_spec.number(), -- number
+          e = { -- word with camel case support
+            { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+            "^().*()$",
+          },
+          i = gen_ai_spec.indent(), -- indent
+          g = gen_ai_spec.buffer(), -- buffer
+          u = gen_spec.function_call(), -- function call
+          U = gen_spec.function_call({ name_pattern = "[%w_]" }), -- function call but no dot in function name (for `a`)
+        },
+      }
+    end,
   },
+
+  -- Extra functionalities for mini.ai, mini.hipatterns, and mini.pick
+  { "echasnovski/mini.extra", lazy = true, opts = {} },
 
   { -- Evaluate, exchange, multiply, replace, and sort text
     "echasnovski/mini.operators",
