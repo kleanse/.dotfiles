@@ -85,7 +85,20 @@ return {
     },
     opts = {
       modes = { insert = true, command = true, terminal = false },
+      -- skip autopair when the next character is in this character class
+      skip_next = [=[[%w%"%$%%%'%.%[%`]]=],
+      -- skip autopair when the cursor is inside these treesitter nodes
+      skip_ts = { "string" },
+      -- skip autopair when the next character is the closing character of a
+      -- pair and there are more closing characters of that pair than opening
+      -- characters
+      skip_unbalanced = true,
+      -- support for Markdown code blocks
+      markdown = true,
     },
+    config = function(_, opts)
+      Config.mini.pairs(opts)
+    end,
   },
 
   { -- Split and join arguments between bracket delimiters under the cursor
