@@ -16,9 +16,23 @@ return {
   { -- Interactive start screen
     "echasnovski/mini.starter",
     event = "VimEnter",
-    opts = {
-      evaluate_single = true,
-    },
+    opts = function()
+      local starter = require("mini.starter")
+      local pick = require("telescope.builtin")
+      local item = function(name, action, section)
+        return { name = name, action = action, section = section }
+      end
+      return {
+        evaluate_single = true,
+        items = {
+          item("Find file", pick.find_files, "Telescope"),
+          item("Recent files", pick.oldfiles, "Telescope"),
+          item("Grep", pick.live_grep, "Telescope"),
+          item("Lazy", "Lazy", "Config"),
+          starter.sections.builtin_actions(),
+        },
+      }
+    end,
     config = function(_, opts)
       local starter = require("mini.starter")
       starter.setup(opts)
