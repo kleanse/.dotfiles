@@ -1,6 +1,7 @@
 ---@class util
 ---@field fn util.fn
 ---@field map util.map
+---@field mini util.mini
 ---@field tabline util.tabline
 ---@field tbl util.tbl
 local M = {}
