@@ -74,6 +74,14 @@ return {
       -- Register i_CTRL-H as a MiniPairs backspacing key so it can delete
       -- adjacent pairs
       { "<C-H>", "v:lua.MiniPairs.bs()", mode = "!", expr = true, replace_keycodes = false },
+      Config.map.toggle.lazy_keys("<Leader>tp", {
+        get = function()
+          return not vim.g.minipairs_disable
+        end,
+        set = function(state)
+          vim.g.minipairs_disable = not state
+        end,
+      }, { name = "minipairs", desc_name = "mini.pairs", echo = true }),
     },
     opts = {
       modes = { insert = true, command = true, terminal = false },
