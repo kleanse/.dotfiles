@@ -15,7 +15,27 @@ return {
 
   { -- Interactive start screen
     "echasnovski/mini.starter",
-    opts = {},
+    event = "VimEnter",
+    opts = {
+      evaluate_single = true,
+    },
+    config = function(_, opts)
+      local starter = require("mini.starter")
+      starter.setup(opts)
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyVimStarted",
+        callback = function(ev)
+          local s = require("lazy").stats()
+          local ms = math.floor(s.startuptime * 100 + 0.5) / 100
+          starter.config.header = "⚡ Neovim loaded " .. s.loaded .. "/" .. s.count .. " plugins in " .. ms .. " ms"
+          if vim.bo[ev.buf].filetype == "ministarter" then
+            pcall(starter.refresh)
+          end
+          return true
+        end,
+      })
+    end,
   },
 
   { -- Status-line plugin
