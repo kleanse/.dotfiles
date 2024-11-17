@@ -129,7 +129,7 @@ return {
         }))
       end, "Git commits")
 
-      nmap("<Leader>gb", function()
+      nmap("<Leader>gr", function()
         builtin.git_branches({
           layout_strategy = "vertical",
           layout_config = {

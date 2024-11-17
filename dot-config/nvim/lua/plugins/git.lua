@@ -44,6 +44,10 @@ return {
         vim.cmd("Git log --oneline --decorate")
       end, "log --oneline")
 
+      nmap("<Leader>gbl", function()
+        vim.cmd("Git blame --date=relative")
+      end, "blame --date=relative")
+
       nmap("<Leader>G", function()
         local window_ids = vim.fn.win_findbuf(vim.g.git_status_bufnr)
         if #window_ids ~= 0 then
