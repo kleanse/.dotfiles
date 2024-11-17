@@ -48,6 +48,7 @@ return {
         local window_ids = vim.fn.win_findbuf(vim.g.git_status_bufnr)
         if #window_ids ~= 0 then
           vim.fn.win_gotoid(window_ids[1])
+          vim.cmd.edit()
         else
           vim.cmd("0tab Git")
           vim.g.git_status_bufnr = vim.fn.bufnr()
