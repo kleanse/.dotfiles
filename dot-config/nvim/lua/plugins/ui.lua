@@ -18,16 +18,15 @@ return {
     event = "VimEnter",
     opts = function()
       local starter = require("mini.starter")
-      local pick = require("telescope.builtin")
       local item = function(name, action, section)
         return { name = name, action = action, section = section }
       end
       return {
         evaluate_single = true,
         items = {
-          item("Find file", pick.find_files, "Telescope"),
-          item("Recent files", pick.oldfiles, "Telescope"),
-          item("Grep", pick.live_grep, "Telescope"),
+          item("Find file", "Telescope find_files", "Telescope"),
+          item("Recent files", "Telescope oldfiles", "Telescope"),
+          item("Grep", "Telescope live_grep", "Telescope"),
           item("Lazy", "Lazy", "Config"),
           starter.sections.builtin_actions(),
         },
