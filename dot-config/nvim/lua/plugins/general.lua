@@ -58,9 +58,6 @@ return {
     end,
   },
 
-  -- Extra functionalities for mini.ai, mini.hipatterns, and mini.pick
-  { "echasnovski/mini.extra", lazy = true, opts = {} },
-
   { -- Evaluate, exchange, multiply, replace, and sort text
     "echasnovski/mini.operators",
     opts = {},
