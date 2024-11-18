@@ -121,10 +121,6 @@ return {
     opts = { respect_selection_type = true },
   },
 
-  { -- Read or write files with `sudo`
-    "lambdalisue/suda.vim",
-  },
-
   { -- Edit buffers in a minimal window to maintain focus
     "folke/zen-mode.nvim",
     keys = { { "<Leader>z", "<Cmd>ZenMode<CR>", desc = "Toggle Zen Mode" } },
