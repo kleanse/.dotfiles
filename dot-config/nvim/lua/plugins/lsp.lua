@@ -24,6 +24,7 @@ return {
 
   { -- LSP Configuration
     "neovim/nvim-lspconfig",
+    event = "VeryLazy",
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { "williamboman/mason.nvim", opts = {} },

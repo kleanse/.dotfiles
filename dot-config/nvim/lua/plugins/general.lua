@@ -1,6 +1,7 @@
 return {
   { -- "gc" to comment visual regions/lines
     "numToStr/Comment.nvim",
+    event = "VeryLazy",
     opts = {},
   },
 
@@ -32,6 +33,7 @@ return {
     -- - g[a     - go to (`g`) left edge (`[`) argument (`a`)
     -- - g]>     - go to (`g`) right edge (`]`) angle bracket (`>`)
     "echasnovski/mini.ai",
+    event = "VeryLazy",
     opts = function()
       local gen_ai_spec = require("mini.extra").gen_ai_spec
       local gen_spec = require("mini.ai").gen_spec
@@ -60,6 +62,7 @@ return {
 
   { -- Evaluate, exchange, multiply, replace, and sort text
     "echasnovski/mini.operators",
+    event = "VeryLazy",
     opts = {},
   },
 
@@ -100,6 +103,7 @@ return {
 
   { -- Split and join arguments between bracket delimiters under the cursor
     "echasnovski/mini.splitjoin",
+    event = "VeryLazy",
     opts = {},
   },
 
@@ -115,6 +119,7 @@ return {
     -- - shl}        - highlight (`sh`) last (`l`) brace (`}`)
     -- - 2sfnt       - find (`sf`) second (`2`) next (`n`) tag (`t`)
     "echasnovski/mini.surround",
+    event = "VeryLazy",
     opts = { respect_selection_type = true },
   },
 

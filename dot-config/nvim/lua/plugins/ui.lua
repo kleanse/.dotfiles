@@ -53,6 +53,7 @@ return {
 
   { -- Status-line plugin
     "echasnovski/mini.statusline",
+    event = "VeryLazy",
     opts = {
       content = {
         active = function()
