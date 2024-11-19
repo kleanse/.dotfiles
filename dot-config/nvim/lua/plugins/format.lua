@@ -33,8 +33,8 @@ return {
       format_on_save = function(bufnr)
         -- Disable autoformatting with LSP for languages that do not have a
         -- well standardized coding style
-        local disable_filetypes = { c = true, cpp = true }
-        local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
+        local disable_filetypes = { "c", "cpp" }
+        local lsp_format_opt = vim.tbl_contains(disable_filetypes, vim.bo[bufnr].filetype) and "never" or "fallback"
         if vim.g.format_on_save then
           return { timeout_ms = 3000, lsp_format = lsp_format_opt }
         end
