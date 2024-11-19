@@ -64,8 +64,16 @@ return {
           nmap("gR", builtin.lsp_references, "go to references")
           nmap("gI", builtin.lsp_implementations, "go to implementation")
           nmap("<Leader>D", builtin.lsp_type_definitions, "type definition")
-          nmap("<Leader>ds", builtin.lsp_document_symbols, "document symbols")
-          nmap("<Leader>ws", builtin.lsp_dynamic_workspace_symbols, "workspace symbols")
+          nmap("<Leader>ds", function()
+            builtin.lsp_document_symbols({
+              symbols = Config.fn.get_kind_filter(),
+            })
+          end, "document symbols")
+          nmap("<Leader>ws", function()
+            builtin.lsp_dynamic_workspace_symbols({
+              symbols = Config.fn.get_kind_filter(),
+            })
+          end, "workspace symbols")
 
           nmap("<Leader>rn", vim.lsp.buf.rename, "rename")
           nmap("<Leader>ca", vim.lsp.buf.code_action, "code action", { "n", "x" })
