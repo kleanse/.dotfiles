@@ -85,7 +85,7 @@ local M = {
       "Struct",
       "Trait",
     },
-    markdown = false,
+    markdown = false, -- no filter for filetype
     help = false,
     -- you can specify a different filter for each filetype
     lua = {

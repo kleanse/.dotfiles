@@ -3,6 +3,29 @@
 ---@class util.fn
 local M = {}
 
+--- Returns an array of symbol kinds with which to filter the results of LSP
+--- document symbols listed in the builtin pickers of
+--- `nvim-telescope/telescope.nvim`. The filter array to return is based on the
+--- file type of `{buffer}` or is a default filter array if no matching filter
+--- array was found or `nil` if the filter for the file type is `false`.
+---@param buffer? number Buffer handle; 0 or nil for current buffer
+---@return string[]?
+function M.get_kind_filter(buffer)
+  buffer = (buffer == nil or buffer == 0) and vim.api.nvim_get_current_buf() or buffer
+  local ft = vim.bo[buffer].filetype
+  local kind_filter = require("util.tbl").kind_filter
+  if kind_filter == nil or kind_filter[ft] == false then
+    return nil
+  end
+  if type(kind_filter[ft]) == "table" then
+    return kind_filter[ft] --[=[@as string[]]=]
+  end
+  if type(kind_filter.default) == "table" then
+    return kind_filter.default --[=[@as string[]]=]
+  end
+  return nil
+end
+
 --- Reads the template file with the extension `ext` into the current buffer
 --- and sets the cursor's position to `curpos`, which uses (1,0) indexing
 --- |api-indexing|. By default, template files are searched for in
