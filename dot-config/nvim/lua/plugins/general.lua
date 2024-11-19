@@ -101,6 +101,12 @@ return {
     end,
   },
 
+  { -- Read, write, and delete global and local sessions
+    "echasnovski/mini.sessions",
+    event = "VeryLazy",
+    opts = {},
+  },
+
   { -- Split and join arguments between bracket delimiters under the cursor
     "echasnovski/mini.splitjoin",
     event = "VeryLazy",

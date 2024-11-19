@@ -17,6 +17,7 @@ return {
     "echasnovski/mini.starter",
     event = "VimEnter",
     opts = function()
+      require("mini.sessions")
       local starter = require("mini.starter")
       local item = function(name, action, section)
         return { name = name, action = action, section = section }
@@ -24,6 +25,7 @@ return {
       return {
         evaluate_single = true,
         items = {
+          starter.sections.sessions(),
           item("Find file", "Telescope find_files", "Telescope"),
           item("Recent files", "Telescope oldfiles", "Telescope"),
           item("Grep", "Telescope live_grep", "Telescope"),
