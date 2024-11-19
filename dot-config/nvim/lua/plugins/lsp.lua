@@ -77,15 +77,8 @@ return {
 
           nmap("<Leader>rn", vim.lsp.buf.rename, "rename")
           nmap("<Leader>ca", vim.lsp.buf.code_action, "code action", { "n", "x" })
-
           nmap("<C-K>", vim.lsp.buf.signature_help, "signature help")
-
           nmap("gD", vim.lsp.buf.declaration, "go to declaration")
-          nmap("<Leader>wa", vim.lsp.buf.add_workspace_folder, "add workspace folder")
-          nmap("<Leader>wr", vim.lsp.buf.remove_workspace_folder, "remove workspace folder")
-          nmap("<Leader>wl", function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, "list workspace folders")
         end,
       })
 
