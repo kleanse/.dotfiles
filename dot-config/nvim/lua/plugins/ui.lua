@@ -30,6 +30,7 @@ return {
           item("Recent files", "Telescope oldfiles", "Telescope"),
           item("Grep", "Telescope live_grep", "Telescope"),
           item("Lazy", "Lazy", "Config"),
+          item("Mason", "Mason", "Config"),
           starter.sections.builtin_actions(),
         },
       }
