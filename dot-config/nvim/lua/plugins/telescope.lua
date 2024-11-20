@@ -119,6 +119,7 @@ return {
               ["<C-F>"] = function(bufnr)
                 full_page_scroll(bufnr, 1)
               end,
+              ["<C-S>"] = "select_horizontal",
               ["<Down>"] = "cycle_history_next",
               ["<Up>"] = "cycle_history_prev",
             },
