@@ -8,23 +8,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
-
-      { -- Snippet engine for creating, expanding, and jumping to the dynamic
-        -- fields of short, reusable pieces of source code
-        "L3MON4D3/LuaSnip",
-        build = (function()
-          -- This build step is needed for regex support in snippets, which is
-          -- not supported in many Windows environments
-          -- Remove the below condition to re-enable on Windows
-          if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-            return
-          end
-          return "make install_jsregexp"
-        end)(),
-      },
-
-      -- L3MON4D3/LuaSnip completion source for nvim-cmp
-      "saadparwaiz1/cmp_luasnip",
+      "saadparwaiz1/cmp_luasnip", -- L3MON4D3/LuaSnip completion source for nvim-cmp
     },
     opts = function()
       local cmp = require("cmp")
