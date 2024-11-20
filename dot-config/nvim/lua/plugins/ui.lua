@@ -1,4 +1,10 @@
 return {
+  { -- Extensible UI for Neovim notifications and LSP progress messages
+    "j-hui/fidget.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+
   { -- Add pretty icons to plugins that support them
     "echasnovski/mini.icons",
     lazy = true,
