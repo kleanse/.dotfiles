@@ -51,7 +51,6 @@ map("n", "<M-o>", vim.cmd.Rexplore, { desc = "Netrw return to or from Explorer" 
 map("n", "<M-g>", vim.cmd.pwd, { desc = "Print current working directory of current window" })
 
 map("n", "<Leader>l", vim.cmd.Lazy, { desc = "Open Lazy" })
-map("n", "<Leader>m", vim.cmd.Mason, { desc = "Open Mason" })
 
 map("n", "<Leader>OT", function()
   vim.cmd.only()

@@ -22,12 +22,21 @@ return {
   { "Bilal2453/luvit-meta", lazy = true }, -- Optional `vim.uv` typings
   { "justinsgithub/wezterm-types", lazy = true },
 
+  { -- Package manager for Neovim to install and manage external editor tools
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    cmd = "Mason",
+    keys = {
+      { "<leader>m", vim.cmd.Mason, desc = "Open Mason" },
+    },
+    opts = {},
+  },
+
   { -- LSP Configuration
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      { "williamboman/mason.nvim", opts = {} },
+      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -111,8 +120,6 @@ return {
         marksman = {},
         ts_ls = {},
       }
-
-      require("mason").setup()
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
