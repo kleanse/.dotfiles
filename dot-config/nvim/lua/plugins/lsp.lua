@@ -43,21 +43,88 @@ return {
       -- Allows extra capabilities provided by nvim-cmp
       "hrsh7th/cmp-nvim-lsp",
     },
-    config = function()
-      -- [[ Configure LSP ]]
-      -- This function gets run when an LSP connects to a particular buffer;
-      -- that is, when a file is opened and is associated with an LSP, this
-      -- function will be executed to configure the current buffer
+    opts = function()
+      ---@class PluginLspOpts
+      local ret = {
+        ---@type vim.diagnostic.Opts
+        diagnostics = {
+          severity_sort = true,
+          signs = {
+            text = {
+              [vim.diagnostic.severity.ERROR] = Config.tbl.icons.diagnostics.Error,
+              [vim.diagnostic.severity.HINT] = Config.tbl.icons.diagnostics.Hint,
+              [vim.diagnostic.severity.INFO] = Config.tbl.icons.diagnostics.Info,
+              [vim.diagnostic.severity.WARN] = Config.tbl.icons.diagnostics.Warn,
+            },
+          },
+          virtual_text = {
+            spacing = 4,
+            source = "if_many",
+            prefix = function(diagnostic)
+              local icons = Config.tbl.icons.diagnostics
+              local prefix
+              for name, icon in pairs(icons) do
+                if diagnostic.severity == vim.diagnostic.severity[name:upper()] then
+                  prefix = icon
+                  break
+                end
+              end
+              return prefix
+            end,
+          },
+        },
+        inlay_hints = {
+          exclude = { "vue" }, -- no inlay hints for these filetypes
+        },
+        -- LSP Server Settings
+        servers = {
+          clangd = {},
+          lua_ls = {
+            settings = {
+              Lua = {
+                completion = {
+                  callSnippet = "Replace",
+                },
+                diagnostics = {
+                  globals = { "vim" },
+                },
+                doc = {
+                  privateName = { "^_" },
+                },
+                hint = {
+                  enable = true,
+                  arrayIndex = "Disable",
+                  paramName = "Disable",
+                  paramType = true,
+                  semicolon = "Disable",
+                  setType = false,
+                },
+                workspace = {
+                  checkThirdParty = false,
+                },
+              },
+            },
+          },
+          marksman = {},
+          ts_ls = {},
+        },
+        -- Tools to install automatically using mason.nvim
+        ensure_installed = {
+          "markdown-toc",
+          "markdownlint-cli2",
+          "prettierd",
+          "stylua", -- Used to format lua code
+        },
+      }
+      return ret
+    end,
+    ---@param opts PluginLspOpts
+    config = function(_, opts)
+      -- This function runs when a language server connects to a particular
+      -- buffer, i.e., when a file is opened and is associated with a server
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that lua is a real programming language, and as
-          -- such it is possible to define small helper and utility functions
-          -- so you don't have to repeat yourself many times.
-          --
-          -- In this case, we create a function that lets us more easily define
-          -- mappings specific for LSP related items. It sets the mode, buffer,
-          -- and description for us each time.
           local nmap = function(keys, func, desc, mode)
             desc = desc and "LSP: " .. desc
             mode = mode or "n"
@@ -84,64 +151,46 @@ return {
           nmap("<Leader>ca", vim.lsp.buf.code_action, "code action", { "n", "x" })
           nmap("<C-K>", vim.lsp.buf.signature_help, "signature help")
           nmap("gD", vim.lsp.buf.declaration, "go to declaration")
+
+          -- Inlay hints
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+            if not vim.tbl_contains(opts.inlay_hints.exclude, vim.bo[event.buf].filetype) then
+              vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+            end
+            Config.map.toggle.set("<leader>th", {
+              get = function()
+                return vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+              end,
+              set = function(state)
+                vim.lsp.inlay_hint.enable(state)
+              end,
+            }, { name = "inlayhints", desc_name = "inlay hints", echo = true }, { buffer = event.buf })
+          end
         end,
       })
 
-      -- nvim-cmp supports additional completion capabilities, so broadcast
-      -- that to servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      vim.diagnostic.config(opts.diagnostics)
 
-      -- Enable the following language servers
-      -- Feel free to add/remove any LSPs that you want here. They will
-      -- automatically be installed.
-      --
-      -- Add any additional override configuration in the following tables.
-      -- They will be passed to the `settings` field of the server config.
-      -- You must look up that documentation yourself.
-      local servers = {
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
-
-        clangd = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = "Replace",
-              },
-              diagnostics = {
-                globals = { "vim" },
-              },
-            },
-          },
-        },
-        marksman = {},
-        ts_ls = {},
-      }
-
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
+      local servers = opts.servers
+      local capabilities = vim.tbl_deep_extend(
+        "force",
+        vim.lsp.protocol.make_client_capabilities(),
+        require("cmp_nvim_lsp").default_capabilities()
+      )
       local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        "markdown-toc",
-        "markdownlint-cli2",
-        "prettierd",
-        "stylua", -- Used to format lua code
-      })
+      vim.list_extend(ensure_installed, opts.ensure_installed)
+
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
       require("mason-lspconfig").setup({
         handlers = {
+          -- Overrides capabilities specified by the server configuration;
+          -- useful for disabling certain features of a language server (e.g.,
+          -- turning off formatting for ts_ls)
           function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting
-            -- for ts_ls)
-            server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-            require("lspconfig")[server_name].setup(server)
+            local server_opts = vim.tbl_deep_extend("force", capabilities, servers[server_name] or {})
+            require("lspconfig")[server_name].setup(server_opts)
           end,
         },
       })
