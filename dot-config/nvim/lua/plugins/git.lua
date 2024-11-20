@@ -15,9 +15,32 @@ return {
     opts = {
       view = {
         style = "sign",
-        signs = { add = "+", change = "~", delete = "-" },
       },
     },
+    config = function(_, opts)
+      require("mini.diff").setup(opts)
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniDiffUpdated",
+        callback = function(data)
+          local summary = vim.b[data.buf].minidiff_summary
+          if summary == nil then
+            return
+          end
+          local t = {}
+          if summary.add > 0 then
+            t[#t + 1] = Config.tbl.icons.git.add .. summary.add
+          end
+          if summary.change > 0 then
+            t[#t + 1] = Config.tbl.icons.git.change .. summary.change
+          end
+          if summary.delete > 0 then
+            t[#t + 1] = Config.tbl.icons.git.delete .. summary.delete
+          end
+          vim.b[data.buf].minidiff_summary_string = table.concat(t, " ")
+        end,
+      })
+    end,
   },
 
   { -- Seamless Git interface in Vim

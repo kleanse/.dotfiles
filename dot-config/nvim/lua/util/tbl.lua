@@ -21,9 +21,9 @@ local M = {
       Info = " ",
     },
     git = {
-      added = " ",
-      modified = " ",
-      removed = " ",
+      add = " ",
+      change = " ",
+      delete = " ",
     },
     kinds = {
       Array = " ",
