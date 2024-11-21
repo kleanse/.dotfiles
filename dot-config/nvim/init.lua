@@ -4,19 +4,10 @@
 -- be used)
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
-
--- Use a dark color scheme
-vim.g.dark_mode = false
-
--- Set to true if you have installed and are using a Nerd Font
-vim.g.have_nerd_font = true
-
--- Directory containing template files
-vim.g.template_path = "~/.templates"
-
--- Remove trailing whitespace and blank lines at the start and end when writing
--- the current buffer
-vim.g.trim_blanks_on_write = true
+vim.g.dark_mode = false -- Use a dark color scheme
+vim.g.have_nerd_font = true -- Set to true if you have installed and are using a Nerd Font
+vim.g.template_path = "~/.templates" -- Directory containing template files
+vim.g.trim_blanks_on_write = true -- Strip trailing whitespace and blank lines when writing current buffer
 
 -- Enable dark mode if operating system's appearance is dark mode
 if
@@ -45,6 +36,3 @@ function P(object)
   print(vim.inspect(object))
   return object
 end
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim:ts=2:sts=2:sw=2:et:
