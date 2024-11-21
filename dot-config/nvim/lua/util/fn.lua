@@ -8,7 +8,7 @@ local M = {}
 --- `nvim-telescope/telescope.nvim`. The filter array to return is based on the
 --- file type of `{buffer}` or is a default filter array if no matching filter
 --- array was found or `nil` if the filter for the file type is `false`.
----@param buffer? number Buffer handle; 0 or nil for current buffer
+---@param buffer? number Buffer handle; 0 or `nil` for current buffer
 ---@return string[]?
 function M.get_kind_filter(buffer)
   buffer = (buffer == nil or buffer == 0) and vim.api.nvim_get_current_buf() or buffer
