@@ -105,6 +105,73 @@ return {
     "echasnovski/mini.sessions",
     event = "VeryLazy",
     opts = {},
+    config = function(_, opts)
+      local ms = require("mini.sessions")
+      ms.setup(opts)
+
+      -- Commands to interact with mini.sessions functions conveniently
+      local complete = Config.mini.complete_session_names
+      vim.api.nvim_create_user_command("SessionRead", function(cmd)
+        local force = cmd.bang or nil -- fall back to config.force.read
+        local session_name = cmd.args ~= "" and cmd.args or nil
+        ms.read(session_name, { force = force })
+      end, {
+        bang = true,
+        desc = "MiniSessions.read()",
+        nargs = "?",
+        complete = complete,
+      })
+      vim.api.nvim_create_user_command("SessionWrite", function(cmd)
+        local force = cmd.bang or nil -- fall back to config.force.write
+        local session_name = cmd.args ~= "" and cmd.args or nil
+        ms.write(session_name, { force = force })
+      end, {
+        bang = true,
+        desc = "MiniSessions.write()",
+        nargs = "?",
+        complete = complete,
+      })
+      vim.api.nvim_create_user_command("SessionDelete", function(cmd)
+        local force = cmd.bang or nil -- fall back to config.force.delete
+        if cmd.args == "" then
+          Config.mini.delete_session(nil, { force = force })
+          return
+        end
+        local session_names ---@type string[]
+        if cmd.args == "*" then
+          ---@param v table
+          session_names = vim.tbl_map(function(v)
+            return v.name
+          end, vim.tbl_values(ms.detected))
+        else
+          session_names = cmd.fargs
+        end
+        for _, name in ipairs(session_names) do
+          Config.mini.delete_session(name, { force = force })
+        end
+      end, {
+        bang = true,
+        desc = "MiniSessions.delete()",
+        nargs = "*",
+        complete = function(ArgLead)
+          local results ---@type string[]
+          if ArgLead == "*" then
+            ---@param v table
+            local session_names = vim.tbl_map(function(v)
+              return vim.fn.escape(v.name, " ")
+            end, vim.tbl_values(ms.detected))
+            results = { table.concat(session_names, " ") }
+          else
+            results = complete(vim.fn.expandcmd(ArgLead))
+            ---@param name string
+            results = vim.tbl_map(function(name)
+              return vim.fn.escape(name, " ")
+            end, results)
+          end
+          return results
+        end,
+      })
+    end,
   },
 
   { -- Split and join arguments between bracket delimiters under the cursor

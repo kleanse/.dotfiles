@@ -1,6 +1,55 @@
 ---@class util.mini
 local M = {}
 
+---@param ArgLead string
+function M.complete_session_names(ArgLead)
+  local ms = require("mini.sessions")
+  ---@param v table
+  local session_names = vim.tbl_map(function(v)
+    return v.name
+  end, vim.tbl_values(ms.detected))
+  ---@param name string
+  local results = vim.tbl_filter(function(name)
+    return vim.startswith(name, ArgLead)
+  end, session_names)
+  if #results == 0 then
+    -- Try finding matches by ignoring case
+    ---@param name string
+    results = vim.tbl_filter(function(name)
+      return vim.startswith(name:lower(), ArgLead:lower())
+    end, session_names)
+  end
+  return results
+end
+
+---@param session_name? string `mini.sessions` session name; `nil` for active session
+---@param opts? table Options for `MiniSessions.delete()`
+function M.delete_session(session_name, opts)
+  opts = opts or {}
+  opts.verbose = opts.verbose or false
+  local ms = require("mini.sessions")
+  local fname = session_name or vim.fn.fnamemodify(vim.fs.normalize(vim.v.this_session), ":t")
+  local ok, errmsg = pcall(ms.delete, session_name, opts)
+  if opts.verbose then
+    return
+  end
+  local info
+  if ok then
+    info = "deleting"
+  else
+    errmsg = errmsg or ""
+    errmsg = errmsg:sub(({ errmsg:find("%(mini%.sessions%) .") })[2] or 1)
+    if errmsg:find("is not a name for detected session", 1, true) then
+      info = "ignoring; session not found:"
+    elseif vim.startswith(errmsg, "Can't delete current session") then
+      info = "ignoring; can't delete current session (no '!'):"
+    else
+      info = errmsg ~= "" and errmsg or "Delete failed but received no error message."
+    end
+  end
+  vim.api.nvim_echo({ { string.format("%s   %s", info, fname) } }, false, {})
+end
+
 -- Function provided by LazyVim.
 
 ---@param opts { skip_next: string, skip_ts: string[], skip_unbalanced: boolean, markdown: boolean }
