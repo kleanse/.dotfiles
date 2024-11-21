@@ -1,5 +1,5 @@
 vim.opt.background = vim.g.dark_mode and "dark" or "light"
-vim.opt.cedit = vim.api.nvim_replace_termcodes("<C-X>", true, true, true)
+vim.opt.cedit = vim.api.nvim_replace_termcodes("<C-O>", true, true, true)
 vim.opt.copyindent = true
 vim.opt.listchars = { tab = "--|", trail = "·" }
 vim.opt.mouse = "a" -- Enable mouse mode
