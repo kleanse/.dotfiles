@@ -11,14 +11,11 @@ return {
         end,
         desc = "Format buffer",
       },
-      Config.map.toggle.lazy_keys(
-        "<Leader>tf",
-        "vim.g.format_on_save",
-        { name = "format", desc_name = "format on save", echo = true }
-      ),
     },
     init = function()
-      vim.g.format_on_save = true
+      if vim.g.format_on_write == nil then
+        vim.g.format_on_write = true
+      end
     end,
     opts = {
       formatters_by_ft = {
@@ -35,7 +32,7 @@ return {
         -- well standardized coding style
         local disable_filetypes = { "c", "cpp" }
         local lsp_format_opt = vim.tbl_contains(disable_filetypes, vim.bo[bufnr].filetype) and "never" or "fallback"
-        if vim.g.format_on_save then
+        if vim.g.format_on_write then
           return { timeout_ms = 3000, lsp_format = lsp_format_opt }
         end
       end,

@@ -8,15 +8,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- TODO: fix update_last_change() so that it can be disabled or check whether a
--- file should be updated
--- Update the date following a "Last change" string in the first 20 lines of
+-- Update the date following a "Last change:" string in the first 20 lines of
 -- the current buffer
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("update-last-change", { clear = true }),
   pattern = "*",
   callback = function()
-    Config.fn.update_last_change()
+    if vim.g.format_on_write then
+      Config.fn.update_last_change()
+    end
   end,
 })
 
@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = vim.api.nvim_create_augroup("trim-blanks", { clear = true }),
   pattern = "*",
   callback = function()
-    if vim.g.trim_blanks_on_write then
+    if vim.g.format_on_write then
       Config.fn.trim_peripheral_blank_lines()
       Config.fn.trim_trailing_whitespace()
     end

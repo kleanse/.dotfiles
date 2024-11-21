@@ -98,6 +98,7 @@ toggle_map("<Leader>td", {
     vim.diagnostic.enable(state)
   end,
 }, { name = "diagnostics", echo = true })
+toggle_map("<Leader>tf", "vim.g.format_on_write", { name = "format", desc_name = "format on write", echo = true })
 toggle_map("<Leader>tl", "list")
 toggle_map("<Leader>to", {
   get = function()
@@ -126,11 +127,6 @@ toggle_map("<Leader>tq", {
   end,
 }, { desc_name = "quickfix window" })
 toggle_map("<Leader>ts", "spell")
-toggle_map(
-  "<Leader>tt",
-  "vim.g.trim_blanks_on_write",
-  { name = "trim", desc_name = "trim blanks on write", echo = true }
-)
 toggle_map("<Leader>tv", "virtualedit", { states = { on = "all", off = "" }, echo = true })
 toggle_map("<Leader>tw", "wrap", { echo = true })
 toggle_map("<Leader>tx", {

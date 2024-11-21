@@ -5,9 +5,9 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 vim.g.dark_mode = false -- Use a dark color scheme
+vim.g.format_on_write = true -- Apply formatters when writing current buffer
 vim.g.have_nerd_font = true -- Set to true if you have installed and are using a Nerd Font
 vim.g.template_path = "~/.templates" -- Directory containing template files
-vim.g.trim_blanks_on_write = true -- Strip trailing whitespace and blank lines when writing current buffer
 
 -- Change appearance automatically based on operating system's appearance
 if vim.uv.os_uname().sysname == "Darwin" then
