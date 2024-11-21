@@ -9,12 +9,33 @@ vim.g.have_nerd_font = true -- Set to true if you have installed and are using a
 vim.g.template_path = "~/.templates" -- Directory containing template files
 vim.g.trim_blanks_on_write = true -- Strip trailing whitespace and blank lines when writing current buffer
 
--- Enable dark mode if operating system's appearance is dark mode
-if
-  vim.uv.os_uname().sysname == "Darwin"
-  and vim.system({ "defaults", "read", "-g", "AppleInterfaceStyle" }):wait().stdout == "Dark\n"
-then
-  vim.g.dark_mode = true
+-- Change appearance automatically based on operating system's appearance
+if vim.uv.os_uname().sysname == "Darwin" then
+  -- Check and set vim.g.dark_mode to avoid screen flash when starting Nvim in
+  -- dark mode and with vim.g.dark_mode set to false
+  if vim.system({ "defaults", "read", "-g", "AppleInterfaceStyle" }):wait().stdout == "Dark\n" then
+    vim.g.dark_mode = true
+  end
+  local dark_mode_on = vim.g.dark_mode ---@type boolean
+  local timer = vim.uv.new_timer()
+  timer:start(
+    0,
+    15 * 1000,
+    vim.schedule_wrap(function()
+      local os_mode = vim.system({ "defaults", "read", "-g", "AppleInterfaceStyle" }):wait().stdout
+      if os_mode == "Dark\n" then
+        if not dark_mode_on then
+          vim.api.nvim_set_option_value("background", "dark", {})
+          vim.cmd.colorscheme("catppuccin")
+          dark_mode_on = true
+        end
+      elseif dark_mode_on then
+        vim.api.nvim_set_option_value("background", "light", {})
+        vim.cmd.colorscheme("gruvbox")
+        dark_mode_on = false
+      end
+    end)
+  )
 end
 
 _G.Config = require("util")
