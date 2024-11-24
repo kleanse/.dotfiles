@@ -104,6 +104,11 @@ return {
   { -- Read, write, and delete global and local sessions
     "echasnovski/mini.sessions",
     event = "VeryLazy",
+    keys = {
+      { "<Leader>Sr", ":SessionRead " },
+      { "<Leader>Sw", ":SessionWrite " },
+      { "<Leader>Sd", ":SessionDelete " },
+    },
     opts = {},
     config = function(_, opts)
       local ms = require("mini.sessions")
