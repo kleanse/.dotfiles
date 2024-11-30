@@ -106,10 +106,13 @@ return {
             },
           },
           marksman = {},
+          neocmake = {},
           ts_ls = {},
         },
         -- Tools to install automatically using mason.nvim
         ensure_installed = {
+          "cmakelang",
+          "cmakelint",
           "markdown-toc",
           "markdownlint-cli2",
           "prettierd",

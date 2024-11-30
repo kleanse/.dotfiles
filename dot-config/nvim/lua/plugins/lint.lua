@@ -7,6 +7,7 @@ return {
       -- Events to trigger linters
       events = { "BufWritePost", "BufReadPost", "InsertLeave" },
       linters_by_ft = {
+        cmake = { "cmakelint" },
         markdown = { "markdownlint-cli2" },
         -- Use the "*" filetype to run linters on all filetypes
         -- ['*'] = { 'global linter' },
