@@ -29,7 +29,29 @@ return {
     keys = {
       { "<leader>m", vim.cmd.Mason, desc = "Open Mason" },
     },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "cmakelang",
+        "cmakelint",
+        "markdown-toc",
+        "markdownlint-cli2",
+        "prettierd",
+        "stylua",
+      },
+    },
+    config = function(_, opts)
+      require("mason").setup(opts)
+
+      local mr = require("mason-registry")
+      mr.refresh(function()
+        for _, tool in ipairs(opts.ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end)
+    end,
   },
 
   { -- LSP Configuration
@@ -38,10 +60,7 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-
-      -- Allows extra capabilities provided by nvim-cmp
-      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp", -- Allows extra capabilities provided by nvim-cmp
     },
     opts = function()
       ---@class PluginLspOpts
@@ -109,15 +128,6 @@ return {
           neocmake = {},
           ts_ls = {},
         },
-        -- Tools to install automatically using mason.nvim
-        ensure_installed = {
-          "cmakelang",
-          "cmakelint",
-          "markdown-toc",
-          "markdownlint-cli2",
-          "prettierd",
-          "stylua", -- Used to format lua code
-        },
       }
       return ret
     end,
@@ -182,11 +192,8 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
       )
       local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, opts.ensure_installed)
-
-      require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
       require("mason-lspconfig").setup({
+        ensure_installed = ensure_installed,
         handlers = {
           -- Overrides capabilities specified by the server configuration;
           -- useful for disabling certain features of a language server (e.g.,
