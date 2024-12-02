@@ -30,6 +30,7 @@ return {
       end
       return {
         evaluate_single = true,
+        silent = true,
         items = {
           starter.sections.sessions(),
           item("Find file", "Telescope find_files", "Telescope"),
