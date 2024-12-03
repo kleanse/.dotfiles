@@ -28,13 +28,13 @@ return {
             return
           end
           local t = {}
-          if summary.add > 0 then
+          if summary.add ~= nil and summary.add > 0 then
             t[#t + 1] = Config.tbl.icons.git.add .. summary.add
           end
-          if summary.change > 0 then
+          if summary.change ~= nil and summary.change > 0 then
             t[#t + 1] = Config.tbl.icons.git.change .. summary.change
           end
-          if summary.delete > 0 then
+          if summary.delete ~= nil and summary.delete > 0 then
             t[#t + 1] = Config.tbl.icons.git.delete .. summary.delete
           end
           vim.b[data.buf].minidiff_summary_string = table.concat(t, " ")
