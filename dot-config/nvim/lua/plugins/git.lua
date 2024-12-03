@@ -64,6 +64,7 @@ return {
         end,
         desc = "Fugitive: Git status",
       },
+      { "<Leader>gB", ":GBrowse<CR>", mode = { "n", "x" }, desc = "Fugitive: GBrowse" },
       -- stylua: ignore start
       { "<Leader>gbl", function() vim.cmd("Git blame --date=relative") end, desc = "Fugitive: Git blame" },
       { "<Leader>glg", function() vim.cmd("Git log --stat") end, desc = "Fugitive: Git log --stat" },
