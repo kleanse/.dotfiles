@@ -223,11 +223,11 @@ return {
         tmux = { enabled = true }, -- tmux status line
       },
       on_open = function()
-        vim.g.format_on_save = false
+        vim.g.format_on_write = false
         vim.diagnostic.enable(false)
       end,
       on_close = function()
-        vim.g.format_on_save = true
+        vim.g.format_on_write = true
         vim.diagnostic.enable(true)
       end,
     },
