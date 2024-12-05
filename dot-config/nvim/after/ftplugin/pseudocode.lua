@@ -1,6 +1,8 @@
 -- Language:	Pseudocode
--- Last Change:	2024 Nov 05
+-- Last Change:	2024 Dec 05
 
 vim.b.undo_ftplugin = "setl fo<"
 
-vim.opt_local.formatoptions:append("tcroqlj")
+local setl = vim.opt_local
+
+setl.formatoptions:append("tcroqlj")

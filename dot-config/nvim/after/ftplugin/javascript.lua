@@ -1,8 +1,10 @@
 -- Script overruling and adding to the distributed "javascript.vim" ftplugin.
 -- Language:	JavaScript
--- Last Change:	2024 Aug 19
+-- Last Change:	2024 Dec 05
 
 vim.b.undo_ftplugin = vim.b.undo_ftplugin .. "| setl et< sw<"
 
-vim.bo.expandtab = true
-vim.bo.shiftwidth = 2
+local setl = vim.opt_local
+
+setl.expandtab = true
+setl.shiftwidth = 2
