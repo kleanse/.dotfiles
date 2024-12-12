@@ -3,9 +3,10 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    -- stylua: ignore
     keys = {
-      -- stylua: ignore
       { "<C-_>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle terminal" },
+      { "<Leader>Rn", function() Snacks.rename.rename_file() end, desc = "Rename file" },
     },
     opts = {
       bigfile = { enabled = true }, -- Disable LSP and Treesitter for big files (default: > 1.5 MB)
