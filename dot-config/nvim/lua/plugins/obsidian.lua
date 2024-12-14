@@ -50,7 +50,7 @@ return {
           opts = { desc = "Obsidian: smart action", buffer = true, expr = true },
         },
         -- Open picker with list of references to the current buffer
-        ["<Leader>ob"] = {
+        ["<Leader>bl"] = {
           action = function()
             return "<Cmd>ObsidianBacklinks<CR>"
           end,

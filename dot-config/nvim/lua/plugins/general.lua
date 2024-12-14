@@ -200,36 +200,4 @@ return {
     event = "VeryLazy",
     opts = { respect_selection_type = true },
   },
-
-  { -- Edit buffers in a minimal window to maintain focus
-    "folke/zen-mode.nvim",
-    keys = { { "<Leader>z", "<Cmd>ZenMode<CR>", desc = "Toggle Zen Mode" } },
-    opts = {
-      window = {
-        width = 80,
-        options = {
-          colorcolumn = "",
-          list = false,
-          signcolumn = "no",
-          spell = false,
-        },
-      },
-      plugins = {
-        -- Enable Zen-Mode plugins to disable their corresponding plugins in
-        -- Zen Mode
-        gitsigns = { enabled = true },
-        -- Run `tmux set status on` in the shell if the status line does not
-        -- return, e.g., when exiting Zen Mode with ":qall"
-        tmux = { enabled = true }, -- tmux status line
-      },
-      on_open = function()
-        vim.g.format_on_write = false
-        vim.diagnostic.enable(false)
-      end,
-      on_close = function()
-        vim.g.format_on_write = true
-        vim.diagnostic.enable(true)
-      end,
-    },
-  },
 }
