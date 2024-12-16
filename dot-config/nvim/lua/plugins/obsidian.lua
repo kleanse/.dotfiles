@@ -13,7 +13,7 @@ return {
     },
     keys = {
       { -- Open picker to select a note from defined workspaces
-        "<Leader>sp",
+        "<Leader>sN",
         function()
           return "<Cmd>ObsidianQuickSwitch<CR>"
         end,

@@ -58,6 +58,16 @@ return {
         end,
         desc = "Telescope: search Nvim-config files",
       },
+      {
+        "<Leader>sp",
+        function()
+          require("telescope.builtin").find_files({
+            cwd = vim.fs.joinpath(vim.fn.stdpath("data") --[[@as string]], "lazy"),
+            prompt_title = "Find Neovim Plugin Files",
+          })
+        end,
+        desc = "Telescope: search Nvim-plugin files",
+      },
       -- Search tracked files and list objects in the Git repository of the
       -- current working directory
       {
