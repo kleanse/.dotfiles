@@ -97,6 +97,7 @@ return {
         },
         -- LSP Server Settings
         servers = {
+          basedpyright = {},
           clangd = {},
           lua_ls = {
             settings = {
@@ -126,6 +127,7 @@ return {
           },
           marksman = {},
           neocmake = {},
+          ruff = {},
           ts_ls = {},
         },
       }
