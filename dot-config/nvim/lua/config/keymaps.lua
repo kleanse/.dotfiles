@@ -56,8 +56,8 @@ map("i", "<C-L>", "<C-X><C-L>") -- Complete whole lines
 -- Move text in Visual mode. Visual-mode "J" and "K" are overwritten; for the
 -- former command, use ":join" instead. The latter might not need addressed:
 -- Visual-mode "K" is rare
-map("x", "J", ":move '>+1<CR>gv=gv", { desc = "Move selected text down one line" })
-map("x", "K", ":move '<-2<CR>gv=gv", { desc = "Move selected text up one line" })
+map("x", "J", ":move '>+1<CR>gv=gv", { silent = true, desc = "Move selected text down one line" })
+map("x", "K", ":move '<-2<CR>gv=gv", { silent = true, desc = "Move selected text up one line" })
 -- Use some common GNU-Readline keyboard shortcuts for the Command line
 -- Overwrite the Command-line commands CTRL-A, CTRL-B, and CTRL-F. CTRL-A is
 -- not useful; CTRL-B's behavior is moved to CTRL-A; and CTRL-F expedites
