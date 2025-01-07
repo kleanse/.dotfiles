@@ -182,6 +182,9 @@ return {
               end,
             }, { name = "inlayhints", desc_name = "inlay hints", echo = true }, { buffer = event.buf })
           end
+
+          -- clangd features
+          nmap("<Leader>ch", "<Cmd>ClangdSwitchSourceHeader<CR>", "clangd switch between source and header files")
         end,
       })
 
