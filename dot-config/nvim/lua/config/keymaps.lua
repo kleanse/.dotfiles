@@ -44,6 +44,8 @@ map("n", "<Leader>l", vim.cmd.Lazy, { desc = "Open Lazy" })
 map("n", "<leader>n", vim.cmd.enew, { desc = "Edit new buffer" })
 map("n", "<Leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic quickfix list" })
 map("n", "<Leader>va", "<Cmd>split $ASCII_REFERENCE | view<CR>", { desc = "View ASCII reference file in a new split" })
+map("n", "<Leader>x", "<Cmd>.source<CR>", { desc = '":source" current line' })
+map("x", "<Leader>x", ":source<CR>", { silent = true, desc = '":source" selection' })
 map("n", "<M-b>", "<C-^>") -- Alternate buffer
 map("n", "<M-e>", vim.cmd.Explore, { desc = "Netrw explore directory of current file" })
 map("n", "<M-g>", vim.cmd.pwd, { desc = "Print current working directory of current window" })
