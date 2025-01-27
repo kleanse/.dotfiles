@@ -17,5 +17,8 @@ return {
     init = function()
       vim.g.mkdp_auto_close = 0
     end,
+    config = function()
+      vim.cmd.doautocmd("FileType")
+    end,
   },
 }
