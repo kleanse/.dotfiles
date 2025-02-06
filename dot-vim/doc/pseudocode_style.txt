@@ -1,4 +1,4 @@
-*pseudocode_style.txt*	Last change: 2025 Feb 01
+*pseudocode_style.txt*	Last change: 2025 Feb 05
 
 			  Pseudocode style reference
 
@@ -154,13 +154,13 @@ Note: do-while does not use the `end` keyword. >
 Two data structures can be declared using special syntax: lists and
 dictionaries.
 
-Lists are declared using square brackets: >
+Lists are created using square brackets: >
 
 	list1 <- []  // empty list
 	foo <- ['b', 'a', 'r']
 	list2 <- list(26)  // list of size 26
 
-Dictionaries are declared using braces: >
+Dictionaries are created using braces: >
 
 	dict1 <- {}  // empty dictionary
 	foo <- {b: 2, a: 1, r: 18}
