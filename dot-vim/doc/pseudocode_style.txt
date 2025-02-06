@@ -165,6 +165,9 @@ Dictionaries are created using braces: >
 	dict1 <- {}  // empty dictionary
 	foo <- {b: 2, a: 1, r: 18}
 
+Both lists and dictionaries are heterogeneous: they can contain values of all
+types.
+
 2.5 Comments ~
 							 *pseudocode-comments*
 Sometimes, even pseudocode cannot be perfectly transparent with its ideas.
