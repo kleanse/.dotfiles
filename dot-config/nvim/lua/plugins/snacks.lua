@@ -5,7 +5,8 @@ return {
     lazy = false,
     -- stylua: ignore
     keys = {
-      { "<C-_>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle terminal" },
+      { "<C-/>", function() Snacks.terminal() end, mode = { "n", "t" }, desc = "Toggle terminal" },
+      { "<C-_>", function() Snacks.terminal() end, mode = { "n", "t" } },
       { "<Leader>Rn", function() Snacks.rename.rename_file() end, desc = "Rename file" },
       { "<Leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
       { "<Leader>o",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
