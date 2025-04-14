@@ -9,6 +9,9 @@ vim.g.format_on_write = true -- Apply formatters when writing current buffer
 vim.g.have_nerd_font = true -- Set to true if you have installed and are using a Nerd Font
 vim.g.template_path = "~/.templates" -- Directory containing template files
 
+-- Filetype plugin settings
+vim.g.ftplugin_sql_omni_key = "<C-Z>"
+
 -- Change appearance automatically based on operating system's appearance
 if vim.uv.os_uname().sysname == "Darwin" then
   -- Check and set vim.g.dark_mode to avoid screen flash when starting Nvim in
